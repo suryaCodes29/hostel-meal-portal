@@ -1,0 +1,1836 @@
+/* =========================================================
+   FORECASTS PAGE
+========================================================= */
+
+.forecasts-page {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+
+  box-sizing: border-box;
+
+  overflow-x: hidden;
+
+  color: #0b2945;
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+
+.forecasts-page *,
+.forecasts-page *::before,
+.forecasts-page *::after {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.forecasts-header {
+  width: 100%;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 18px;
+
+  margin-bottom: 18px;
+}
+
+
+.forecasts-eyebrow {
+  display: block;
+
+  margin: 0 0 5px;
+
+  color: #ff6500;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  line-height: 1.2;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+}
+
+
+.forecasts-header h1 {
+  margin: 0;
+
+  color: #082a47;
+
+  font-size: 30px;
+  font-weight: 800;
+
+  line-height: 1.15;
+
+  letter-spacing: -0.5px;
+}
+
+
+.forecasts-header p {
+  margin: 7px 0 0;
+
+  color: #60738a;
+
+  font-size: 13px;
+
+  line-height: 1.45;
+}
+
+
+/* =========================================================
+   REFRESH BUTTON
+========================================================= */
+
+.forecast-refresh-button {
+  min-width: 108px;
+  height: 48px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+
+  padding: 0 16px;
+
+  border: 1px solid #d7e0e8;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #0b2945;
+
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.forecast-refresh-button:hover:not(:disabled) {
+  background: #f8fafc;
+
+  border-color: #c7d2dc;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 14px rgba(15, 23, 42, 0.06);
+}
+
+
+.forecast-refresh-button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   ERROR / WARNING
+========================================================= */
+
+.forecast-error-message,
+.forecast-warning-message {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 16px;
+
+  padding: 12px 14px;
+
+  border-radius: 10px;
+
+  font-size: 12px;
+}
+
+
+.forecast-error-message {
+  border: 1px solid #ffd0d5;
+
+  background: #fff5f6;
+
+  color: #bd3540;
+}
+
+
+.forecast-error-message > div {
+  min-width: 0;
+  flex: 1;
+}
+
+
+.forecast-error-message strong {
+  display: block;
+
+  color: #9f2630;
+
+  font-size: 12px;
+  font-weight: 750;
+}
+
+
+.forecast-error-message span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #b55860;
+
+  font-size: 11px;
+}
+
+
+.forecast-error-message > button {
+  min-height: 34px;
+
+  padding: 0 12px;
+
+  border: 0;
+  border-radius: 7px;
+
+  background: #bd3540;
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.forecast-warning-message {
+  border: 1px solid #ffdfb6;
+
+  background: #fff8ed;
+
+  color: #b96909;
+
+  font-weight: 650;
+}
+
+
+/* =========================================================
+   FILTER CONTAINER
+========================================================= */
+
+.forecast-filter-card {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+
+  /*
+    8 controls:
+    1 Search
+    2 Hostel
+    3 Mess Unit
+    4 Meal Category
+    5 Start Date
+    6 End Date
+    7 Preparation
+    8 Clear Filters
+
+    4 columns = perfect 2-row layout.
+  */
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 16px 12px;
+
+  align-items: end;
+
+  margin-bottom: 20px;
+
+  padding: 18px;
+
+  border: 1px solid #d9e2ea;
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 3px 10px rgba(15, 23, 42, 0.025);
+}
+
+
+/* =========================================================
+   SEARCH FIELD
+========================================================= */
+
+.forecast-search-box {
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 0 13px;
+
+  border: 1px solid #d7e0e8;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #8ca0b5;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.forecast-search-box:focus-within {
+  border-color: #ff6500;
+
+  box-shadow:
+    0 0 0 3px rgba(255, 101, 0, 0.08);
+}
+
+
+.forecast-search-box svg {
+  width: 18px;
+  height: 18px;
+
+  flex-shrink: 0;
+
+  color: #8197ad;
+}
+
+
+.forecast-search-box input {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0 !important;
+  border-bottom: 0 !important;
+
+  outline: 0 !important;
+
+  box-shadow: none !important;
+
+  background: transparent !important;
+
+  color: #0b2945;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
+
+  line-height: normal;
+}
+
+
+.forecast-search-box input::placeholder {
+  color: #91a4b8;
+
+  opacity: 1;
+}
+
+
+/* =========================================================
+   FILTER FIELD
+========================================================= */
+
+.forecast-filter-field {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+
+.forecast-filter-field label {
+  display: block;
+
+  margin: 0;
+
+  color: #50657b;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 750;
+
+  line-height: 1.2;
+}
+
+
+.forecast-filter-field select,
+.forecast-filter-field input {
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+
+  margin: 0;
+
+  padding: 0 12px;
+
+  border: 1px solid #d7e0e8 !important;
+  border-radius: 10px;
+
+  outline: none !important;
+
+  box-shadow: none;
+
+  background: #ffffff;
+
+  color: #0b2945;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+
+  line-height: normal;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.forecast-filter-field select:focus,
+.forecast-filter-field input:focus {
+  border-color: #ff6500 !important;
+
+  box-shadow:
+    0 0 0 3px rgba(255, 101, 0, 0.08);
+}
+
+
+.forecast-filter-field select {
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   CLEAR FILTERS
+========================================================= */
+
+.forecast-clear-button {
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0;
+
+  padding: 0 14px;
+
+  border: 1px solid #d7e0e8;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #52677c;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+
+.forecast-clear-button:hover {
+  background: #f8fafc;
+
+  border-color: #c6d1dc;
+
+  color: #0b2945;
+}
+
+
+/* =========================================================
+   SUMMARY GRID
+========================================================= */
+
+.forecast-summary-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 16px;
+
+  margin-bottom: 20px;
+}
+
+
+.forecast-summary-card {
+  min-width: 0;
+  min-height: 112px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 17px;
+
+  border: 1px solid #d9e2ea;
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.035);
+}
+
+
+.forecast-summary-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 11px;
+}
+
+
+.forecast-summary-icon.blue {
+  background: #eaf3ff;
+
+  color: #2563eb;
+}
+
+
+.forecast-summary-icon.orange {
+  background: #fff2e7;
+
+  color: #ff6500;
+}
+
+
+.forecast-summary-icon.green {
+  background: #eaf8ef;
+
+  color: #22a765;
+}
+
+
+.forecast-summary-icon.navy {
+  background: #edf5fa;
+
+  color: #0b527e;
+}
+
+
+.forecast-summary-card > div:last-child {
+  min-width: 0;
+}
+
+
+.forecast-summary-card span {
+  display: block;
+
+  color: #60738a;
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+
+.forecast-summary-card strong {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #082a47;
+
+  font-size: 26px;
+  font-weight: 800;
+
+  line-height: 1.1;
+}
+
+
+/* =========================================================
+   DASHBOARD GRID
+========================================================= */
+
+.forecast-dashboard-grid {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.9fr)
+    minmax(300px, 1fr);
+
+  gap: 16px;
+
+  margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   COMMON PANEL
+========================================================= */
+
+.forecast-panel {
+  width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+
+  border: 1px solid #d9e2ea;
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.035);
+}
+
+
+.forecast-panel-header {
+  min-height: 72px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  padding: 16px 18px;
+
+  border-bottom: 1px solid #edf1f5;
+}
+
+
+.forecast-panel-header h2 {
+  margin: 0;
+
+  color: #082a47;
+
+  font-size: 15px;
+  font-weight: 800;
+
+  line-height: 1.25;
+}
+
+
+.forecast-panel-header p {
+  margin: 4px 0 0;
+
+  color: #8a9bad;
+
+  font-size: 10px;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   CHART LEGEND
+========================================================= */
+
+.forecast-chart-legend {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  flex-shrink: 0;
+}
+
+
+.forecast-chart-legend span {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  color: #5f7082;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+
+.forecast-chart-legend i {
+  width: 10px;
+  height: 10px;
+
+  display: block;
+
+  border-radius: 50%;
+}
+
+
+.forecast-chart-legend .predicted i {
+  background: #2563eb;
+}
+
+
+.forecast-chart-legend .actual i {
+  background: #ff6500;
+}
+
+
+/* =========================================================
+   LINE CHART
+========================================================= */
+
+.forecast-line-chart-wrapper {
+  width: 100%;
+  min-width: 0;
+
+  overflow-x: auto;
+
+  padding: 12px 14px 10px;
+}
+
+
+.forecast-line-chart {
+  width: 100%;
+  min-width: 620px;
+
+  display: block;
+
+  height: auto;
+}
+
+
+.forecast-chart-grid-line {
+  stroke: #e8edf2;
+
+  stroke-width: 1;
+
+  stroke-dasharray: 4 4;
+}
+
+
+.forecast-chart-axis-label {
+  fill: #8295a8;
+
+  font-size: 10px;
+
+  font-family:
+    Inter,
+    system-ui,
+    sans-serif;
+}
+
+
+.forecast-chart-line {
+  fill: none;
+
+  stroke-width: 3;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+.forecast-chart-line.predicted {
+  stroke: #2563eb;
+}
+
+
+.forecast-chart-line.actual {
+  stroke: #ff6500;
+}
+
+
+.forecast-chart-point {
+  stroke: #ffffff;
+
+  stroke-width: 2;
+
+  cursor: pointer;
+}
+
+
+.forecast-chart-point.predicted {
+  fill: #2563eb;
+}
+
+
+.forecast-chart-point.actual {
+  fill: #ff6500;
+}
+
+
+/* =========================================================
+   CHART EMPTY / LOADING
+========================================================= */
+
+.forecast-chart-empty,
+.forecast-panel-loading {
+  min-height: 265px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 8px;
+
+  padding: 24px;
+
+  text-align: center;
+}
+
+
+.forecast-chart-empty svg,
+.forecast-panel-loading svg {
+  color: #91a2b3;
+}
+
+
+.forecast-chart-empty strong {
+  color: #082a47;
+
+  font-size: 13px;
+}
+
+
+.forecast-chart-empty span,
+.forecast-panel-loading span {
+  color: #718398;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   DEMAND BY MEAL
+========================================================= */
+
+.forecast-meal-list {
+  padding: 8px 18px 16px;
+}
+
+
+.forecast-meal-row {
+  padding: 14px 0;
+
+  border-bottom: 1px solid #edf1f5;
+}
+
+
+.forecast-meal-row:last-child {
+  border-bottom: 0;
+}
+
+
+.forecast-meal-row-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+}
+
+
+.forecast-meal-row-top > div {
+  min-width: 0;
+}
+
+
+.forecast-meal-row-top > div strong {
+  display: block;
+
+  color: #082a47;
+
+  font-size: 12px;
+  font-weight: 750;
+}
+
+
+.forecast-meal-row-top > div span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #8ca0b3;
+
+  font-size: 9px;
+}
+
+
+.forecast-meal-value {
+  color: #2563eb;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+
+.forecast-meal-progress {
+  width: 100%;
+  height: 8px;
+
+  margin-top: 10px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background: #edf1f5;
+}
+
+
+.forecast-meal-progress span {
+  display: block;
+
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: #2563eb;
+
+  transition: width 0.25s ease;
+}
+
+
+.forecast-meal-comparison {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-top: 8px;
+
+  color: #718398;
+
+  font-size: 9px;
+}
+
+
+.forecast-meal-comparison strong {
+  color: #0b2945;
+}
+
+
+/* =========================================================
+   UPCOMING THREE DAYS
+========================================================= */
+
+.forecast-upcoming-panel {
+  margin-bottom: 20px;
+}
+
+
+.forecast-upcoming-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+
+  padding: 16px;
+}
+
+
+.forecast-day-card {
+  min-width: 0;
+
+  padding: 14px;
+
+  border: 1px solid #e3e9ef;
+  border-radius: 11px;
+
+  background: #fbfcfd;
+}
+
+
+.forecast-day-heading {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding-bottom: 11px;
+
+  border-bottom: 1px solid #e7edf2;
+
+  color: #082a47;
+}
+
+
+.forecast-day-heading svg {
+  color: #ff6500;
+}
+
+
+.forecast-day-heading strong {
+  font-size: 11px;
+}
+
+
+.forecast-day-meals {
+  margin-top: 4px;
+}
+
+
+.forecast-day-meal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  padding: 10px 0;
+
+  border-bottom: 1px solid #edf1f5;
+}
+
+
+.forecast-day-meal:last-child {
+  border-bottom: 0;
+}
+
+
+.forecast-day-meal > div:first-child strong {
+  display: block;
+
+  color: #082a47;
+
+  font-size: 10px;
+}
+
+
+.forecast-day-meal > div:first-child span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #8ca0b3;
+
+  font-size: 9px;
+}
+
+
+.forecast-day-prediction {
+  text-align: right;
+}
+
+
+.forecast-day-prediction span {
+  display: block;
+
+  color: #8ca0b3;
+
+  font-size: 8px;
+}
+
+
+.forecast-day-prediction strong {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #2563eb;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+
+.forecast-upcoming-empty {
+  min-height: 190px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 7px;
+
+  padding: 24px;
+
+  text-align: center;
+}
+
+
+.forecast-upcoming-empty svg {
+  color: #91a2b3;
+}
+
+
+.forecast-upcoming-empty strong {
+  color: #082a47;
+
+  font-size: 12px;
+}
+
+
+.forecast-upcoming-empty span {
+  max-width: 450px;
+
+  color: #718398;
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   TABLE CARD
+========================================================= */
+
+.forecast-table-card {
+  width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+
+  border: 1px solid #d9e2ea;
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.035);
+}
+
+
+.forecast-table-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding: 15px 18px;
+
+  border-bottom: 1px solid #e8edf2;
+}
+
+
+.forecast-table-heading strong {
+  display: block;
+
+  color: #082a47;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+
+.forecast-table-heading span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #8ca0b3;
+
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.forecast-table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+
+.forecast-table {
+  width: 100%;
+
+  min-width: 1380px;
+
+  border-collapse: collapse;
+
+  background: #ffffff;
+}
+
+
+.forecast-table th,
+.forecast-table td {
+  padding: 12px 13px;
+
+  border-bottom: 1px solid #edf1f5;
+
+  text-align: left;
+
+  vertical-align: middle;
+
+  white-space: nowrap;
+}
+
+
+.forecast-table th {
+  background: #f8fafc;
+
+  color: #60738a;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+
+.forecast-table td {
+  color: #526174;
+
+  font-size: 10px;
+}
+
+
+.forecast-table tbody tr:hover {
+  background: #fbfcfd;
+}
+
+
+.forecast-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+
+/* =========================================================
+   TABLE CELLS
+========================================================= */
+
+.forecast-date-cell,
+.forecast-updated-cell {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+}
+
+
+.forecast-date-cell svg,
+.forecast-updated-cell svg {
+  flex-shrink: 0;
+
+  color: #8ca0b3;
+}
+
+
+.forecast-meal-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 5px 8px;
+
+  border-radius: 20px;
+
+  background: #edf5ff;
+
+  color: #2563eb;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+
+.forecast-category-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 55px;
+
+  padding: 5px 8px;
+
+  border-radius: 20px;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+
+.forecast-category-badge.veg {
+  background: #eaf8f0;
+
+  color: #16864e;
+}
+
+
+.forecast-category-badge.nonveg {
+  background: #fff0e9;
+
+  color: #d85a0b;
+}
+
+
+.forecast-predicted-value {
+  color: #2563eb;
+
+  font-weight: 800;
+}
+
+
+.forecast-actual-value {
+  color: #ff6500;
+
+  font-weight: 800;
+}
+
+
+.forecast-difference {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 46px;
+
+  padding: 5px 8px;
+
+  border-radius: 20px;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+
+.forecast-difference.positive {
+  background: #fff3e9;
+
+  color: #d85a0b;
+}
+
+
+.forecast-difference.negative {
+  background: #eaf8f0;
+
+  color: #16864e;
+}
+
+
+.forecast-difference.zero {
+  background: #f1f5f9;
+
+  color: #64748b;
+}
+
+
+/* =========================================================
+   PREPARATION STATUS
+========================================================= */
+
+.forecast-preparation-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 84px;
+
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+
+.forecast-preparation-status.planned {
+  background: #eaf8f0;
+
+  color: #16864e;
+}
+
+
+.forecast-preparation-status.in-progress {
+  background: #edf5ff;
+
+  color: #2563eb;
+}
+
+
+.forecast-preparation-status.completed {
+  background: #eef5fb;
+
+  color: #0b527e;
+}
+
+
+.forecast-preparation-status.pending {
+  background: #fff5e7;
+
+  color: #c77809;
+}
+
+
+/* =========================================================
+   VIEW BUTTON
+========================================================= */
+
+.forecast-view-button {
+  min-height: 31px;
+
+  padding: 0 10px;
+
+  border: 1px solid #d7e0e8;
+  border-radius: 7px;
+
+  background: #ffffff;
+
+  color: #526174;
+
+  font-family: inherit;
+  font-size: 9px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.forecast-view-button:hover {
+  background: #f8fafc;
+
+  border-color: #c7d2dc;
+
+  color: #082a47;
+}
+
+
+/* =========================================================
+   LOADING / EMPTY STATE
+========================================================= */
+
+.forecast-loading,
+.forecast-empty-state {
+  min-height: 280px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 8px;
+
+  padding: 26px;
+
+  text-align: center;
+}
+
+
+.forecast-loading span,
+.forecast-empty-state p {
+  color: #718398;
+
+  font-size: 10px;
+}
+
+
+.forecast-empty-state svg {
+  color: #91a2b3;
+}
+
+
+.forecast-empty-state h2 {
+  margin: 5px 0 0;
+
+  color: #082a47;
+
+  font-size: 16px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   SPINNER
+========================================================= */
+
+.forecast-spin {
+  animation:
+    forecast-spin-animation
+    0.8s linear infinite;
+}
+
+
+@keyframes forecast-spin-animation {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   MODAL BACKDROP
+========================================================= */
+
+.forecast-modal-backdrop {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 3000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  overflow-y: auto;
+
+  background: rgba(4, 20, 36, 0.58);
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.forecast-modal {
+  width: 100%;
+  max-width: 580px;
+  max-height: 92vh;
+
+  overflow-y: auto;
+
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 26px 65px rgba(0, 0, 0, 0.22);
+}
+
+
+.forecast-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  padding: 19px 20px;
+
+  border-bottom: 1px solid #e7ebef;
+}
+
+
+.forecast-modal-header h2 {
+  margin: 0;
+
+  color: #082a47;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+
+.forecast-modal-header p {
+  margin: 4px 0 0;
+
+  color: #718398;
+
+  font-size: 10px;
+}
+
+
+.forecast-modal-header > button {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: #f5f7fa;
+
+  color: #60738a;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   MODAL CONTENT
+========================================================= */
+
+.forecast-view-content {
+  padding: 18px 20px;
+}
+
+
+.forecast-view-content > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  padding: 12px 0;
+
+  border-bottom: 1px solid #edf1f5;
+}
+
+
+.forecast-view-content > div:last-child {
+  border-bottom: 0;
+}
+
+
+.forecast-view-content span {
+  color: #718398;
+
+  font-size: 10px;
+}
+
+
+.forecast-view-content strong {
+  max-width: 65%;
+
+  color: #082a47;
+
+  font-size: 10px;
+  font-weight: 750;
+
+  text-align: right;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   MODAL ACTIONS
+========================================================= */
+
+.forecast-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  padding: 0 20px 20px;
+}
+
+
+.forecast-secondary-button {
+  min-height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 15px;
+
+  border: 1px solid #d7e0e8;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #082a47;
+
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.forecast-secondary-button:hover {
+  background: #f8fafc;
+}
+
+
+/* =========================================================
+   RESPONSIVE — LARGE DESKTOP
+========================================================= */
+
+@media (max-width: 1350px) {
+  .forecast-filter-card {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+  }
+
+
+  .forecast-dashboard-grid {
+    grid-template-columns:
+      minmax(0, 1.55fr)
+      minmax(290px, 0.85fr);
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MEDIUM
+========================================================= */
+
+@media (max-width: 1100px) {
+  .forecast-filter-card {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+
+  .forecast-summary-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .forecast-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .forecast-upcoming-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 820px) {
+  .forecast-filter-card {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .forecast-upcoming-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+  .forecasts-header {
+    flex-direction: column;
+  }
+
+
+  .forecast-refresh-button {
+    width: 100%;
+  }
+
+
+  .forecast-filter-card {
+    grid-template-columns: 1fr;
+
+    padding: 14px;
+  }
+
+
+  .forecast-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .forecast-panel-header {
+    flex-direction: column;
+  }
+
+
+  .forecast-chart-legend {
+    align-self: flex-start;
+  }
+
+
+  .forecast-upcoming-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .forecast-meal-comparison {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 4px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+  .forecasts-header h1 {
+    font-size: 25px;
+  }
+
+
+  .forecast-modal-backdrop {
+    padding: 0;
+  }
+
+
+  .forecast-modal {
+    min-height: 100vh;
+    max-height: 100vh;
+
+    border-radius: 0;
+  }
+
+
+  .forecast-modal-actions > button {
+    width: 100%;
+  }
+}

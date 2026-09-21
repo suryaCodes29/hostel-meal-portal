@@ -1,0 +1,1325 @@
+/* =========================================================
+   MESS UNITS PAGE
+========================================================= */
+
+.mess-units-page {
+  width: 100%;
+  min-width: 0;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.mess-units-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 18px;
+
+  margin-bottom: 14px;
+}
+
+
+.mess-units-eyebrow {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #ff6500;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+}
+
+
+.mess-units-page-header h1 {
+  margin: 0;
+
+  color: #0b2945;
+
+  font-size: 26px;
+  font-weight: 800;
+}
+
+
+.mess-units-page-header p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   COMMON BUTTONS
+========================================================= */
+
+.mess-primary-button,
+.mess-secondary-button {
+  min-height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0 14px;
+
+  border-radius: 8px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.mess-primary-button {
+  border: 1px solid #ff6500;
+
+  background: #ff6500;
+
+  color: #ffffff;
+}
+
+
+.mess-primary-button:hover:not(:disabled) {
+  background: #e85c00;
+
+  border-color: #e85c00;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 7px 18px
+    rgba(255, 101, 0, 0.18);
+}
+
+
+.mess-secondary-button {
+  border: 1px solid #dce4ec;
+
+  background: #ffffff;
+
+  color: #0b2945;
+}
+
+
+.mess-secondary-button:hover:not(:disabled) {
+  background: #f8fafc;
+
+  border-color: #c8d3dd;
+}
+
+
+.mess-primary-button:disabled,
+.mess-secondary-button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   INFO NOTE
+========================================================= */
+
+.mess-units-info-note {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10px;
+
+  margin-bottom: 15px;
+
+  padding: 12px 14px;
+
+  border: 1px solid #ffe0ca;
+
+  border-radius: 9px;
+
+  background: #fff8f3;
+
+  color: #d95d0a;
+}
+
+
+.mess-units-info-note svg {
+  flex-shrink: 0;
+
+  margin-top: 1px;
+}
+
+
+.mess-units-info-note strong,
+.mess-units-info-note span {
+  display: block;
+}
+
+
+.mess-units-info-note strong {
+  color: #a94708;
+
+  font-size: 10px;
+}
+
+
+.mess-units-info-note span {
+  margin-top: 2px;
+
+  color: #8f674c;
+
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   SUCCESS / ERROR
+========================================================= */
+
+.mess-success-message,
+.mess-error-message {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 15px;
+
+  padding: 12px 14px;
+
+  border-radius: 9px;
+
+  box-sizing: border-box;
+}
+
+
+.mess-success-message {
+  border: 1px solid #ccebd9;
+
+  background: #effaf4;
+
+  color: #1d7c4e;
+}
+
+
+.mess-success-message > span {
+  flex: 1;
+
+  font-size: 10px;
+  font-weight: 650;
+}
+
+
+.mess-success-message > button {
+  width: 29px;
+  height: 29px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+
+  border-radius: 6px;
+
+  background: transparent;
+
+  color: #4f8569;
+
+  cursor: pointer;
+}
+
+
+.mess-error-message {
+  border: 1px solid #ffd1d5;
+
+  background: #fff5f6;
+
+  color: #bd3540;
+}
+
+
+.mess-error-message > div {
+  flex: 1;
+}
+
+
+.mess-error-message strong,
+.mess-error-message span {
+  display: block;
+}
+
+
+.mess-error-message strong {
+  color: #9f2630;
+
+  font-size: 10px;
+}
+
+
+.mess-error-message span {
+  margin-top: 2px;
+
+  color: #b55860;
+
+  font-size: 9px;
+}
+
+
+.mess-error-message > button {
+  min-height: 32px;
+
+  padding: 0 10px;
+
+  border: 0;
+
+  border-radius: 7px;
+
+  background: #bd3540;
+
+  color: #ffffff;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.mess-summary-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 13px;
+
+  margin-bottom: 16px;
+}
+
+
+.mess-summary-card {
+  min-height: 92px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 14px;
+
+  border: 1px solid #dce4ec;
+
+  border-radius: 11px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 14px
+    rgba(15, 23, 42, 0.035);
+}
+
+
+.mess-summary-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 9px;
+
+  background: #edf5ff;
+
+  color: #2563eb;
+}
+
+
+.mess-summary-icon.green {
+  background: #ebf9f1;
+
+  color: #1e9b5c;
+}
+
+
+.mess-summary-icon.blue {
+  background: #edf5ff;
+
+  color: #2563eb;
+}
+
+
+.mess-summary-icon.orange {
+  background: #fff3e9;
+
+  color: #ff6500;
+}
+
+
+.mess-summary-card span,
+.mess-summary-card strong {
+  display: block;
+}
+
+
+.mess-summary-card span {
+  color: #64748b;
+
+  font-size: 9px;
+}
+
+
+.mess-summary-card strong {
+  margin-top: 3px;
+
+  color: #0b2945;
+
+  font-size: 22px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   FILTERS
+========================================================= */
+
+.mess-filter-card {
+  display: grid;
+
+  grid-template-columns:
+    minmax(240px, 1fr)
+    180px
+    150px
+    auto;
+
+  gap: 12px;
+
+  align-items: end;
+
+  margin-bottom: 16px;
+
+  padding: 14px;
+
+  border: 1px solid #dce4ec;
+
+  border-radius: 11px;
+
+  background: #ffffff;
+}
+
+
+.mess-search-box {
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 0 11px;
+
+  border: 1px solid #dce4ec;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #94a3b8;
+}
+
+
+.mess-search-box:focus-within {
+  border-color: #ff6500;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(255, 101, 0, 0.08);
+}
+
+
+.mess-search-box input {
+  width: 100%;
+
+  border: 0;
+
+  outline: none;
+
+  background: transparent;
+
+  color: #0b2945;
+
+  font-size: 10px;
+}
+
+
+.mess-search-box input::placeholder {
+  color: #94a3b8;
+}
+
+
+.mess-filter-field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+
+.mess-filter-field label {
+  color: #64748b;
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+
+.mess-filter-field select {
+  height: 40px;
+
+  padding: 0 10px;
+
+  border: 1px solid #dce4ec;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #0b2945;
+
+  font-size: 10px;
+}
+
+
+.mess-filter-field select:focus {
+  border-color: #ff6500;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(255, 101, 0, 0.08);
+}
+
+
+.mess-clear-button {
+  min-height: 40px;
+
+  padding: 0 13px;
+
+  border: 1px solid #dce4ec;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #64748b;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.mess-clear-button:hover:not(:disabled) {
+  background: #f8fafc;
+
+  color: #0b2945;
+}
+
+
+.mess-clear-button:disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   MESS UNIT CARDS
+========================================================= */
+
+.mess-unit-card-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 15px;
+}
+
+
+.mess-unit-card {
+  min-width: 0;
+
+  padding: 17px;
+
+  border: 1px solid #dce4ec;
+
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 14px
+    rgba(15, 23, 42, 0.035);
+}
+
+
+.mess-unit-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 12px;
+}
+
+
+.mess-unit-title-wrapper {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+}
+
+
+.mess-unit-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 9px;
+
+  background: #fff3e9;
+
+  color: #ff6500;
+}
+
+
+.mess-unit-title-wrapper > div:last-child > span {
+  display: block;
+
+  margin-bottom: 2px;
+
+  color: #64748b;
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+
+.mess-unit-title-wrapper h2 {
+  margin: 0;
+
+  overflow: hidden;
+
+  color: #0b2945;
+
+  font-size: 15px;
+  font-weight: 780;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+.mess-status-badge {
+  padding: 4px 8px;
+
+  flex-shrink: 0;
+
+  border-radius: 20px;
+
+  font-size: 8px;
+  font-weight: 800;
+}
+
+
+.mess-status-badge.active {
+  background: #eaf8f0;
+
+  color: #16864e;
+}
+
+
+.mess-status-badge.inactive {
+  background: #fff0f1;
+
+  color: #c23c47;
+}
+
+
+/* =========================================================
+   HOSTEL ROW
+========================================================= */
+
+.mess-unit-hostel {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 14px;
+
+  padding: 10px;
+
+  border-radius: 8px;
+
+  background: #f8fafc;
+}
+
+
+.mess-unit-hostel svg {
+  flex-shrink: 0;
+
+  color: #64748b;
+}
+
+
+.mess-unit-hostel span,
+.mess-unit-hostel strong {
+  display: block;
+}
+
+
+.mess-unit-hostel span {
+  color: #94a3b8;
+
+  font-size: 8px;
+}
+
+
+.mess-unit-hostel strong {
+  margin-top: 2px;
+
+  color: #0b2945;
+
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   DETAILS GRID
+========================================================= */
+
+.mess-unit-details-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 8px;
+
+  margin-top: 12px;
+}
+
+
+.mess-unit-details-grid > div {
+  min-width: 0;
+
+  padding: 10px;
+
+  border: 1px solid #edf1f5;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+}
+
+
+.mess-unit-details-grid span,
+.mess-unit-details-grid strong {
+  display: block;
+}
+
+
+.mess-unit-details-grid span {
+  color: #94a3b8;
+
+  font-size: 8px;
+}
+
+
+.mess-unit-details-grid strong {
+  margin-top: 3px;
+
+  overflow: hidden;
+
+  color: #0b2945;
+
+  font-size: 9px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   INFO ROWS
+========================================================= */
+
+.mess-unit-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-top: 11px;
+
+  padding-top: 11px;
+
+  border-top: 1px solid #edf1f5;
+}
+
+
+.mess-unit-info-row span {
+  color: #64748b;
+
+  font-size: 8px;
+}
+
+
+.mess-unit-info-row strong {
+  max-width: 60%;
+
+  overflow: hidden;
+
+  color: #0b2945;
+
+  font-size: 9px;
+
+  text-align: right;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   CARD ACTIONS
+========================================================= */
+
+.mess-unit-card-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  margin-top: 14px;
+
+  padding-top: 13px;
+
+  border-top: 1px solid #edf1f5;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.mess-empty-state {
+  min-height: 300px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 8px;
+
+  padding: 28px;
+
+  border: 1px dashed #cfd8e1;
+
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  text-align: center;
+}
+
+
+.mess-empty-state svg {
+  color: #94a3b8;
+}
+
+
+.mess-empty-state h2 {
+  margin: 5px 0 0;
+
+  color: #0b2945;
+
+  font-size: 15px;
+}
+
+
+.mess-empty-state p {
+  max-width: 420px;
+
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.mess-units-loading {
+  min-height: 350px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 10px;
+
+  color: #64748b;
+
+  font-size: 10px;
+}
+
+
+.mess-units-spin {
+  animation:
+    mess-units-spin-animation
+    0.8s linear infinite;
+}
+
+
+@keyframes mess-units-spin-animation {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   MODAL BACKDROP
+========================================================= */
+
+.mess-modal-backdrop {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 2600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  overflow-y: auto;
+
+  background:
+    rgba(4, 20, 36, 0.58);
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.mess-modal {
+  width: 100%;
+  max-width: 720px;
+  max-height: 92vh;
+
+  overflow-y: auto;
+
+  border-radius: 13px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 26px 65px
+    rgba(0, 0, 0, 0.22);
+}
+
+
+.mess-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 18px 20px;
+
+  border-bottom: 1px solid #e7ebef;
+}
+
+
+.mess-modal-header h2 {
+  margin: 0;
+
+  color: #0b2945;
+
+  font-size: 17px;
+  font-weight: 780;
+}
+
+
+.mess-modal-header p {
+  margin: 4px 0 0;
+
+  color: #64748b;
+
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+
+.mess-modal-close {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: 0;
+
+  border-radius: 7px;
+
+  background: #f5f7fa;
+
+  color: #64748b;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.mess-form {
+  padding: 20px;
+}
+
+
+.mess-form-error {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 14px;
+
+  padding: 10px 12px;
+
+  border: 1px solid #ffd0d4;
+
+  border-radius: 8px;
+
+  background: #fff4f5;
+
+  color: #b8343f;
+
+  font-size: 9px;
+}
+
+
+.mess-form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 13px;
+}
+
+
+.mess-form-field {
+  min-width: 0;
+}
+
+
+.mess-form-field label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #526174;
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+
+.mess-form-field input,
+.mess-form-field select {
+  width: 100%;
+  height: 40px;
+
+  box-sizing: border-box;
+
+  padding: 0 10px;
+
+  border: 1px solid #dce4ec;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #0b2945;
+
+  font-size: 10px;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.mess-form-field input:focus,
+.mess-form-field select:focus {
+  border-color: #ff6500;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(255, 101, 0, 0.08);
+}
+
+
+.mess-form-field select:disabled {
+  background: #f1f5f9;
+
+  color: #94a3b8;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   MODAL ACTIONS
+========================================================= */
+
+.mess-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  margin-top: 18px;
+
+  padding-top: 15px;
+
+  border-top: 1px solid #edf1f5;
+}
+
+
+/* =========================================================
+   VIEW MODAL
+========================================================= */
+
+.mess-view-modal {
+  max-width: 560px;
+}
+
+
+.mess-view-content {
+  padding: 18px 20px;
+}
+
+
+.mess-view-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding: 11px 0;
+
+  border-bottom: 1px solid #edf1f5;
+}
+
+
+.mess-view-row:last-child {
+  border-bottom: 0;
+}
+
+
+.mess-view-row span {
+  color: #64748b;
+
+  font-size: 9px;
+}
+
+
+.mess-view-row strong {
+  max-width: 60%;
+
+  color: #0b2945;
+
+  font-size: 9px;
+
+  text-align: right;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1150px) {
+  .mess-summary-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .mess-unit-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+@media (max-width: 900px) {
+  .mess-filter-card {
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+
+  .mess-clear-button {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 650px) {
+  .mess-units-page-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .mess-units-page-header
+  > .mess-primary-button {
+    width: 100%;
+  }
+
+
+  .mess-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .mess-filter-card {
+    grid-template-columns: 1fr;
+  }
+
+
+  .mess-unit-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .mess-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .mess-modal-actions {
+    flex-direction: column-reverse;
+  }
+
+
+  .mess-modal-actions > button {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .mess-units-page-header h1 {
+    font-size: 22px;
+  }
+
+
+  .mess-unit-card {
+    padding: 14px;
+  }
+
+
+  .mess-unit-card-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .mess-status-badge {
+    align-self: flex-start;
+  }
+
+
+  .mess-modal-backdrop {
+    padding: 0;
+  }
+
+
+  .mess-modal {
+    min-height: 100vh;
+    max-height: 100vh;
+
+    border-radius: 0;
+  }
+}

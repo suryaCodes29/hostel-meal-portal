@@ -1,0 +1,3178 @@
+/* ============================================================
+   HOSTEL DETAILS PAGE
+============================================================ */
+
+.hostel-details-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+
+  background:
+    var(
+      --manager-bg,
+      #f5f7fa
+    );
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+}
+
+
+/* ============================================================
+   PAGE HEADER
+============================================================ */
+
+.hostel-details-page-header {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  margin-bottom: 22px;
+}
+
+
+.hostel-details-page-header > div {
+  min-width: 0;
+}
+
+
+.hostel-details-eyebrow {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #ff6500;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+
+.hostel-details-page-header h1 {
+  margin: 0;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 27px;
+  font-weight: 800;
+
+  line-height: 1.2;
+}
+
+
+.hostel-details-page-header p {
+  margin:
+    7px 0 0;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 13px;
+  font-weight: 500;
+
+  line-height: 1.5;
+}
+
+
+/* ============================================================
+   ADD HOSTEL BUTTON
+============================================================ */
+
+.hostel-details-add-button {
+  min-height: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+
+  padding:
+    0 16px;
+
+  border: 1px solid #ff6500;
+
+  border-radius: 9px;
+
+  background: #ff6500;
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 12px
+    rgba(
+      255,
+      101,
+      0,
+      0.18
+    );
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.hostel-details-add-button:hover {
+  background: #eb5d00;
+
+  border-color: #eb5d00;
+
+  transform:
+    translateY(-1px);
+
+  box-shadow:
+    0 6px 16px
+    rgba(
+      255,
+      101,
+      0,
+      0.22
+    );
+}
+
+
+.hostel-details-add-button:active {
+  transform:
+    translateY(0);
+}
+
+
+.hostel-details-add-button:focus-visible {
+  outline:
+    3px solid
+    rgba(
+      255,
+      101,
+      0,
+      0.2
+    );
+
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   SUCCESS / ERROR MESSAGE
+============================================================ */
+
+.hostel-details-message {
+  width: 100%;
+
+  min-height: 46px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 18px;
+
+  padding:
+    10px 13px;
+
+  box-sizing: border-box;
+
+  border-radius: 9px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+.hostel-details-message.success {
+  border:
+    1px solid
+    rgba(
+      34,
+      167,
+      101,
+      0.3
+    );
+
+  background:
+    rgba(
+      34,
+      167,
+      101,
+      0.08
+    );
+
+  color: #168753;
+}
+
+
+.hostel-details-message.error {
+  border:
+    1px solid
+    rgba(
+      220,
+      38,
+      38,
+      0.28
+    );
+
+  background:
+    rgba(
+      220,
+      38,
+      38,
+      0.07
+    );
+
+  color: #b91c1c;
+}
+
+
+.hostel-details-message > span {
+  flex: 1;
+}
+
+
+.hostel-details-message > button {
+  width: 30px;
+  height: 30px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 7px;
+
+  background: transparent;
+
+  color: inherit;
+
+  cursor: pointer;
+}
+
+
+.hostel-details-message > button:hover {
+  background:
+    rgba(
+      15,
+      23,
+      42,
+      0.06
+    );
+}
+
+
+/* ============================================================
+   FILTER CARD
+============================================================ */
+
+.hostel-details-filter-card {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(
+      240px,
+      1fr
+    )
+    180px
+    auto
+    42px;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 20px;
+
+  padding: 15px;
+
+  box-sizing: border-box;
+
+  border:
+    1px solid
+    var(
+      --manager-border,
+      #dce4ec
+    );
+
+  border-radius: 11px;
+
+  background:
+    var(
+      --manager-surface,
+      #ffffff
+    );
+
+  box-shadow:
+    0 2px 8px
+    rgba(
+      15,
+      23,
+      42,
+      0.035
+    );
+}
+
+
+/* ============================================================
+   SEARCH
+============================================================ */
+
+.hostel-details-search-field {
+  min-height: 40px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  padding:
+    0 12px;
+
+  border:
+    1px solid
+    var(
+      --manager-border,
+      #dce4ec
+    );
+
+  border-radius: 8px;
+
+  background:
+    var(
+      --manager-input-bg,
+      #ffffff
+    );
+
+  color:
+    var(
+      --manager-text-muted,
+      #94a3b8
+    );
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.hostel-details-search-field:focus-within {
+  border-color: #ff6500;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(
+      255,
+      101,
+      0,
+      0.1
+    );
+}
+
+
+.hostel-details-search-field input {
+  width: 100%;
+  min-width: 0;
+
+  padding: 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+
+.hostel-details-search-field input::placeholder {
+  color:
+    var(
+      --manager-text-muted,
+      #94a3b8
+    );
+}
+
+
+/* ============================================================
+   FILTER SELECT
+============================================================ */
+
+.hostel-details-filter-card > select {
+  width: 100%;
+  min-height: 40px;
+
+  padding:
+    0 34px
+    0 11px;
+
+  border:
+    1px solid
+    var(
+      --manager-border,
+      #dce4ec
+    );
+
+  border-radius: 8px;
+
+  outline: none;
+
+  background:
+    var(
+      --manager-input-bg,
+      #ffffff
+    );
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+
+.hostel-details-filter-card > select:focus {
+  border-color: #ff6500;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(
+      255,
+      101,
+      0,
+      0.1
+    );
+}
+
+
+/* ============================================================
+   CLEAR FILTER BUTTON
+============================================================ */
+
+.hostel-details-clear-button {
+  min-height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding:
+    0 13px;
+
+  border:
+    1px solid
+    var(
+      --manager-border,
+      #dce4ec
+    );
+
+  border-radius: 8px;
+
+  background:
+    var(
+      --manager-surface,
+      #ffffff
+    );
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-family: inherit;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+
+.hostel-details-clear-button:hover {
+  border-color: #cbd5e1;
+
+  background:
+    var(
+      --manager-surface-hover,
+      #f8fafc
+    );
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+}
+
+
+/* ============================================================
+   REFRESH BUTTON
+============================================================ */
+
+.hostel-details-refresh-button {
+  width: 42px;
+  height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border:
+    1px solid
+    var(
+      --manager-border,
+      #dce4ec
+    );
+
+  border-radius: 8px;
+
+  background:
+    var(
+      --manager-surface,
+      #ffffff
+    );
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+
+.hostel-details-refresh-button:hover:not(:disabled) {
+  border-color:
+    rgba(
+      255,
+      101,
+      0,
+      0.45
+    );
+
+  background:
+    rgba(
+      255,
+      101,
+      0,
+      0.06
+    );
+
+  color: #ff6500;
+}
+
+
+.hostel-details-refresh-button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+
+/* ============================================================
+   HOSTEL GRID
+============================================================ */
+
+.hostel-details-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(
+        0,
+        1fr
+      )
+    );
+
+  gap: 18px;
+}
+
+
+/* ============================================================
+   HOSTEL CARD
+============================================================ */
+
+.hostel-details-card {
+  min-width: 0;
+
+  overflow: hidden;
+
+  padding: 18px;
+
+  border:
+    1px solid
+    var(
+      --manager-border,
+      #dce4ec
+    );
+
+  border-radius: 11px;
+
+  background:
+    var(
+      --manager-surface,
+      #ffffff
+    );
+
+  box-shadow:
+    0 3px 10px
+    rgba(
+      15,
+      23,
+      42,
+      0.045
+    );
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+
+.hostel-details-card:hover {
+  transform:
+    translateY(-1px);
+
+  border-color: #cbd5e1;
+
+  box-shadow:
+    0 7px 20px
+    rgba(
+      15,
+      23,
+      42,
+      0.07
+    );
+}
+
+
+/* ============================================================
+   CARD HEADER
+============================================================ */
+
+.hostel-details-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding-bottom: 15px;
+
+  border-bottom:
+    1px solid
+    var(
+      --manager-border-soft,
+      #edf1f5
+    );
+}
+
+
+.hostel-details-card-title {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+}
+
+
+.hostel-details-building-icon {
+  width: 42px;
+  height: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 42px;
+
+  border-radius: 10px;
+
+  background:
+    rgba(
+      37,
+      99,
+      235,
+      0.09
+    );
+
+  color: #2563eb;
+}
+
+
+.hostel-details-card-title > div:last-child {
+  min-width: 0;
+}
+
+
+.hostel-details-code {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #ff6500;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+}
+
+
+.hostel-details-card-title h2 {
+  margin: 0;
+
+  overflow: hidden;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 16px;
+  font-weight: 800;
+
+  line-height: 1.3;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* ============================================================
+   STATUS
+============================================================ */
+
+.hostel-details-status,
+.unit-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 999px;
+
+  text-transform: capitalize;
+}
+
+
+.hostel-details-status {
+  min-height: 25px;
+
+  padding:
+    0 9px;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+
+.hostel-details-status.active,
+.unit-status.active {
+  background:
+    rgba(
+      34,
+      167,
+      101,
+      0.11
+    );
+
+  color: #168753;
+}
+
+
+.hostel-details-status.inactive,
+.unit-status.inactive {
+  background:
+    rgba(
+      100,
+      116,
+      139,
+      0.12
+    );
+
+  color: #64748b;
+}
+
+
+/* ============================================================
+   CARD INFORMATION
+============================================================ */
+
+.hostel-details-card-info {
+  display: grid;
+
+  gap: 9px;
+
+  margin-top: 14px;
+}
+
+
+.hostel-details-card-info > div {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+
+.hostel-details-card-info svg {
+  flex-shrink: 0;
+
+  color:
+    var(
+      --manager-text-muted,
+      #94a3b8
+    );
+}
+
+
+.hostel-details-card-info span {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* ============================================================
+   BLOCKS
+============================================================ */
+
+.hostel-details-blocks {
+  margin-top: 16px;
+}
+
+
+.hostel-details-section-label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.03em;
+
+  text-transform: uppercase;
+}
+
+
+.hostel-details-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 6px;
+}
+
+
+.hostel-details-chip {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 25px;
+
+  padding:
+    0 9px;
+
+  border:
+    1px solid
+    var(
+      --manager-border,
+      #dce4ec
+    );
+
+  border-radius: 999px;
+
+  background:
+    var(
+      --manager-surface-soft,
+      #f8fafc
+    );
+
+  color:
+    var(
+      --manager-text-secondary,
+      #475569
+    );
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+
+.hostel-details-muted {
+  color:
+    var(
+      --manager-text-muted,
+      #94a3b8
+    );
+
+  font-size: 10px;
+}
+
+
+/* ============================================================
+   MESS SECTION
+============================================================ */
+
+.hostel-details-mess-section {
+  margin-top: 17px;
+
+  padding-top: 15px;
+
+  border-top:
+    1px solid
+    var(
+      --manager-border-soft,
+      #edf1f5
+    );
+}
+
+
+.hostel-details-mess-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-bottom: 10px;
+}
+
+
+.hostel-details-mess-section-title
+.hostel-details-section-label {
+  margin: 0;
+}
+
+
+.hostel-details-count {
+  min-width: 24px;
+  height: 24px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    0 7px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(
+      6,
+      46,
+      79,
+      0.08
+    );
+
+  color: #062e4f;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+
+/* ============================================================
+   UNIT LIST
+============================================================ */
+
+.hostel-details-unit-list {
+  display: grid;
+
+  gap: 8px;
+}
+
+
+.hostel-details-unit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  padding:
+    10px;
+
+  border:
+    1px solid
+    var(
+      --manager-border-soft,
+      #e8edf2
+    );
+
+  border-radius: 8px;
+
+  background:
+    var(
+      --manager-surface-soft,
+      #fafcfd
+    );
+}
+
+
+.hostel-details-unit-row > div:first-child {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+
+.hostel-details-unit-row > div:first-child svg {
+  flex-shrink: 0;
+
+  color: #008f87;
+}
+
+
+.hostel-details-unit-row > div:first-child span {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+.hostel-details-unit-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  flex-wrap: wrap;
+
+  gap: 5px;
+}
+
+
+.hostel-details-unit-meta > span {
+  min-height: 22px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    0 7px;
+
+  border-radius: 999px;
+
+  background:
+    var(
+      --manager-surface,
+      #ffffff
+    );
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+
+.hostel-details-unit-meta > span.veg {
+  background:
+    rgba(
+      34,
+      167,
+      101,
+      0.1
+    );
+
+  color: #168753;
+}
+
+
+.hostel-details-unit-meta > span.non-veg {
+  background:
+    rgba(
+      255,
+      101,
+      0,
+      0.1
+    );
+
+  color: #d95300;
+}
+
+
+.hostel-details-unit-meta
+.unit-status {
+  min-height: 22px;
+
+  padding:
+    0 7px;
+
+  font-size: 8px;
+}
+
+
+/* ============================================================
+   NO MESS UNITS
+============================================================ */
+
+.hostel-details-no-mess {
+  display: grid;
+
+  grid-template-columns:
+    auto
+    minmax(
+      0,
+      1fr
+    )
+    auto;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 12px;
+
+  border:
+    1px dashed
+    #f3b589;
+
+  border-radius: 9px;
+
+  background:
+    rgba(
+      255,
+      101,
+      0,
+      0.035
+    );
+}
+
+
+.hostel-details-no-mess > svg {
+  flex-shrink: 0;
+
+  color: #ff6500;
+}
+
+
+.hostel-details-no-mess > div {
+  min-width: 0;
+}
+
+
+.hostel-details-no-mess strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+.hostel-details-no-mess span {
+  display: block;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 9px;
+
+  line-height: 1.4;
+}
+
+
+.hostel-details-no-mess button,
+.hostel-details-add-missing-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  border-radius: 7px;
+
+  font-family: inherit;
+
+  font-size: 9px;
+  font-weight: 750;
+
+  cursor: pointer;
+}
+
+
+.hostel-details-no-mess button {
+  min-height: 32px;
+
+  padding:
+    0 9px;
+
+  border: 0;
+
+  background: #ff6500;
+
+  color: #ffffff;
+}
+
+
+.hostel-details-no-mess button:hover {
+  background: #e95d00;
+}
+
+
+.hostel-details-add-missing-button {
+  min-height: 33px;
+
+  margin-top: 9px;
+
+  padding:
+    0 10px;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      101,
+      0,
+      0.35
+    );
+
+  background:
+    rgba(
+      255,
+      101,
+      0,
+      0.06
+    );
+
+  color: #e55c00;
+}
+
+
+.hostel-details-add-missing-button:hover {
+  border-color: #ff6500;
+
+  background:
+    rgba(
+      255,
+      101,
+      0,
+      0.1
+    );
+}
+
+
+/* ============================================================
+   HOSTEL CARD ACTIONS
+============================================================ */
+
+.hostel-details-card-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 17px;
+
+  padding-top: 14px;
+
+  border-top:
+    1px solid
+    var(
+      --manager-border-soft,
+      #edf1f5
+    );
+}
+
+
+.hostel-details-card-actions button {
+  min-height: 35px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  padding:
+    0 11px;
+
+  border-radius: 7px;
+
+  font-family: inherit;
+
+  font-size: 10px;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+
+.hostel-details-edit-button {
+  border:
+    1px solid
+    #cbd5e1;
+
+  background:
+    var(
+      --manager-surface,
+      #ffffff
+    );
+
+  color: #2563eb;
+}
+
+
+.hostel-details-edit-button:hover {
+  border-color:
+    rgba(
+      37,
+      99,
+      235,
+      0.4
+    );
+
+  background:
+    rgba(
+      37,
+      99,
+      235,
+      0.06
+    );
+}
+
+
+.hostel-details-deactivate-button {
+  border:
+    1px solid
+    rgba(
+      220,
+      38,
+      38,
+      0.25
+    );
+
+  background:
+    rgba(
+      220,
+      38,
+      38,
+      0.045
+    );
+
+  color: #b91c1c;
+}
+
+
+.hostel-details-deactivate-button:hover:not(:disabled) {
+  background:
+    rgba(
+      220,
+      38,
+      38,
+      0.09
+    );
+}
+
+
+.hostel-details-activate-button {
+  border:
+    1px solid
+    rgba(
+      34,
+      167,
+      101,
+      0.28
+    );
+
+  background:
+    rgba(
+      34,
+      167,
+      101,
+      0.06
+    );
+
+  color: #168753;
+}
+
+
+.hostel-details-activate-button:hover:not(:disabled) {
+  background:
+    rgba(
+      34,
+      167,
+      101,
+      0.11
+    );
+}
+
+
+.hostel-details-card-actions button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+
+/* ============================================================
+   LOADING / EMPTY STATE
+============================================================ */
+
+.hostel-details-state-card {
+  min-height: 250px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  gap: 9px;
+
+  padding: 30px;
+
+  border:
+    1px solid
+    var(
+      --manager-border,
+      #dce4ec
+    );
+
+  border-radius: 11px;
+
+  background:
+    var(
+      --manager-surface,
+      #ffffff
+    );
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  text-align: center;
+}
+
+
+.hostel-details-state-card > svg {
+  color:
+    var(
+      --manager-text-muted,
+      #94a3b8
+    );
+}
+
+
+.hostel-details-state-card strong {
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 13px;
+}
+
+
+.hostel-details-state-card p {
+  max-width: 430px;
+
+  margin: 0;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+.hostel-details-state-card button {
+  min-height: 34px;
+
+  margin-top: 4px;
+
+  padding:
+    0 13px;
+
+  border: 0;
+
+  border-radius: 7px;
+
+  background: #062e4f;
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* ============================================================
+   MODAL OVERLAY
+============================================================ */
+
+.hostel-details-modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 3000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  box-sizing: border-box;
+
+  background:
+    rgba(
+      3,
+      20,
+      35,
+      0.52
+    );
+
+  -webkit-backdrop-filter:
+    blur(2px);
+
+  backdrop-filter:
+    blur(2px);
+
+  overflow-y: auto;
+}
+
+
+/* ============================================================
+   MODAL
+============================================================ */
+
+.hostel-details-modal {
+  width:
+    min(
+      600px,
+      100%
+    );
+
+  max-height:
+    calc(
+      100vh - 48px
+    );
+
+  display: flex;
+
+  flex-direction: column;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    var(
+      --manager-border,
+      #dce4ec
+    );
+
+  border-radius: 13px;
+
+  background:
+    var(
+      --manager-surface,
+      #ffffff
+    );
+
+  box-shadow:
+    0 24px 60px
+    rgba(
+      2,
+      16,
+      28,
+      0.24
+    );
+}
+
+
+.hostel-details-modal-large {
+  width:
+    min(
+      820px,
+      100%
+    );
+}
+
+
+/* ============================================================
+   MODAL HEADER
+============================================================ */
+
+.hostel-details-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  padding:
+    18px 20px;
+
+  border-bottom:
+    1px solid
+    var(
+      --manager-border-soft,
+      #edf1f5
+    );
+}
+
+
+.hostel-details-modal-header > div {
+  min-width: 0;
+}
+
+
+.hostel-details-modal-header h2 {
+  margin: 0;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 17px;
+  font-weight: 800;
+
+  line-height: 1.3;
+}
+
+
+.hostel-details-modal-header p {
+  margin:
+    5px 0 0;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+
+.hostel-details-modal-close {
+  width: 34px;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 34px;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 8px;
+
+  background: transparent;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+
+.hostel-details-modal-close:hover {
+  background:
+    var(
+      --manager-surface-hover,
+      #f1f5f9
+    );
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+}
+
+
+/* ============================================================
+   MODAL FORM
+============================================================ */
+
+.hostel-details-modal > form {
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  flex: 1;
+}
+
+
+.hostel-details-modal-body {
+  min-height: 0;
+
+  flex: 1;
+
+  padding: 20px;
+
+  overflow-y: auto;
+}
+
+
+.hostel-details-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 9px;
+
+  padding:
+    14px 20px;
+
+  border-top:
+    1px solid
+    var(
+      --manager-border-soft,
+      #edf1f5
+    );
+
+  background:
+    var(
+      --manager-surface-soft,
+      #fafcfd
+    );
+}
+
+
+/* ============================================================
+   FORM ERROR
+============================================================ */
+
+.hostel-details-form-error {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 8px;
+
+  margin-bottom: 15px;
+
+  padding:
+    10px 12px;
+
+  border:
+    1px solid
+    rgba(
+      220,
+      38,
+      38,
+      0.26
+    );
+
+  border-radius: 8px;
+
+  background:
+    rgba(
+      220,
+      38,
+      38,
+      0.06
+    );
+
+  color: #b91c1c;
+
+  font-size: 10px;
+  font-weight: 650;
+
+  line-height: 1.45;
+}
+
+
+.hostel-details-form-error svg {
+  flex-shrink: 0;
+
+  margin-top: 1px;
+}
+
+
+/* ============================================================
+   FORM GRID
+============================================================ */
+
+.hostel-details-form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(
+        0,
+        1fr
+      )
+    );
+
+  gap: 14px;
+}
+
+
+.hostel-details-form-grid
+.full-width {
+  grid-column:
+    1 / -1;
+}
+
+
+.hostel-details-form-grid label,
+.hostel-details-block-input-grid label,
+.hostel-details-mess-fields > label {
+  min-width: 0;
+
+  display: grid;
+
+  gap: 6px;
+}
+
+
+.hostel-details-form-grid label > span,
+.hostel-details-block-input-grid label > span,
+.hostel-details-mess-fields > label > span {
+  color:
+    var(
+      --manager-text-secondary,
+      #475569
+    );
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   INPUTS / SELECTS
+============================================================ */
+
+.hostel-details-form-grid input,
+.hostel-details-form-grid select,
+.hostel-details-block-input-grid input,
+.hostel-details-mess-fields input[type="number"],
+.hostel-details-mess-fields select {
+  width: 100%;
+
+  min-height: 40px;
+
+  box-sizing: border-box;
+
+  padding:
+    0 11px;
+
+  border:
+    1px solid
+    var(
+      --manager-border,
+      #dce4ec
+    );
+
+  border-radius: 8px;
+
+  outline: none;
+
+  background:
+    var(
+      --manager-input-bg,
+      #ffffff
+    );
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-family: inherit;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.hostel-details-form-grid input:focus,
+.hostel-details-form-grid select:focus,
+.hostel-details-block-input-grid input:focus,
+.hostel-details-mess-fields input[type="number"]:focus,
+.hostel-details-mess-fields select:focus {
+  border-color: #ff6500;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(
+      255,
+      101,
+      0,
+      0.09
+    );
+}
+
+
+.hostel-details-form-grid input::placeholder,
+.hostel-details-block-input-grid input::placeholder {
+  color:
+    var(
+      --manager-text-muted,
+      #94a3b8
+    );
+}
+
+
+/* ============================================================
+   FORM SECTION
+============================================================ */
+
+.hostel-details-form-section {
+  margin-top: 22px;
+
+  padding-top: 18px;
+
+  border-top:
+    1px solid
+    var(
+      --manager-border-soft,
+      #edf1f5
+    );
+}
+
+
+.hostel-details-form-section > h3,
+.hostel-details-section-heading h3 {
+  margin: 0;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+
+.hostel-details-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom: 13px;
+}
+
+
+.hostel-details-section-heading p {
+  margin:
+    4px 0 0;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 9px;
+
+  line-height: 1.45;
+}
+
+
+/* ============================================================
+   BLOCK INPUT GRID
+============================================================ */
+
+.hostel-details-block-input-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(
+        0,
+        1fr
+      )
+    );
+
+  gap: 12px;
+
+  margin-top: 12px;
+}
+
+
+/* ============================================================
+   MESS SELECTION GRID
+============================================================ */
+
+.hostel-details-mess-selection-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(
+        0,
+        1fr
+      )
+    );
+
+  gap: 12px;
+}
+
+
+.hostel-details-mess-selection-grid.single-column {
+  grid-template-columns:
+    1fr;
+}
+
+
+/* ============================================================
+   MESS SELECTION CARD
+============================================================ */
+
+.hostel-details-mess-card {
+  min-width: 0;
+
+  padding: 13px;
+
+  border:
+    1px solid
+    var(
+      --manager-border,
+      #dce4ec
+    );
+
+  border-radius: 9px;
+
+  background:
+    var(
+      --manager-surface,
+      #ffffff
+    );
+
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.hostel-details-mess-card.selected {
+  border-color:
+    rgba(
+      255,
+      101,
+      0,
+      0.46
+    );
+
+  background:
+    rgba(
+      255,
+      101,
+      0,
+      0.025
+    );
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(
+      255,
+      101,
+      0,
+      0.04
+    );
+}
+
+
+.hostel-details-mess-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+}
+
+
+/* ============================================================
+   CUSTOM CHECKBOX
+============================================================ */
+
+.hostel-details-mess-select {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  cursor: pointer;
+}
+
+
+.hostel-details-mess-select > input {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+
+.hostel-details-checkbox-box {
+  width: 20px;
+  height: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 20px;
+
+  box-sizing: border-box;
+
+  border:
+    1.5px solid
+    #cbd5e1;
+
+  border-radius: 5px;
+
+  background:
+    var(
+      --manager-surface,
+      #ffffff
+    );
+
+  color: transparent;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+
+.hostel-details-mess-select
+> input:checked
++ .hostel-details-checkbox-box {
+  border-color: #ff6500;
+
+  background: #ff6500;
+
+  color: #ffffff;
+}
+
+
+.hostel-details-mess-select
+> input:disabled
++ .hostel-details-checkbox-box {
+  cursor: not-allowed;
+
+  opacity: 0.7;
+}
+
+
+.hostel-details-checkbox-box.checked {
+  border-color: #ff6500;
+
+  background: #ff6500;
+
+  color: #ffffff;
+}
+
+
+/* ============================================================
+   MESS NAME
+============================================================ */
+
+.hostel-details-mess-name {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+
+.hostel-details-mess-name svg {
+  flex-shrink: 0;
+
+  color: #008f87;
+}
+
+
+/* ============================================================
+   EXISTING BADGE
+============================================================ */
+
+.hostel-details-existing-badge {
+  min-height: 22px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  padding:
+    0 7px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(
+      37,
+      99,
+      235,
+      0.09
+    );
+
+  color: #2563eb;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+}
+
+
+/* ============================================================
+   MESS FIELDS
+============================================================ */
+
+.hostel-details-mess-fields {
+  display: grid;
+
+  gap: 11px;
+
+  margin-top: 13px;
+
+  padding-top: 12px;
+
+  border-top:
+    1px solid
+    var(
+      --manager-border-soft,
+      #edf1f5
+    );
+}
+
+
+/* ============================================================
+   SUPPORT OPTIONS
+============================================================ */
+
+.hostel-details-support-options {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 14px;
+}
+
+
+.hostel-details-support-options label {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 6px;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #475569
+    );
+
+  font-size: 9px;
+  font-weight: 650;
+
+  cursor: pointer;
+}
+
+
+.hostel-details-support-options input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+
+  margin: 0;
+
+  accent-color: #ff6500;
+
+  cursor: pointer;
+}
+
+
+/* ============================================================
+   EDIT MESS TOGGLE
+============================================================ */
+
+.hostel-details-edit-mess-toggle {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  color: inherit;
+
+  font-family: inherit;
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+
+/* ============================================================
+   DEACTIVATED NOTE
+============================================================ */
+
+.hostel-details-deactivated-note {
+  margin-top: 10px;
+
+  padding:
+    9px 10px;
+
+  border-radius: 7px;
+
+  background:
+    rgba(
+      100,
+      116,
+      139,
+      0.08
+    );
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 9px;
+
+  line-height: 1.45;
+}
+
+
+/* ============================================================
+   MODAL NOTE
+============================================================ */
+
+.hostel-details-modal-note {
+  margin:
+    0 0 14px;
+
+  padding:
+    10px 11px;
+
+  border-left:
+    3px solid #2563eb;
+
+  border-radius:
+    0 7px 7px 0;
+
+  background:
+    rgba(
+      37,
+      99,
+      235,
+      0.055
+    );
+
+  color:
+    var(
+      --manager-text-secondary,
+      #475569
+    );
+
+  font-size: 9px;
+
+  line-height: 1.5;
+}
+
+
+/* ============================================================
+   MODAL BUTTONS
+============================================================ */
+
+.hostel-details-primary-button,
+.hostel-details-secondary-button {
+  min-height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding:
+    0 14px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 10px;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+
+.hostel-details-primary-button {
+  border:
+    1px solid
+    #ff6500;
+
+  background: #ff6500;
+
+  color: #ffffff;
+}
+
+
+.hostel-details-primary-button:hover:not(:disabled) {
+  border-color: #e95d00;
+
+  background: #e95d00;
+}
+
+
+.hostel-details-secondary-button {
+  border:
+    1px solid
+    var(
+      --manager-border,
+      #dce4ec
+    );
+
+  background:
+    var(
+      --manager-surface,
+      #ffffff
+    );
+
+  color:
+    var(
+      --manager-text-secondary,
+      #475569
+    );
+}
+
+
+.hostel-details-secondary-button:hover:not(:disabled) {
+  border-color: #cbd5e1;
+
+  background:
+    var(
+      --manager-surface-hover,
+      #f8fafc
+    );
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+}
+
+
+.hostel-details-primary-button:disabled,
+.hostel-details-secondary-button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+
+/* ============================================================
+   SCROLLBAR
+============================================================ */
+
+.hostel-details-modal-body::-webkit-scrollbar {
+  width: 7px;
+}
+
+
+.hostel-details-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+.hostel-details-modal-body::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  background:
+    rgba(
+      100,
+      116,
+      139,
+      0.25
+    );
+}
+
+
+.hostel-details-modal-body::-webkit-scrollbar-thumb:hover {
+  background:
+    rgba(
+      100,
+      116,
+      139,
+      0.38
+    );
+}
+
+
+/* ============================================================
+   SPINNER
+============================================================ */
+
+.spinning {
+  animation:
+    hostel-details-spin
+    0.8s linear infinite;
+}
+
+
+@keyframes hostel-details-spin {
+  to {
+    transform:
+      rotate(360deg);
+  }
+}
+
+
+/* ============================================================
+   DARK MODE
+============================================================ */
+
+html[data-manager-theme="dark"]
+.hostel-details-page {
+  background:
+    var(
+      --manager-bg,
+      #0f172a
+    );
+}
+
+
+html[data-manager-theme="dark"]
+.hostel-details-count {
+  background:
+    rgba(
+      148,
+      163,
+      184,
+      0.1
+    );
+
+  color: #cbd5e1;
+}
+
+
+html[data-manager-theme="dark"]
+.hostel-details-building-icon {
+  background:
+    rgba(
+      37,
+      99,
+      235,
+      0.18
+    );
+}
+
+
+html[data-manager-theme="dark"]
+.hostel-details-chip {
+  background:
+    rgba(
+      148,
+      163,
+      184,
+      0.06
+    );
+}
+
+
+html[data-manager-theme="dark"]
+.hostel-details-unit-row {
+  background:
+    rgba(
+      148,
+      163,
+      184,
+      0.04
+    );
+}
+
+
+html[data-manager-theme="dark"]
+.hostel-details-unit-meta > span {
+  background:
+    rgba(
+      148,
+      163,
+      184,
+      0.07
+    );
+}
+
+
+html[data-manager-theme="dark"]
+.hostel-details-checkbox-box {
+  background:
+    rgba(
+      15,
+      23,
+      42,
+      0.8
+    );
+}
+
+
+html[data-manager-theme="dark"]
+.hostel-details-mess-select
+> input:checked
++ .hostel-details-checkbox-box,
+html[data-manager-theme="dark"]
+.hostel-details-checkbox-box.checked {
+  background: #ff6500;
+}
+
+
+html[data-manager-theme="dark"]
+.hostel-details-modal-footer {
+  background:
+    rgba(
+      15,
+      23,
+      42,
+      0.6
+    );
+}
+
+
+/* ============================================================
+   COMPACT MODE
+============================================================ */
+
+html.manager-compact-mode
+.hostel-details-page {
+  padding: 18px;
+}
+
+
+html.manager-compact-mode
+.hostel-details-card {
+  padding: 14px;
+}
+
+
+html.manager-compact-mode
+.hostel-details-filter-card {
+  padding: 11px;
+}
+
+
+html.manager-compact-mode
+.hostel-details-modal-body {
+  padding: 16px;
+}
+
+
+html.manager-compact-mode
+.hostel-details-modal-header {
+  padding:
+    14px 16px;
+}
+
+
+html.manager-compact-mode
+.hostel-details-modal-footer {
+  padding:
+    11px 16px;
+}
+
+
+/* ============================================================
+   RESPONSIVE - LARGE TABLET
+============================================================ */
+
+@media (
+  max-width: 1100px
+) {
+  .hostel-details-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .hostel-details-filter-card {
+    grid-template-columns:
+      minmax(
+        200px,
+        1fr
+      )
+      160px
+      auto
+      42px;
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVE - TABLET
+============================================================ */
+
+@media (
+  max-width: 820px
+) {
+  .hostel-details-page {
+    padding: 18px;
+  }
+
+
+  .hostel-details-page-header {
+    align-items: flex-start;
+  }
+
+
+  .hostel-details-filter-card {
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+
+  .hostel-details-search-field {
+    grid-column:
+      1 / -1;
+  }
+
+
+  .hostel-details-refresh-button {
+    width: 100%;
+  }
+
+
+  .hostel-details-form-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .hostel-details-form-grid
+  .full-width {
+    grid-column:
+      auto;
+  }
+
+
+  .hostel-details-block-input-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .hostel-details-mess-selection-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .hostel-details-unit-row {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .hostel-details-unit-meta {
+    justify-content:
+      flex-start;
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVE - MOBILE
+============================================================ */
+
+@media (
+  max-width: 600px
+) {
+  .hostel-details-page {
+    padding: 14px;
+  }
+
+
+  .hostel-details-page-header {
+    flex-direction: column;
+
+    gap: 14px;
+
+    margin-bottom: 16px;
+  }
+
+
+  .hostel-details-page-header h1 {
+    font-size: 23px;
+  }
+
+
+  .hostel-details-add-button {
+    width: 100%;
+  }
+
+
+  .hostel-details-filter-card {
+    grid-template-columns:
+      1fr;
+
+    padding: 12px;
+  }
+
+
+  .hostel-details-search-field {
+    grid-column:
+      auto;
+  }
+
+
+  .hostel-details-clear-button,
+  .hostel-details-refresh-button {
+    width: 100%;
+  }
+
+
+  .hostel-details-card {
+    padding: 14px;
+  }
+
+
+  .hostel-details-card-header {
+    align-items: flex-start;
+  }
+
+
+  .hostel-details-card-title h2 {
+    max-width: 180px;
+  }
+
+
+  .hostel-details-no-mess {
+    grid-template-columns:
+      auto
+      minmax(
+        0,
+        1fr
+      );
+  }
+
+
+  .hostel-details-no-mess button {
+    grid-column:
+      1 / -1;
+
+    width: 100%;
+  }
+
+
+  .hostel-details-card-actions {
+    display: grid;
+
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+
+  .hostel-details-card-actions button {
+    width: 100%;
+  }
+
+
+  .hostel-details-modal-overlay {
+    align-items: flex-end;
+
+    padding: 0;
+  }
+
+
+  .hostel-details-modal,
+  .hostel-details-modal-large {
+    width: 100%;
+
+    max-height: 94vh;
+
+    border-radius:
+      14px 14px 0 0;
+  }
+
+
+  .hostel-details-modal-header {
+    padding:
+      15px 16px;
+  }
+
+
+  .hostel-details-modal-body {
+    padding: 16px;
+  }
+
+
+  .hostel-details-modal-footer {
+    padding:
+      12px 16px;
+  }
+
+
+  .hostel-details-primary-button,
+  .hostel-details-secondary-button {
+    flex: 1;
+  }
+}
+
+
+/* ============================================================
+   EXTRA SMALL MOBILE
+============================================================ */
+
+@media (
+  max-width: 420px
+) {
+  .hostel-details-page {
+    padding: 11px;
+  }
+
+
+  .hostel-details-page-header h1 {
+    font-size: 21px;
+  }
+
+
+  .hostel-details-card-title {
+    gap: 8px;
+  }
+
+
+  .hostel-details-building-icon {
+    width: 38px;
+    height: 38px;
+
+    flex-basis: 38px;
+  }
+
+
+  .hostel-details-card-title h2 {
+    max-width: 145px;
+
+    font-size: 14px;
+  }
+
+
+  .hostel-details-support-options {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 9px;
+  }
+
+
+  .hostel-details-modal-footer {
+    display: grid;
+
+    grid-template-columns:
+      1fr 1fr;
+  }
+}

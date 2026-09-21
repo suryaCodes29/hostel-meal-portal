@@ -1,0 +1,2379 @@
+/* ============================================================
+   MANAGER HEADER
+============================================================ */
+
+.manager-header {
+  position: relative;
+  z-index: 1200;
+
+  width: 100%;
+  min-height: 84px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  padding:
+    0 30px;
+
+  box-sizing: border-box;
+
+  border-bottom:
+    1px solid
+    var(
+      --manager-border,
+      #e2e8f0
+    );
+
+  background:
+    var(
+      --manager-surface,
+      #ffffff
+    );
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
+  box-shadow:
+    0 1px 3px
+    rgba(
+      15,
+      23,
+      42,
+      0.035
+    );
+}
+
+
+/* ============================================================
+   HEADER LEFT
+============================================================ */
+
+.manager-header-left {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+}
+
+
+.manager-header-title {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+
+.manager-header-title h2 {
+  margin: 0;
+
+  overflow: hidden;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 17px;
+  font-weight: 800;
+
+  line-height: 1.2;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+.manager-header-title p {
+  margin:
+    4px 0 0;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 10px;
+  font-weight: 600;
+
+  line-height: 1.25;
+}
+
+
+/* ============================================================
+   MENU BUTTON
+============================================================ */
+
+.manager-menu-button {
+  width: 42px;
+  height: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 42px;
+
+  padding: 0;
+
+  border: 0;
+  outline: none;
+
+  border-radius: 10px;
+
+  background: transparent;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font: inherit;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+
+.manager-menu-button:hover {
+  background:
+    var(
+      --manager-surface-hover,
+      #f1f5f9
+    );
+
+  color: #ff6500;
+}
+
+
+.manager-menu-button:active {
+  transform:
+    scale(0.96);
+}
+
+
+.manager-menu-button:focus-visible {
+  outline:
+    3px solid
+    rgba(
+      255,
+      101,
+      0,
+      0.18
+    );
+
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   HEADER RIGHT
+============================================================ */
+
+.manager-header-right {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 8px;
+}
+
+
+.manager-header-action,
+.manager-profile-wrapper {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+}
+
+
+/* ============================================================
+   ICON BUTTON RESET
+============================================================ */
+
+.manager-icon-button,
+.manager-help-button,
+.manager-notification-button {
+  appearance: none;
+
+  width: 42px;
+  height: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 42px;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  outline: none;
+
+  border-radius: 10px;
+
+  background: transparent;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #475569
+    );
+
+  font: inherit;
+
+  cursor: pointer;
+
+  position: relative;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+
+.manager-icon-button:hover,
+.manager-help-button:hover,
+.manager-notification-button:hover {
+  background:
+    var(
+      --manager-surface-hover,
+      #f1f5f9
+    );
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+}
+
+
+.manager-icon-button:active,
+.manager-help-button:active,
+.manager-notification-button:active {
+  transform:
+    scale(0.96);
+}
+
+
+.manager-icon-button:focus-visible,
+.manager-help-button:focus-visible,
+.manager-notification-button:focus-visible {
+  outline:
+    3px solid
+    rgba(
+      255,
+      101,
+      0,
+      0.16
+    );
+
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   NOTIFICATION BADGE
+============================================================ */
+
+.notification-badge {
+  position: absolute;
+
+  top: 4px;
+  right: 3px;
+
+  min-width: 17px;
+  height: 17px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    0 4px;
+
+  box-sizing: border-box;
+
+  border:
+    2px solid
+    var(
+      --manager-surface,
+      #ffffff
+    );
+
+  border-radius: 999px;
+
+  background: #ff6500;
+
+  color: #ffffff;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  line-height: 1;
+}
+
+
+/* ============================================================
+   PROFILE BUTTON
+============================================================ */
+
+.manager-profile-button {
+  appearance: none;
+
+  min-width: 0;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin: 0;
+
+  padding:
+    4px 9px
+    4px 5px;
+
+  border: 0;
+  outline: none;
+
+  border-radius: 11px;
+
+  background: transparent;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font: inherit;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  transition:
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.manager-profile-button:hover {
+  background:
+    var(
+      --manager-surface-hover,
+      #f1f5f9
+    );
+}
+
+
+.manager-profile-button:focus-visible {
+  outline:
+    3px solid
+    rgba(
+      255,
+      101,
+      0,
+      0.16
+    );
+
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   AVATAR
+============================================================ */
+
+.manager-avatar,
+.profile-dropdown-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #062e4f,
+      #0d4c73
+    );
+
+  color: #ffffff;
+
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+
+.manager-avatar {
+  width: 38px;
+  height: 38px;
+}
+
+
+.profile-dropdown-avatar {
+  width: 42px;
+  height: 42px;
+}
+
+
+.manager-avatar-initials,
+.profile-dropdown-avatar-initials {
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.3px;
+
+  text-transform: uppercase;
+}
+
+
+/* ============================================================
+   PROFILE HEADER TEXT
+============================================================ */
+
+.manager-profile-info {
+  min-width: 0;
+  max-width: 150px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+
+.manager-profile-info strong {
+  display: block;
+
+  max-width: 150px;
+
+  overflow: hidden;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 11px;
+  font-weight: 800;
+
+  line-height: 1.25;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+.manager-profile-info span {
+  display: block;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 9px;
+  font-weight: 600;
+
+  line-height: 1.2;
+}
+
+
+.manager-profile-chevron {
+  flex-shrink: 0;
+
+  color:
+    var(
+      --manager-text-muted,
+      #94a3b8
+    );
+
+  transition:
+    transform 0.18s ease,
+    color 0.18s ease;
+}
+
+
+.manager-profile-button:hover
+.manager-profile-chevron {
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+}
+
+
+.manager-profile-chevron.open {
+  transform:
+    rotate(180deg);
+}
+
+
+/* ============================================================
+   COMMON DROPDOWN
+============================================================ */
+
+.manager-dropdown {
+  position: absolute;
+
+  top:
+    calc(
+      100% + 10px
+    );
+
+  right: 0;
+
+  z-index: 3500;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    var(
+      --manager-border,
+      #e2e8f0
+    );
+
+  border-radius: 12px;
+
+  background:
+    var(
+      --manager-surface,
+      #ffffff
+    );
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  box-shadow:
+    0 18px 45px
+    rgba(
+      15,
+      23,
+      42,
+      0.16
+    );
+
+  animation:
+    manager-dropdown-enter
+    0.16s ease-out;
+}
+
+
+@keyframes manager-dropdown-enter {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(-5px)
+      scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+
+/* ============================================================
+   DROPDOWN HEADER
+============================================================ */
+
+.dropdown-header {
+  padding:
+    14px 15px;
+
+  border-bottom:
+    1px solid
+    var(
+      --manager-border-soft,
+      #edf1f5
+    );
+}
+
+
+/* ============================================================
+   NOTIFICATION DROPDOWN
+============================================================ */
+
+.notification-dropdown {
+  width: 360px;
+  max-width:
+    calc(
+      100vw - 28px
+    );
+
+  max-height: 500px;
+}
+
+
+.notification-dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+}
+
+
+.notification-dropdown-header > div {
+  min-width: 0;
+}
+
+
+.notification-dropdown-header strong {
+  display: block;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+
+.notification-dropdown-header span {
+  display: block;
+
+  margin-top: 3px;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 9px;
+  font-weight: 500;
+}
+
+
+/* ============================================================
+   MARK ALL BUTTON
+============================================================ */
+
+.notification-mark-all-button {
+  appearance: none;
+
+  min-height: 32px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  flex-shrink: 0;
+
+  padding:
+    0 9px;
+
+  border: 0;
+
+  border-radius: 7px;
+
+  background: transparent;
+
+  color: #ff6500;
+
+  font: inherit;
+
+  font-size: 9px;
+  font-weight: 750;
+
+  cursor: pointer;
+}
+
+
+.notification-mark-all-button:hover:not(:disabled) {
+  background:
+    rgba(
+      255,
+      101,
+      0,
+      0.08
+    );
+}
+
+
+.notification-mark-all-button:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+
+/* ============================================================
+   NOTIFICATION LIST
+============================================================ */
+
+.notification-list {
+  max-height: 330px;
+
+  overflow-y: auto;
+
+  overscroll-behavior: contain;
+}
+
+
+.notification-item {
+  width: 100%;
+
+  display: flex;
+
+  margin: 0;
+  padding:
+    12px 14px;
+
+  box-sizing: border-box;
+
+  border:
+    0;
+
+  border-bottom:
+    1px solid
+    var(
+      --manager-border-soft,
+      #edf1f5
+    );
+
+  background:
+    var(
+      --manager-surface,
+      #ffffff
+    );
+
+  color: inherit;
+}
+
+
+.notification-item:last-child {
+  border-bottom: 0;
+}
+
+
+.notification-item.unread {
+  background:
+    rgba(
+      255,
+      101,
+      0,
+      0.045
+    );
+}
+
+
+.notification-item.read {
+  background:
+    var(
+      --manager-surface,
+      #ffffff
+    );
+}
+
+
+.notification-item-button {
+  appearance: none;
+
+  font: inherit;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease;
+}
+
+
+.notification-item-button:hover {
+  background:
+    var(
+      --manager-surface-hover,
+      #f8fafc
+    ) !important;
+}
+
+
+.notification-item-button.unread:hover {
+  background:
+    rgba(
+      255,
+      101,
+      0,
+      0.08
+    ) !important;
+}
+
+
+.notification-item-button:focus-visible {
+  position: relative;
+
+  z-index: 1;
+
+  outline:
+    2px solid #ff6500;
+
+  outline-offset: -2px;
+}
+
+
+.notification-item-main {
+  min-width: 0;
+  width: 100%;
+}
+
+
+.notification-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 8px;
+}
+
+
+.notification-title-row strong {
+  min-width: 0;
+
+  overflow: hidden;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 10px;
+  font-weight: 800;
+
+  line-height: 1.3;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+.notification-unread-dot {
+  width: 7px;
+  height: 7px;
+
+  display: block;
+
+  flex:
+    0 0 7px;
+
+  border-radius: 50%;
+
+  background: #ff6500;
+}
+
+
+.notification-message {
+  display: block;
+
+  margin-top: 5px;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 9px;
+
+  line-height: 1.5;
+}
+
+
+.notification-item small {
+  display: block;
+
+  margin-top: 6px;
+
+  color:
+    var(
+      --manager-text-muted,
+      #94a3b8
+    );
+
+  font-size: 8px;
+  font-weight: 500;
+}
+
+
+/* ============================================================
+   NOTIFICATION LOADING
+============================================================ */
+
+.notification-loading {
+  min-height: 160px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  gap: 9px;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+}
+
+
+.notification-loading span {
+  font-size: 9px;
+  font-weight: 600;
+}
+
+
+.notification-spin {
+  animation:
+    manager-notification-spin
+    0.8s linear infinite;
+}
+
+
+@keyframes manager-notification-spin {
+  to {
+    transform:
+      rotate(360deg);
+  }
+}
+
+
+/* ============================================================
+   NOTIFICATION ERROR
+============================================================ */
+
+.notification-error {
+  min-height: 165px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  gap: 7px;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+}
+
+
+.notification-error > svg {
+  color: #b4232d;
+}
+
+
+.notification-error strong {
+  color: #b4232d;
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+.notification-error span {
+  max-width: 260px;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 9px;
+
+  line-height: 1.5;
+}
+
+
+.notification-error button {
+  appearance: none;
+
+  min-height: 31px;
+
+  margin-top: 4px;
+
+  padding:
+    0 11px;
+
+  border: 0;
+
+  border-radius: 7px;
+
+  background: #b4232d;
+
+  color: #ffffff;
+
+  font: inherit;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.notification-error button:hover {
+  background: #981b24;
+}
+
+
+/* ============================================================
+   NOTIFICATION EMPTY
+============================================================ */
+
+.notification-empty {
+  min-height: 165px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  gap: 7px;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+}
+
+
+.notification-empty > svg {
+  color:
+    var(
+      --manager-text-muted,
+      #94a3b8
+    );
+}
+
+
+.notification-empty strong {
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+.notification-empty span {
+  max-width: 260px;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 9px;
+
+  line-height: 1.5;
+}
+
+
+.notification-empty button {
+  appearance: none;
+
+  min-height: 31px;
+
+  margin-top: 5px;
+
+  padding:
+    0 11px;
+
+  border: 0;
+
+  border-radius: 7px;
+
+  background: #ff6500;
+
+  color: #ffffff;
+
+  font: inherit;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.notification-empty button:hover {
+  background: #e85d00;
+}
+
+
+/* ============================================================
+   NOTIFICATION FOOTER
+============================================================ */
+
+.notification-dropdown-footer {
+  padding: 8px;
+
+  border-top:
+    1px solid
+    var(
+      --manager-border-soft,
+      #edf1f5
+    );
+
+  background:
+    var(
+      --manager-surface,
+      #ffffff
+    );
+}
+
+
+.notification-dropdown-footer button {
+  appearance: none;
+
+  width: 100%;
+  min-height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  padding:
+    0 10px;
+
+  border: 0;
+
+  border-radius: 7px;
+
+  background: transparent;
+
+  color: #ff6500;
+
+  font: inherit;
+
+  font-size: 9px;
+  font-weight: 750;
+
+  cursor: pointer;
+}
+
+
+.notification-dropdown-footer button:hover {
+  background:
+    var(
+      --manager-surface-hover,
+      #f8fafc
+    );
+}
+
+
+/* ============================================================
+   HELP DROPDOWN
+============================================================ */
+
+.manager-help-dropdown {
+  width: 370px;
+  max-width:
+    calc(
+      100vw - 28px
+    );
+
+  max-height: 510px;
+}
+
+
+.manager-help-dropdown-header {
+  min-height: 68px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding:
+    14px 15px;
+
+  box-sizing: border-box;
+
+  border-bottom:
+    1px solid
+    var(
+      --manager-border-soft,
+      #edf1f5
+    );
+}
+
+
+.manager-help-dropdown-header > div:first-child {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+
+.manager-help-dropdown-header
+> div:first-child
+> svg {
+  flex-shrink: 0;
+
+  color: #ff6500;
+}
+
+
+.manager-help-dropdown-header
+> div:first-child
+> div {
+  min-width: 0;
+}
+
+
+.manager-help-dropdown-header strong {
+  display: block;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+
+.manager-help-dropdown-header span {
+  display: block;
+
+  margin-top: 3px;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 8px;
+  font-weight: 500;
+}
+
+
+/* ============================================================
+   HELP CLOSE
+============================================================ */
+
+.manager-help-close {
+  appearance: none;
+
+  width: 32px;
+  height: 32px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 32px;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 8px;
+
+  background: transparent;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  cursor: pointer;
+}
+
+
+.manager-help-close:hover {
+  background:
+    var(
+      --manager-surface-hover,
+      #f1f5f9
+    );
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+}
+
+
+/* ============================================================
+   HELP SEARCH
+============================================================ */
+
+.manager-help-search {
+  min-height: 39px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin:
+    12px 13px;
+
+  padding:
+    0 10px;
+
+  border:
+    1px solid
+    var(
+      --manager-border,
+      #dce4ec
+    );
+
+  border-radius: 8px;
+
+  background:
+    var(
+      --manager-input-bg,
+      #ffffff
+    );
+
+  color:
+    var(
+      --manager-text-muted,
+      #94a3b8
+    );
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.manager-help-search:focus-within {
+  border-color: #ff6500;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(
+      255,
+      101,
+      0,
+      0.08
+    );
+}
+
+
+.manager-help-search input {
+  min-width: 0;
+  width: 100%;
+
+  padding: 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font: inherit;
+
+  font-size: 10px;
+  font-weight: 500;
+}
+
+
+.manager-help-search input::placeholder {
+  color:
+    var(
+      --manager-text-muted,
+      #94a3b8
+    );
+}
+
+
+.manager-help-search > button {
+  appearance: none;
+
+  width: 26px;
+  height: 26px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 26px;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 6px;
+
+  background: transparent;
+
+  color:
+    var(
+      --manager-text-muted,
+      #94a3b8
+    );
+
+  cursor: pointer;
+}
+
+
+.manager-help-search > button:hover {
+  background:
+    var(
+      --manager-surface-hover,
+      #f1f5f9
+    );
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+}
+
+
+/* ============================================================
+   HELP LIST
+============================================================ */
+
+.manager-help-list {
+  max-height: 300px;
+
+  overflow-y: auto;
+
+  padding:
+    0 8px 8px;
+}
+
+
+.manager-help-item {
+  appearance: none;
+
+  width: 100%;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10px;
+
+  margin: 0;
+  padding:
+    10px;
+
+  border: 0;
+
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: inherit;
+
+  font: inherit;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.16s ease;
+}
+
+
+.manager-help-item:hover {
+  background:
+    var(
+      --manager-surface-hover,
+      #f8fafc
+    );
+}
+
+
+.manager-help-item-icon {
+  width: 34px;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex:
+    0 0 34px;
+
+  border-radius: 8px;
+
+  background:
+    rgba(
+      6,
+      46,
+      79,
+      0.07
+    );
+
+  color: #062e4f;
+}
+
+
+.manager-help-item-content {
+  min-width: 0;
+
+  display: block;
+
+  padding-top: 1px;
+}
+
+
+.manager-help-item-content strong {
+  display: block;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+.manager-help-item-content small {
+  display: block;
+
+  margin-top: 4px;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 8px;
+
+  line-height: 1.45;
+}
+
+
+/* ============================================================
+   HELP EMPTY
+============================================================ */
+
+.manager-help-empty {
+  min-height: 180px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  gap: 7px;
+
+  padding: 20px;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  text-align: center;
+}
+
+
+.manager-help-empty > svg {
+  color:
+    var(
+      --manager-text-muted,
+      #94a3b8
+    );
+}
+
+
+.manager-help-empty strong {
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 10px;
+}
+
+
+.manager-help-empty span {
+  font-size: 9px;
+}
+
+
+/* ============================================================
+   HELP FOOTER
+============================================================ */
+
+.manager-help-footer {
+  padding:
+    11px 14px;
+
+  border-top:
+    1px solid
+    var(
+      --manager-border-soft,
+      #edf1f5
+    );
+
+  background:
+    var(
+      --manager-surface-soft,
+      #f8fafc
+    );
+
+  text-align: center;
+}
+
+
+.manager-help-footer span,
+.manager-help-footer strong {
+  display: block;
+}
+
+
+.manager-help-footer span {
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 8px;
+}
+
+
+.manager-help-footer strong {
+  margin-top: 3px;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 9px;
+  font-weight: 750;
+}
+
+
+/* ============================================================
+   PROFILE DROPDOWN
+============================================================ */
+
+.profile-dropdown {
+  width: 286px;
+
+  max-width:
+    calc(
+      100vw - 28px
+    );
+
+  padding:
+    7px;
+}
+
+
+/* ============================================================
+   PROFILE USER
+============================================================ */
+
+.profile-dropdown-user {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding:
+    10px;
+}
+
+
+.profile-dropdown-user-info {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+
+.profile-dropdown-user-info strong {
+  display: block;
+
+  max-width: 185px;
+
+  overflow: hidden;
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+
+  font-size: 11px;
+  font-weight: 800;
+
+  line-height: 1.3;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+.profile-dropdown-user-info span {
+  display: block;
+
+  max-width: 185px;
+
+  overflow: hidden;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #64748b
+    );
+
+  font-size: 8px;
+
+  line-height: 1.35;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+.profile-dropdown-user-info small {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #ff6500;
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+
+/* fallback for previous markup */
+
+.profile-dropdown-user > div:last-child {
+  min-width: 0;
+}
+
+
+.profile-dropdown-user
+> div:last-child
+> strong {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+.profile-dropdown-user
+> div:last-child
+> span {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* ============================================================
+   PROFILE DIVIDER
+============================================================ */
+
+.profile-dropdown-divider {
+  width:
+    calc(
+      100% - 12px
+    );
+
+  height: 1px;
+
+  margin:
+    5px 6px;
+
+  background:
+    var(
+      --manager-border-soft,
+      #edf1f5
+    );
+}
+
+
+/* ============================================================
+   PROFILE OPTIONS
+============================================================ */
+
+.profile-dropdown-option {
+  appearance: none;
+
+  width: 100%;
+  min-height: 40px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin: 0;
+
+  padding:
+    0 10px;
+
+  border: 0;
+
+  border-radius: 8px;
+
+  background: transparent;
+
+  color:
+    var(
+      --manager-text-secondary,
+      #475569
+    );
+
+  font: inherit;
+
+  font-size: 10px;
+  font-weight: 650;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.16s ease,
+    color 0.16s ease;
+}
+
+
+.profile-dropdown-option svg {
+  flex-shrink: 0;
+
+  color:
+    var(
+      --manager-text-muted,
+      #94a3b8
+    );
+}
+
+
+.profile-dropdown-option span {
+  min-width: 0;
+
+  flex: 1;
+}
+
+
+.profile-dropdown-option:hover {
+  background:
+    var(
+      --manager-surface-hover,
+      #f1f5f9
+    );
+
+  color:
+    var(
+      --manager-text,
+      #0b2945
+    );
+}
+
+
+.profile-dropdown-option:hover svg {
+  color: #ff6500;
+}
+
+
+.profile-dropdown-option.logout-option {
+  color: #b4232d;
+}
+
+
+.profile-dropdown-option.logout-option svg {
+  color: #b4232d;
+}
+
+
+.profile-dropdown-option.logout-option:hover {
+  background:
+    rgba(
+      180,
+      35,
+      45,
+      0.07
+    );
+
+  color: #9d1f28;
+}
+
+
+/* ============================================================
+   SCROLLBARS
+============================================================ */
+
+.notification-list::-webkit-scrollbar,
+.manager-help-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+
+.notification-list::-webkit-scrollbar-track,
+.manager-help-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+.notification-list::-webkit-scrollbar-thumb,
+.manager-help-list::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  background:
+    rgba(
+      100,
+      116,
+      139,
+      0.25
+    );
+}
+
+
+.notification-list::-webkit-scrollbar-thumb:hover,
+.manager-help-list::-webkit-scrollbar-thumb:hover {
+  background:
+    rgba(
+      100,
+      116,
+      139,
+      0.38
+    );
+}
+
+
+/* ============================================================
+   DARK MODE
+============================================================ */
+
+html[data-manager-theme="dark"]
+.manager-header {
+  border-bottom-color:
+    rgba(
+      148,
+      163,
+      184,
+      0.14
+    );
+}
+
+
+html[data-manager-theme="dark"]
+.manager-avatar,
+html[data-manager-theme="dark"]
+.profile-dropdown-avatar {
+  background:
+    linear-gradient(
+      135deg,
+      #ff6500,
+      #c94f00
+    );
+}
+
+
+html[data-manager-theme="dark"]
+.manager-help-item-icon {
+  background:
+    rgba(
+      148,
+      163,
+      184,
+      0.08
+    );
+
+  color: #cbd5e1;
+}
+
+
+html[data-manager-theme="dark"]
+.manager-help-footer {
+  background:
+    rgba(
+      15,
+      23,
+      42,
+      0.45
+    );
+}
+
+
+html[data-manager-theme="dark"]
+.notification-item.unread {
+  background:
+    rgba(
+      255,
+      101,
+      0,
+      0.08
+    );
+}
+
+
+html[data-manager-theme="dark"]
+.notification-item.read {
+  background:
+    var(
+      --manager-surface,
+      #111827
+    );
+}
+
+
+/* ============================================================
+   COMPACT MODE
+============================================================ */
+
+html.manager-compact-mode
+.manager-header {
+  min-height: 70px;
+
+  padding:
+    0 22px;
+}
+
+
+html.manager-compact-mode
+.manager-profile-button {
+  height: 44px;
+}
+
+
+html.manager-compact-mode
+.manager-avatar {
+  width: 34px;
+  height: 34px;
+}
+
+
+/* ============================================================
+   TABLET
+============================================================ */
+
+@media (
+  max-width: 900px
+) {
+  .manager-header {
+    min-height: 76px;
+
+    padding:
+      0 20px;
+  }
+
+
+  .manager-profile-info {
+    max-width: 110px;
+  }
+
+
+  .manager-profile-info strong {
+    max-width: 110px;
+  }
+
+
+  .manager-header-title h2 {
+    font-size: 15px;
+  }
+
+
+  .notification-dropdown {
+    width: 345px;
+  }
+
+
+  .manager-help-dropdown {
+    width: 350px;
+  }
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media (
+  max-width: 650px
+) {
+  .manager-header {
+    min-height: 68px;
+
+    gap: 10px;
+
+    padding:
+      0 12px;
+  }
+
+
+  .manager-header-left {
+    gap: 7px;
+  }
+
+
+  .manager-menu-button,
+  .manager-icon-button,
+  .manager-help-button,
+  .manager-notification-button {
+    width: 38px;
+    height: 38px;
+
+    flex-basis: 38px;
+  }
+
+
+  .manager-header-title {
+    max-width:
+      calc(
+        100vw - 210px
+      );
+  }
+
+
+  .manager-header-title h2 {
+    max-width: 190px;
+
+    font-size: 13px;
+  }
+
+
+  .manager-header-title p {
+    display: none;
+  }
+
+
+  .manager-header-right {
+    gap: 3px;
+  }
+
+
+  .manager-profile-button {
+    width: 42px;
+    height: 42px;
+
+    justify-content: center;
+
+    padding: 2px;
+  }
+
+
+  .manager-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+
+  .manager-profile-info,
+  .manager-profile-chevron {
+    display: none;
+  }
+
+
+  .notification-dropdown,
+  .manager-help-dropdown {
+    position: fixed;
+
+    top: 74px;
+    right: 10px;
+    left: 10px;
+
+    width: auto;
+    max-width: none;
+  }
+
+
+  .profile-dropdown {
+    position: fixed;
+
+    top: 74px;
+    right: 10px;
+
+    width:
+      min(
+        286px,
+        calc(
+          100vw - 20px
+        )
+      );
+  }
+}
+
+
+/* ============================================================
+   SMALL MOBILE
+============================================================ */
+
+@media (
+  max-width: 430px
+) {
+  .manager-header {
+    padding:
+      0 8px;
+  }
+
+
+  .manager-header-title {
+    max-width:
+      calc(
+        100vw - 185px
+      );
+  }
+
+
+  .manager-header-title h2 {
+    max-width: 145px;
+
+    font-size: 12px;
+  }
+
+
+  .manager-menu-button,
+  .manager-icon-button,
+  .manager-help-button,
+  .manager-notification-button {
+    width: 36px;
+    height: 36px;
+
+    flex-basis: 36px;
+  }
+
+
+  .manager-profile-button {
+    width: 38px;
+    height: 38px;
+  }
+
+
+  .manager-avatar {
+    width: 34px;
+    height: 34px;
+  }
+
+
+  .notification-dropdown,
+  .manager-help-dropdown {
+    top: 68px;
+
+    right: 8px;
+    left: 8px;
+  }
+
+
+  .notification-mark-all-button span {
+    display: none;
+  }
+
+
+  .profile-dropdown {
+    top: 68px;
+
+    right: 8px;
+  }
+}

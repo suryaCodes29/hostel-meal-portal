@@ -1,0 +1,5506 @@
+{
+  "generated_at_utc": "2026-09-12T10:14:26.650893+00:00",
+  "original_rows": {
+    "generated_at_utc": "2026-09-12T10:14:25.399446+00:00",
+    "meal_responses": [
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 85,
+          "menu_id": 499,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 11,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 499,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 5,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 5,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 18,
+          "email": "krishna.student01@hostel.test",
+          "hostel_id": 8,
+          "id": 11,
+          "is_active": true,
+          "mess_unit_id": 13,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 86,
+          "menu_id": 499,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 13,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 499,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 5,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 5,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 20,
+          "email": "krishna.student03@hostel.test",
+          "hostel_id": 8,
+          "id": 13,
+          "is_active": true,
+          "mess_unit_id": 13,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 87,
+          "menu_id": 499,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 15,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 499,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 5,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 5,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 19,
+          "email": "krishna.student05@hostel.test",
+          "hostel_id": 8,
+          "id": 15,
+          "is_active": true,
+          "mess_unit_id": 13,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 88,
+          "menu_id": 499,
+          "mess_unit_id": 5,
+          "response": "skipping",
+          "student_user_id": 17,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 499,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 5,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 5,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 18,
+          "email": "krishna.student07@hostel.test",
+          "hostel_id": 8,
+          "id": 17,
+          "is_active": true,
+          "mess_unit_id": 13,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 89,
+          "menu_id": 499,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 21,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 499,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 5,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 5,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 19,
+          "email": "krishna.student11@hostel.test",
+          "hostel_id": 8,
+          "id": 21,
+          "is_active": true,
+          "mess_unit_id": 13,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 90,
+          "menu_id": 499,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 23,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 499,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 5,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 5,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 18,
+          "email": "krishna.student13@hostel.test",
+          "hostel_id": 8,
+          "id": 23,
+          "is_active": true,
+          "mess_unit_id": 13,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 91,
+          "menu_id": 503,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 12,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 503,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 5,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 5,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 19,
+          "email": "krishna.student02@hostel.test",
+          "hostel_id": 8,
+          "id": 12,
+          "is_active": true,
+          "mess_unit_id": 13,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 92,
+          "menu_id": 503,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 14,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 503,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 5,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 5,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 18,
+          "email": "krishna.student04@hostel.test",
+          "hostel_id": 8,
+          "id": 14,
+          "is_active": true,
+          "mess_unit_id": 13,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 93,
+          "menu_id": 503,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 16,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 503,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 5,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 5,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 20,
+          "email": "krishna.student06@hostel.test",
+          "hostel_id": 8,
+          "id": 16,
+          "is_active": true,
+          "mess_unit_id": 13,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 94,
+          "menu_id": 503,
+          "mess_unit_id": 5,
+          "response": "skipping",
+          "student_user_id": 18,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 503,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 5,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 5,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 19,
+          "email": "krishna.student08@hostel.test",
+          "hostel_id": 8,
+          "id": 18,
+          "is_active": true,
+          "mess_unit_id": 13,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 95,
+          "menu_id": 503,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 22,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 503,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 5,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 5,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 20,
+          "email": "krishna.student12@hostel.test",
+          "hostel_id": 8,
+          "id": 22,
+          "is_active": true,
+          "mess_unit_id": 13,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 96,
+          "menu_id": 507,
+          "mess_unit_id": 6,
+          "response": "attending",
+          "student_user_id": 25,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 507,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 6,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 6,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 20,
+          "email": "krishna.student15@hostel.test",
+          "hostel_id": 8,
+          "id": 25,
+          "is_active": true,
+          "mess_unit_id": 14,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 97,
+          "menu_id": 507,
+          "mess_unit_id": 6,
+          "response": "attending",
+          "student_user_id": 27,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 507,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 6,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 6,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 19,
+          "email": "krishna.student17@hostel.test",
+          "hostel_id": 8,
+          "id": 27,
+          "is_active": true,
+          "mess_unit_id": 14,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 98,
+          "menu_id": 507,
+          "mess_unit_id": 6,
+          "response": "attending",
+          "student_user_id": 29,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 507,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 6,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 6,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 18,
+          "email": "krishna.student19@hostel.test",
+          "hostel_id": 8,
+          "id": 29,
+          "is_active": true,
+          "mess_unit_id": 14,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 99,
+          "menu_id": 507,
+          "mess_unit_id": 6,
+          "response": "skipping",
+          "student_user_id": 31,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 507,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 6,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 6,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 20,
+          "email": "krishna.student21@hostel.test",
+          "hostel_id": 8,
+          "id": 31,
+          "is_active": true,
+          "mess_unit_id": 14,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 100,
+          "menu_id": 507,
+          "mess_unit_id": 6,
+          "response": "attending",
+          "student_user_id": 35,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 507,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 6,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 6,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 18,
+          "email": "krishna.student25@hostel.test",
+          "hostel_id": 8,
+          "id": 35,
+          "is_active": true,
+          "mess_unit_id": 14,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 101,
+          "menu_id": 511,
+          "mess_unit_id": 6,
+          "response": "attending",
+          "student_user_id": 24,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 511,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 6,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 6,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 19,
+          "email": "krishna.student14@hostel.test",
+          "hostel_id": 8,
+          "id": 24,
+          "is_active": true,
+          "mess_unit_id": 14,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 102,
+          "menu_id": 511,
+          "mess_unit_id": 6,
+          "response": "attending",
+          "student_user_id": 26,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 511,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 6,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 6,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 18,
+          "email": "krishna.student16@hostel.test",
+          "hostel_id": 8,
+          "id": 26,
+          "is_active": true,
+          "mess_unit_id": 14,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 103,
+          "menu_id": 511,
+          "mess_unit_id": 6,
+          "response": "attending",
+          "student_user_id": 28,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 511,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 6,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 6,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 20,
+          "email": "krishna.student18@hostel.test",
+          "hostel_id": 8,
+          "id": 28,
+          "is_active": true,
+          "mess_unit_id": 14,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 104,
+          "menu_id": 511,
+          "mess_unit_id": 6,
+          "response": "skipping",
+          "student_user_id": 30,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 511,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 6,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 6,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 19,
+          "email": "krishna.student20@hostel.test",
+          "hostel_id": 8,
+          "id": 30,
+          "is_active": true,
+          "mess_unit_id": 14,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 105,
+          "menu_id": 511,
+          "mess_unit_id": 6,
+          "response": "attending",
+          "student_user_id": 34,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 4,
+          "id": 511,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 6,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 6,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 20,
+          "email": "krishna.student24@hostel.test",
+          "hostel_id": 8,
+          "id": 34,
+          "is_active": true,
+          "mess_unit_id": 14,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 106,
+          "menu_id": 515,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 36,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 515,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 7,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 7,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 21,
+          "email": "kaveri.student01@hostel.test",
+          "hostel_id": 9,
+          "id": 36,
+          "is_active": true,
+          "mess_unit_id": 15,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 107,
+          "menu_id": 515,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 38,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 515,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 7,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 7,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 23,
+          "email": "kaveri.student03@hostel.test",
+          "hostel_id": 9,
+          "id": 38,
+          "is_active": true,
+          "mess_unit_id": 15,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 108,
+          "menu_id": 515,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 40,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 515,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 7,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 7,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 22,
+          "email": "kaveri.student05@hostel.test",
+          "hostel_id": 9,
+          "id": 40,
+          "is_active": true,
+          "mess_unit_id": 15,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 109,
+          "menu_id": 515,
+          "mess_unit_id": 7,
+          "response": "skipping",
+          "student_user_id": 42,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 515,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 7,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 7,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 21,
+          "email": "kaveri.student07@hostel.test",
+          "hostel_id": 9,
+          "id": 42,
+          "is_active": true,
+          "mess_unit_id": 15,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 110,
+          "menu_id": 515,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 46,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 515,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 7,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 7,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 22,
+          "email": "kaveri.student11@hostel.test",
+          "hostel_id": 9,
+          "id": 46,
+          "is_active": true,
+          "mess_unit_id": 15,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 111,
+          "menu_id": 515,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 48,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 515,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 7,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 7,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 21,
+          "email": "kaveri.student13@hostel.test",
+          "hostel_id": 9,
+          "id": 48,
+          "is_active": true,
+          "mess_unit_id": 15,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 112,
+          "menu_id": 519,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 37,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 519,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 7,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 7,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 22,
+          "email": "kaveri.student02@hostel.test",
+          "hostel_id": 9,
+          "id": 37,
+          "is_active": true,
+          "mess_unit_id": 15,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 113,
+          "menu_id": 519,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 39,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 519,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 7,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 7,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 21,
+          "email": "kaveri.student04@hostel.test",
+          "hostel_id": 9,
+          "id": 39,
+          "is_active": true,
+          "mess_unit_id": 15,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 114,
+          "menu_id": 519,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 41,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 519,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 7,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 7,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 23,
+          "email": "kaveri.student06@hostel.test",
+          "hostel_id": 9,
+          "id": 41,
+          "is_active": true,
+          "mess_unit_id": 15,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 115,
+          "menu_id": 519,
+          "mess_unit_id": 7,
+          "response": "skipping",
+          "student_user_id": 43,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 519,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 7,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 7,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 22,
+          "email": "kaveri.student08@hostel.test",
+          "hostel_id": 9,
+          "id": 43,
+          "is_active": true,
+          "mess_unit_id": 15,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 116,
+          "menu_id": 519,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 47,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 519,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 7,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 7,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 23,
+          "email": "kaveri.student12@hostel.test",
+          "hostel_id": 9,
+          "id": 47,
+          "is_active": true,
+          "mess_unit_id": 15,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 117,
+          "menu_id": 523,
+          "mess_unit_id": 8,
+          "response": "attending",
+          "student_user_id": 50,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 523,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 8,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 8,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 23,
+          "email": "kaveri.student15@hostel.test",
+          "hostel_id": 9,
+          "id": 50,
+          "is_active": true,
+          "mess_unit_id": 16,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 118,
+          "menu_id": 523,
+          "mess_unit_id": 8,
+          "response": "attending",
+          "student_user_id": 52,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 523,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 8,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 8,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 22,
+          "email": "kaveri.student17@hostel.test",
+          "hostel_id": 9,
+          "id": 52,
+          "is_active": true,
+          "mess_unit_id": 16,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 119,
+          "menu_id": 523,
+          "mess_unit_id": 8,
+          "response": "attending",
+          "student_user_id": 54,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 523,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 8,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 8,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 21,
+          "email": "kaveri.student19@hostel.test",
+          "hostel_id": 9,
+          "id": 54,
+          "is_active": true,
+          "mess_unit_id": 16,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 120,
+          "menu_id": 523,
+          "mess_unit_id": 8,
+          "response": "skipping",
+          "student_user_id": 56,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 523,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 8,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 8,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 23,
+          "email": "kaveri.student21@hostel.test",
+          "hostel_id": 9,
+          "id": 56,
+          "is_active": true,
+          "mess_unit_id": 16,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 121,
+          "menu_id": 523,
+          "mess_unit_id": 8,
+          "response": "attending",
+          "student_user_id": 60,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 523,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 8,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 8,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 21,
+          "email": "kaveri.student25@hostel.test",
+          "hostel_id": 9,
+          "id": 60,
+          "is_active": true,
+          "mess_unit_id": 16,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 122,
+          "menu_id": 527,
+          "mess_unit_id": 8,
+          "response": "attending",
+          "student_user_id": 49,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 527,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 8,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 8,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 22,
+          "email": "kaveri.student14@hostel.test",
+          "hostel_id": 9,
+          "id": 49,
+          "is_active": true,
+          "mess_unit_id": 16,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 123,
+          "menu_id": 527,
+          "mess_unit_id": 8,
+          "response": "attending",
+          "student_user_id": 51,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 527,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 8,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 8,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 21,
+          "email": "kaveri.student16@hostel.test",
+          "hostel_id": 9,
+          "id": 51,
+          "is_active": true,
+          "mess_unit_id": 16,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 124,
+          "menu_id": 527,
+          "mess_unit_id": 8,
+          "response": "attending",
+          "student_user_id": 53,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 527,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 8,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 8,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 23,
+          "email": "kaveri.student18@hostel.test",
+          "hostel_id": 9,
+          "id": 53,
+          "is_active": true,
+          "mess_unit_id": 16,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 125,
+          "menu_id": 527,
+          "mess_unit_id": 8,
+          "response": "skipping",
+          "student_user_id": 55,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 527,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 8,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 8,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 22,
+          "email": "kaveri.student20@hostel.test",
+          "hostel_id": 9,
+          "id": 55,
+          "is_active": true,
+          "mess_unit_id": 16,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 126,
+          "menu_id": 527,
+          "mess_unit_id": 8,
+          "response": "attending",
+          "student_user_id": 59,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 5,
+          "id": 527,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 8,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 8,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 23,
+          "email": "kaveri.student24@hostel.test",
+          "hostel_id": 9,
+          "id": 59,
+          "is_active": true,
+          "mess_unit_id": 16,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 127,
+          "menu_id": 531,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 61,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 531,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 9,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 9,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 24,
+          "email": "yamuna.student01@hostel.test",
+          "hostel_id": 10,
+          "id": 61,
+          "is_active": true,
+          "mess_unit_id": 17,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 128,
+          "menu_id": 531,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 63,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 531,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 9,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 9,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 26,
+          "email": "yamuna.student03@hostel.test",
+          "hostel_id": 10,
+          "id": 63,
+          "is_active": true,
+          "mess_unit_id": 17,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 129,
+          "menu_id": 531,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 65,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 531,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 9,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 9,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 25,
+          "email": "yamuna.student05@hostel.test",
+          "hostel_id": 10,
+          "id": 65,
+          "is_active": true,
+          "mess_unit_id": 17,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 130,
+          "menu_id": 531,
+          "mess_unit_id": 9,
+          "response": "skipping",
+          "student_user_id": 67,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 531,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 9,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 9,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 24,
+          "email": "yamuna.student07@hostel.test",
+          "hostel_id": 10,
+          "id": 67,
+          "is_active": true,
+          "mess_unit_id": 17,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 131,
+          "menu_id": 531,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 71,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 531,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 9,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 9,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 25,
+          "email": "yamuna.student11@hostel.test",
+          "hostel_id": 10,
+          "id": 71,
+          "is_active": true,
+          "mess_unit_id": 17,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 132,
+          "menu_id": 531,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 73,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 531,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 9,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 9,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 24,
+          "email": "yamuna.student13@hostel.test",
+          "hostel_id": 10,
+          "id": 73,
+          "is_active": true,
+          "mess_unit_id": 17,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 133,
+          "menu_id": 535,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 62,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 535,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 9,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 9,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 25,
+          "email": "yamuna.student02@hostel.test",
+          "hostel_id": 10,
+          "id": 62,
+          "is_active": true,
+          "mess_unit_id": 17,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 134,
+          "menu_id": 535,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 64,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 535,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 9,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 9,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 24,
+          "email": "yamuna.student04@hostel.test",
+          "hostel_id": 10,
+          "id": 64,
+          "is_active": true,
+          "mess_unit_id": 17,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 135,
+          "menu_id": 535,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 66,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 535,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 9,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 9,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 26,
+          "email": "yamuna.student06@hostel.test",
+          "hostel_id": 10,
+          "id": 66,
+          "is_active": true,
+          "mess_unit_id": 17,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 136,
+          "menu_id": 535,
+          "mess_unit_id": 9,
+          "response": "skipping",
+          "student_user_id": 68,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 535,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 9,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 9,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 25,
+          "email": "yamuna.student08@hostel.test",
+          "hostel_id": 10,
+          "id": 68,
+          "is_active": true,
+          "mess_unit_id": 17,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 137,
+          "menu_id": 535,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 72,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 535,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 9,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 9,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 26,
+          "email": "yamuna.student12@hostel.test",
+          "hostel_id": 10,
+          "id": 72,
+          "is_active": true,
+          "mess_unit_id": 17,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 138,
+          "menu_id": 539,
+          "mess_unit_id": 10,
+          "response": "attending",
+          "student_user_id": 75,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 539,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 10,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 10,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 26,
+          "email": "yamuna.student15@hostel.test",
+          "hostel_id": 10,
+          "id": 75,
+          "is_active": true,
+          "mess_unit_id": 18,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 139,
+          "menu_id": 539,
+          "mess_unit_id": 10,
+          "response": "attending",
+          "student_user_id": 77,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 539,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 10,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 10,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 25,
+          "email": "yamuna.student17@hostel.test",
+          "hostel_id": 10,
+          "id": 77,
+          "is_active": true,
+          "mess_unit_id": 18,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 140,
+          "menu_id": 539,
+          "mess_unit_id": 10,
+          "response": "attending",
+          "student_user_id": 79,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 539,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 10,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 10,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 24,
+          "email": "yamuna.student19@hostel.test",
+          "hostel_id": 10,
+          "id": 79,
+          "is_active": true,
+          "mess_unit_id": 18,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 141,
+          "menu_id": 539,
+          "mess_unit_id": 10,
+          "response": "skipping",
+          "student_user_id": 81,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 539,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 10,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 10,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 26,
+          "email": "yamuna.student21@hostel.test",
+          "hostel_id": 10,
+          "id": 81,
+          "is_active": true,
+          "mess_unit_id": 18,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 142,
+          "menu_id": 539,
+          "mess_unit_id": 10,
+          "response": "attending",
+          "student_user_id": 85,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 539,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 10,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 10,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 24,
+          "email": "yamuna.student25@hostel.test",
+          "hostel_id": 10,
+          "id": 85,
+          "is_active": true,
+          "mess_unit_id": 18,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 143,
+          "menu_id": 543,
+          "mess_unit_id": 10,
+          "response": "attending",
+          "student_user_id": 74,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 543,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 10,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 10,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 25,
+          "email": "yamuna.student14@hostel.test",
+          "hostel_id": 10,
+          "id": 74,
+          "is_active": true,
+          "mess_unit_id": 18,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 144,
+          "menu_id": 543,
+          "mess_unit_id": 10,
+          "response": "attending",
+          "student_user_id": 76,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 543,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 10,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 10,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 24,
+          "email": "yamuna.student16@hostel.test",
+          "hostel_id": 10,
+          "id": 76,
+          "is_active": true,
+          "mess_unit_id": 18,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 145,
+          "menu_id": 543,
+          "mess_unit_id": 10,
+          "response": "attending",
+          "student_user_id": 78,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 543,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 10,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 10,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 26,
+          "email": "yamuna.student18@hostel.test",
+          "hostel_id": 10,
+          "id": 78,
+          "is_active": true,
+          "mess_unit_id": 18,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 146,
+          "menu_id": 543,
+          "mess_unit_id": 10,
+          "response": "skipping",
+          "student_user_id": 80,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 543,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 10,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 10,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 25,
+          "email": "yamuna.student20@hostel.test",
+          "hostel_id": 10,
+          "id": 80,
+          "is_active": true,
+          "mess_unit_id": 18,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 147,
+          "menu_id": 543,
+          "mess_unit_id": 10,
+          "response": "attending",
+          "student_user_id": 84,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 6,
+          "id": 543,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 10,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 10,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 26,
+          "email": "yamuna.student24@hostel.test",
+          "hostel_id": 10,
+          "id": 84,
+          "is_active": true,
+          "mess_unit_id": 18,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 148,
+          "menu_id": 547,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 86,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 547,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 11,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 11,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 27,
+          "email": "ganga.student01@hostel.test",
+          "hostel_id": 11,
+          "id": 86,
+          "is_active": true,
+          "mess_unit_id": 19,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 149,
+          "menu_id": 547,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 88,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 547,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 11,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 11,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 29,
+          "email": "ganga.student03@hostel.test",
+          "hostel_id": 11,
+          "id": 88,
+          "is_active": true,
+          "mess_unit_id": 19,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 150,
+          "menu_id": 547,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 90,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 547,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 11,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 11,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 28,
+          "email": "ganga.student05@hostel.test",
+          "hostel_id": 11,
+          "id": 90,
+          "is_active": true,
+          "mess_unit_id": 19,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 151,
+          "menu_id": 547,
+          "mess_unit_id": 11,
+          "response": "skipping",
+          "student_user_id": 92,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 547,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 11,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 11,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 27,
+          "email": "ganga.student07@hostel.test",
+          "hostel_id": 11,
+          "id": 92,
+          "is_active": true,
+          "mess_unit_id": 19,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 152,
+          "menu_id": 547,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 96,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 547,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 11,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 11,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 28,
+          "email": "ganga.student11@hostel.test",
+          "hostel_id": 11,
+          "id": 96,
+          "is_active": true,
+          "mess_unit_id": 19,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 153,
+          "menu_id": 547,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 98,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 547,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 11,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 11,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 27,
+          "email": "ganga.student13@hostel.test",
+          "hostel_id": 11,
+          "id": 98,
+          "is_active": true,
+          "mess_unit_id": 19,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 154,
+          "menu_id": 551,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 87,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 551,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 11,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 11,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 28,
+          "email": "ganga.student02@hostel.test",
+          "hostel_id": 11,
+          "id": 87,
+          "is_active": true,
+          "mess_unit_id": 19,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 155,
+          "menu_id": 551,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 89,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 551,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 11,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 11,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 27,
+          "email": "ganga.student04@hostel.test",
+          "hostel_id": 11,
+          "id": 89,
+          "is_active": true,
+          "mess_unit_id": 19,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 156,
+          "menu_id": 551,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 91,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 551,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 11,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 11,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 29,
+          "email": "ganga.student06@hostel.test",
+          "hostel_id": 11,
+          "id": 91,
+          "is_active": true,
+          "mess_unit_id": 19,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 157,
+          "menu_id": 551,
+          "mess_unit_id": 11,
+          "response": "skipping",
+          "student_user_id": 93,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 551,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 11,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 11,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 28,
+          "email": "ganga.student08@hostel.test",
+          "hostel_id": 11,
+          "id": 93,
+          "is_active": true,
+          "mess_unit_id": 19,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 158,
+          "menu_id": 551,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 97,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 551,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 11,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 11,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "student": {
+          "block_id": 29,
+          "email": "ganga.student12@hostel.test",
+          "hostel_id": 11,
+          "id": 97,
+          "is_active": true,
+          "mess_unit_id": 19,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 159,
+          "menu_id": 555,
+          "mess_unit_id": 12,
+          "response": "attending",
+          "student_user_id": 100,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 555,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 12,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 12,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 29,
+          "email": "ganga.student15@hostel.test",
+          "hostel_id": 11,
+          "id": 100,
+          "is_active": true,
+          "mess_unit_id": 20,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 160,
+          "menu_id": 555,
+          "mess_unit_id": 12,
+          "response": "attending",
+          "student_user_id": 102,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 555,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 12,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 12,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 28,
+          "email": "ganga.student17@hostel.test",
+          "hostel_id": 11,
+          "id": 102,
+          "is_active": true,
+          "mess_unit_id": 20,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 161,
+          "menu_id": 555,
+          "mess_unit_id": 12,
+          "response": "attending",
+          "student_user_id": 104,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 555,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 12,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 12,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 27,
+          "email": "ganga.student19@hostel.test",
+          "hostel_id": 11,
+          "id": 104,
+          "is_active": true,
+          "mess_unit_id": 20,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 162,
+          "menu_id": 555,
+          "mess_unit_id": 12,
+          "response": "skipping",
+          "student_user_id": 106,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 555,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 12,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 12,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 29,
+          "email": "ganga.student21@hostel.test",
+          "hostel_id": 11,
+          "id": 106,
+          "is_active": true,
+          "mess_unit_id": 20,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 163,
+          "menu_id": 555,
+          "mess_unit_id": 12,
+          "response": "attending",
+          "student_user_id": 110,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 555,
+          "meal": "lunch",
+          "meal_category": "veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 12,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 12,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 27,
+          "email": "ganga.student25@hostel.test",
+          "hostel_id": 11,
+          "id": 110,
+          "is_active": true,
+          "mess_unit_id": 20,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 164,
+          "menu_id": 559,
+          "mess_unit_id": 12,
+          "response": "attending",
+          "student_user_id": 99,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 559,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 12,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 12,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 28,
+          "email": "ganga.student14@hostel.test",
+          "hostel_id": 11,
+          "id": 99,
+          "is_active": true,
+          "mess_unit_id": 20,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 165,
+          "menu_id": 559,
+          "mess_unit_id": 12,
+          "response": "attending",
+          "student_user_id": 101,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 559,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 12,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 12,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 27,
+          "email": "ganga.student16@hostel.test",
+          "hostel_id": 11,
+          "id": 101,
+          "is_active": true,
+          "mess_unit_id": 20,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 166,
+          "menu_id": 559,
+          "mess_unit_id": 12,
+          "response": "attending",
+          "student_user_id": 103,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 559,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 12,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 12,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 29,
+          "email": "ganga.student18@hostel.test",
+          "hostel_id": 11,
+          "id": 103,
+          "is_active": true,
+          "mess_unit_id": 20,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 167,
+          "menu_id": 559,
+          "mess_unit_id": 12,
+          "response": "skipping",
+          "student_user_id": 105,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 559,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 12,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 12,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 28,
+          "email": "ganga.student20@hostel.test",
+          "hostel_id": 11,
+          "id": 105,
+          "is_active": true,
+          "mess_unit_id": 20,
+          "role": "student"
+        }
+      },
+      {
+        "response": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 168,
+          "menu_id": 559,
+          "mess_unit_id": 12,
+          "response": "attending",
+          "student_user_id": 109,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "source_menu": {
+          "hostel_id": 7,
+          "id": 559,
+          "meal": "lunch",
+          "meal_category": "non-veg",
+          "menu_date": "2026-09-04",
+          "mess_unit_id": 12,
+          "status": "published"
+        },
+        "source_mess_unit": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 12,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "student": {
+          "block_id": 29,
+          "email": "ganga.student24@hostel.test",
+          "hostel_id": 11,
+          "id": 109,
+          "is_active": true,
+          "mess_unit_id": 20,
+          "role": "student"
+        }
+      }
+    ],
+    "mess_units": [
+      {
+        "block_id": null,
+        "hostel_id": 4,
+        "id": 5,
+        "name": "North Mess",
+        "status": "active",
+        "supervisor_user_id": 111,
+        "unit_type": "north"
+      },
+      {
+        "block_id": null,
+        "hostel_id": 4,
+        "id": 6,
+        "name": "South Mess",
+        "status": "active",
+        "supervisor_user_id": 115,
+        "unit_type": "south"
+      },
+      {
+        "block_id": null,
+        "hostel_id": 5,
+        "id": 7,
+        "name": "North Mess",
+        "status": "active",
+        "supervisor_user_id": 118,
+        "unit_type": "north"
+      },
+      {
+        "block_id": null,
+        "hostel_id": 5,
+        "id": 8,
+        "name": "South Mess",
+        "status": "active",
+        "supervisor_user_id": 122,
+        "unit_type": "south"
+      },
+      {
+        "block_id": null,
+        "hostel_id": 6,
+        "id": 9,
+        "name": "North Mess",
+        "status": "active",
+        "supervisor_user_id": 125,
+        "unit_type": "north"
+      },
+      {
+        "block_id": null,
+        "hostel_id": 6,
+        "id": 10,
+        "name": "South Mess",
+        "status": "active",
+        "supervisor_user_id": 129,
+        "unit_type": "south"
+      },
+      {
+        "block_id": null,
+        "hostel_id": 7,
+        "id": 11,
+        "name": "North Mess",
+        "status": "active",
+        "supervisor_user_id": 132,
+        "unit_type": "north"
+      },
+      {
+        "block_id": null,
+        "hostel_id": 7,
+        "id": 12,
+        "name": "South Mess",
+        "status": "active",
+        "supervisor_user_id": 136,
+        "unit_type": "south"
+      }
+    ]
+  },
+  "purpose": "Pre-commit backup for deterministic tenant integrity repair.",
+  "repair_plan": {
+    "actions": [
+      {
+        "action": "clear_invalid_supervisor",
+        "after": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 5,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "before": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 5,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": 111,
+          "unit_type": "north"
+        },
+        "category": "mess_units",
+        "reason": "Supervisor belongs to a different Hostel.",
+        "record_id": 5
+      },
+      {
+        "action": "clear_invalid_supervisor",
+        "after": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 6,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "before": {
+          "block_id": null,
+          "hostel_id": 4,
+          "id": 6,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": 115,
+          "unit_type": "south"
+        },
+        "category": "mess_units",
+        "reason": "Supervisor belongs to a different Hostel.",
+        "record_id": 6
+      },
+      {
+        "action": "clear_invalid_supervisor",
+        "after": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 7,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "before": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 7,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": 118,
+          "unit_type": "north"
+        },
+        "category": "mess_units",
+        "reason": "Supervisor belongs to a different Hostel.",
+        "record_id": 7
+      },
+      {
+        "action": "clear_invalid_supervisor",
+        "after": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 8,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "before": {
+          "block_id": null,
+          "hostel_id": 5,
+          "id": 8,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": 122,
+          "unit_type": "south"
+        },
+        "category": "mess_units",
+        "reason": "Supervisor belongs to a different Hostel.",
+        "record_id": 8
+      },
+      {
+        "action": "clear_invalid_supervisor",
+        "after": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 9,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "before": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 9,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": 125,
+          "unit_type": "north"
+        },
+        "category": "mess_units",
+        "reason": "Supervisor belongs to a different Hostel.",
+        "record_id": 9
+      },
+      {
+        "action": "clear_invalid_supervisor",
+        "after": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 10,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "before": {
+          "block_id": null,
+          "hostel_id": 6,
+          "id": 10,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": 129,
+          "unit_type": "south"
+        },
+        "category": "mess_units",
+        "reason": "Supervisor belongs to a different Hostel.",
+        "record_id": 10
+      },
+      {
+        "action": "clear_invalid_supervisor",
+        "after": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 11,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "north"
+        },
+        "before": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 11,
+          "name": "North Mess",
+          "status": "active",
+          "supervisor_user_id": 132,
+          "unit_type": "north"
+        },
+        "category": "mess_units",
+        "reason": "Supervisor belongs to a different Hostel.",
+        "record_id": 11
+      },
+      {
+        "action": "clear_invalid_supervisor",
+        "after": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 12,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": null,
+          "unit_type": "south"
+        },
+        "before": {
+          "block_id": null,
+          "hostel_id": 7,
+          "id": 12,
+          "name": "South Mess",
+          "status": "active",
+          "supervisor_user_id": 136,
+          "unit_type": "south"
+        },
+        "category": "mess_units",
+        "reason": "Supervisor belongs to a different Hostel.",
+        "record_id": 12
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 85,
+          "menu_id": 947,
+          "mess_unit_id": 13,
+          "response": "attending",
+          "student_user_id": 11,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 85,
+          "menu_id": 499,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 11,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 85
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 86,
+          "menu_id": 947,
+          "mess_unit_id": 13,
+          "response": "attending",
+          "student_user_id": 13,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 86,
+          "menu_id": 499,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 13,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 86
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 87,
+          "menu_id": 947,
+          "mess_unit_id": 13,
+          "response": "attending",
+          "student_user_id": 15,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 87,
+          "menu_id": 499,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 15,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 87
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 88,
+          "menu_id": 947,
+          "mess_unit_id": 13,
+          "response": "skipping",
+          "student_user_id": 17,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 88,
+          "menu_id": 499,
+          "mess_unit_id": 5,
+          "response": "skipping",
+          "student_user_id": 17,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 88
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 89,
+          "menu_id": 947,
+          "mess_unit_id": 13,
+          "response": "attending",
+          "student_user_id": 21,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 89,
+          "menu_id": 499,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 21,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 89
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 90,
+          "menu_id": 947,
+          "mess_unit_id": 13,
+          "response": "attending",
+          "student_user_id": 23,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 90,
+          "menu_id": 499,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 23,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 90
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 91,
+          "menu_id": 951,
+          "mess_unit_id": 13,
+          "response": "attending",
+          "student_user_id": 12,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 91,
+          "menu_id": 503,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 12,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 91
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 92,
+          "menu_id": 951,
+          "mess_unit_id": 13,
+          "response": "attending",
+          "student_user_id": 14,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 92,
+          "menu_id": 503,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 14,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 92
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 93,
+          "menu_id": 951,
+          "mess_unit_id": 13,
+          "response": "attending",
+          "student_user_id": 16,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 93,
+          "menu_id": 503,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 16,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 93
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 94,
+          "menu_id": 951,
+          "mess_unit_id": 13,
+          "response": "skipping",
+          "student_user_id": 18,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 94,
+          "menu_id": 503,
+          "mess_unit_id": 5,
+          "response": "skipping",
+          "student_user_id": 18,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 94
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 95,
+          "menu_id": 951,
+          "mess_unit_id": 13,
+          "response": "attending",
+          "student_user_id": 22,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 95,
+          "menu_id": 503,
+          "mess_unit_id": 5,
+          "response": "attending",
+          "student_user_id": 22,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 95
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 96,
+          "menu_id": 955,
+          "mess_unit_id": 14,
+          "response": "attending",
+          "student_user_id": 25,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 96,
+          "menu_id": 507,
+          "mess_unit_id": 6,
+          "response": "attending",
+          "student_user_id": 25,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 96
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 97,
+          "menu_id": 955,
+          "mess_unit_id": 14,
+          "response": "attending",
+          "student_user_id": 27,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 97,
+          "menu_id": 507,
+          "mess_unit_id": 6,
+          "response": "attending",
+          "student_user_id": 27,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 97
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 98,
+          "menu_id": 955,
+          "mess_unit_id": 14,
+          "response": "attending",
+          "student_user_id": 29,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 98,
+          "menu_id": 507,
+          "mess_unit_id": 6,
+          "response": "attending",
+          "student_user_id": 29,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 98
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 99,
+          "menu_id": 955,
+          "mess_unit_id": 14,
+          "response": "skipping",
+          "student_user_id": 31,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 99,
+          "menu_id": 507,
+          "mess_unit_id": 6,
+          "response": "skipping",
+          "student_user_id": 31,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 99
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 100,
+          "menu_id": 955,
+          "mess_unit_id": 14,
+          "response": "attending",
+          "student_user_id": 35,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 100,
+          "menu_id": 507,
+          "mess_unit_id": 6,
+          "response": "attending",
+          "student_user_id": 35,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 100
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 101,
+          "menu_id": 959,
+          "mess_unit_id": 14,
+          "response": "attending",
+          "student_user_id": 24,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 101,
+          "menu_id": 511,
+          "mess_unit_id": 6,
+          "response": "attending",
+          "student_user_id": 24,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 101
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 102,
+          "menu_id": 959,
+          "mess_unit_id": 14,
+          "response": "attending",
+          "student_user_id": 26,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 102,
+          "menu_id": 511,
+          "mess_unit_id": 6,
+          "response": "attending",
+          "student_user_id": 26,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 102
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 103,
+          "menu_id": 959,
+          "mess_unit_id": 14,
+          "response": "attending",
+          "student_user_id": 28,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 103,
+          "menu_id": 511,
+          "mess_unit_id": 6,
+          "response": "attending",
+          "student_user_id": 28,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 103
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 104,
+          "menu_id": 959,
+          "mess_unit_id": 14,
+          "response": "skipping",
+          "student_user_id": 30,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 104,
+          "menu_id": 511,
+          "mess_unit_id": 6,
+          "response": "skipping",
+          "student_user_id": 30,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 104
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 105,
+          "menu_id": 959,
+          "mess_unit_id": 14,
+          "response": "attending",
+          "student_user_id": 34,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 105,
+          "menu_id": 511,
+          "mess_unit_id": 6,
+          "response": "attending",
+          "student_user_id": 34,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 105
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 106,
+          "menu_id": 963,
+          "mess_unit_id": 15,
+          "response": "attending",
+          "student_user_id": 36,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 106,
+          "menu_id": 515,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 36,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 106
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 107,
+          "menu_id": 963,
+          "mess_unit_id": 15,
+          "response": "attending",
+          "student_user_id": 38,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 107,
+          "menu_id": 515,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 38,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 107
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 108,
+          "menu_id": 963,
+          "mess_unit_id": 15,
+          "response": "attending",
+          "student_user_id": 40,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 108,
+          "menu_id": 515,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 40,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 108
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 109,
+          "menu_id": 963,
+          "mess_unit_id": 15,
+          "response": "skipping",
+          "student_user_id": 42,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 109,
+          "menu_id": 515,
+          "mess_unit_id": 7,
+          "response": "skipping",
+          "student_user_id": 42,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 109
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 110,
+          "menu_id": 963,
+          "mess_unit_id": 15,
+          "response": "attending",
+          "student_user_id": 46,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 110,
+          "menu_id": 515,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 46,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 110
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 111,
+          "menu_id": 963,
+          "mess_unit_id": 15,
+          "response": "attending",
+          "student_user_id": 48,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 111,
+          "menu_id": 515,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 48,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 111
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 112,
+          "menu_id": 967,
+          "mess_unit_id": 15,
+          "response": "attending",
+          "student_user_id": 37,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 112,
+          "menu_id": 519,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 37,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 112
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 113,
+          "menu_id": 967,
+          "mess_unit_id": 15,
+          "response": "attending",
+          "student_user_id": 39,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 113,
+          "menu_id": 519,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 39,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 113
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 114,
+          "menu_id": 967,
+          "mess_unit_id": 15,
+          "response": "attending",
+          "student_user_id": 41,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 114,
+          "menu_id": 519,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 41,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 114
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 115,
+          "menu_id": 967,
+          "mess_unit_id": 15,
+          "response": "skipping",
+          "student_user_id": 43,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 115,
+          "menu_id": 519,
+          "mess_unit_id": 7,
+          "response": "skipping",
+          "student_user_id": 43,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 115
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 116,
+          "menu_id": 967,
+          "mess_unit_id": 15,
+          "response": "attending",
+          "student_user_id": 47,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 116,
+          "menu_id": 519,
+          "mess_unit_id": 7,
+          "response": "attending",
+          "student_user_id": 47,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 116
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 117,
+          "menu_id": 971,
+          "mess_unit_id": 16,
+          "response": "attending",
+          "student_user_id": 50,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 117,
+          "menu_id": 523,
+          "mess_unit_id": 8,
+          "response": "attending",
+          "student_user_id": 50,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 117
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 118,
+          "menu_id": 971,
+          "mess_unit_id": 16,
+          "response": "attending",
+          "student_user_id": 52,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 118,
+          "menu_id": 523,
+          "mess_unit_id": 8,
+          "response": "attending",
+          "student_user_id": 52,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 118
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 119,
+          "menu_id": 971,
+          "mess_unit_id": 16,
+          "response": "attending",
+          "student_user_id": 54,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 119,
+          "menu_id": 523,
+          "mess_unit_id": 8,
+          "response": "attending",
+          "student_user_id": 54,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 119
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 120,
+          "menu_id": 971,
+          "mess_unit_id": 16,
+          "response": "skipping",
+          "student_user_id": 56,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 120,
+          "menu_id": 523,
+          "mess_unit_id": 8,
+          "response": "skipping",
+          "student_user_id": 56,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 120
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 121,
+          "menu_id": 971,
+          "mess_unit_id": 16,
+          "response": "attending",
+          "student_user_id": 60,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 121,
+          "menu_id": 523,
+          "mess_unit_id": 8,
+          "response": "attending",
+          "student_user_id": 60,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 121
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 122,
+          "menu_id": 975,
+          "mess_unit_id": 16,
+          "response": "attending",
+          "student_user_id": 49,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 122,
+          "menu_id": 527,
+          "mess_unit_id": 8,
+          "response": "attending",
+          "student_user_id": 49,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 122
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 123,
+          "menu_id": 975,
+          "mess_unit_id": 16,
+          "response": "attending",
+          "student_user_id": 51,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 123,
+          "menu_id": 527,
+          "mess_unit_id": 8,
+          "response": "attending",
+          "student_user_id": 51,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 123
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 124,
+          "menu_id": 975,
+          "mess_unit_id": 16,
+          "response": "attending",
+          "student_user_id": 53,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 124,
+          "menu_id": 527,
+          "mess_unit_id": 8,
+          "response": "attending",
+          "student_user_id": 53,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 124
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 125,
+          "menu_id": 975,
+          "mess_unit_id": 16,
+          "response": "skipping",
+          "student_user_id": 55,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 125,
+          "menu_id": 527,
+          "mess_unit_id": 8,
+          "response": "skipping",
+          "student_user_id": 55,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 125
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 126,
+          "menu_id": 975,
+          "mess_unit_id": 16,
+          "response": "attending",
+          "student_user_id": 59,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 126,
+          "menu_id": 527,
+          "mess_unit_id": 8,
+          "response": "attending",
+          "student_user_id": 59,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 126
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 127,
+          "menu_id": 979,
+          "mess_unit_id": 17,
+          "response": "attending",
+          "student_user_id": 61,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 127,
+          "menu_id": 531,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 61,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 127
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 128,
+          "menu_id": 979,
+          "mess_unit_id": 17,
+          "response": "attending",
+          "student_user_id": 63,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 128,
+          "menu_id": 531,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 63,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 128
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 129,
+          "menu_id": 979,
+          "mess_unit_id": 17,
+          "response": "attending",
+          "student_user_id": 65,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 129,
+          "menu_id": 531,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 65,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 129
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 130,
+          "menu_id": 979,
+          "mess_unit_id": 17,
+          "response": "skipping",
+          "student_user_id": 67,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 130,
+          "menu_id": 531,
+          "mess_unit_id": 9,
+          "response": "skipping",
+          "student_user_id": 67,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 130
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 131,
+          "menu_id": 979,
+          "mess_unit_id": 17,
+          "response": "attending",
+          "student_user_id": 71,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 131,
+          "menu_id": 531,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 71,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 131
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 132,
+          "menu_id": 979,
+          "mess_unit_id": 17,
+          "response": "attending",
+          "student_user_id": 73,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 132,
+          "menu_id": 531,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 73,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 132
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 133,
+          "menu_id": 983,
+          "mess_unit_id": 17,
+          "response": "attending",
+          "student_user_id": 62,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 133,
+          "menu_id": 535,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 62,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 133
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 134,
+          "menu_id": 983,
+          "mess_unit_id": 17,
+          "response": "attending",
+          "student_user_id": 64,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 134,
+          "menu_id": 535,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 64,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 134
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 135,
+          "menu_id": 983,
+          "mess_unit_id": 17,
+          "response": "attending",
+          "student_user_id": 66,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 135,
+          "menu_id": 535,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 66,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 135
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 136,
+          "menu_id": 983,
+          "mess_unit_id": 17,
+          "response": "skipping",
+          "student_user_id": 68,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 136,
+          "menu_id": 535,
+          "mess_unit_id": 9,
+          "response": "skipping",
+          "student_user_id": 68,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 136
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 137,
+          "menu_id": 983,
+          "mess_unit_id": 17,
+          "response": "attending",
+          "student_user_id": 72,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 137,
+          "menu_id": 535,
+          "mess_unit_id": 9,
+          "response": "attending",
+          "student_user_id": 72,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 137
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 138,
+          "menu_id": 987,
+          "mess_unit_id": 18,
+          "response": "attending",
+          "student_user_id": 75,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 138,
+          "menu_id": 539,
+          "mess_unit_id": 10,
+          "response": "attending",
+          "student_user_id": 75,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 138
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 139,
+          "menu_id": 987,
+          "mess_unit_id": 18,
+          "response": "attending",
+          "student_user_id": 77,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 139,
+          "menu_id": 539,
+          "mess_unit_id": 10,
+          "response": "attending",
+          "student_user_id": 77,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 139
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 140,
+          "menu_id": 987,
+          "mess_unit_id": 18,
+          "response": "attending",
+          "student_user_id": 79,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 140,
+          "menu_id": 539,
+          "mess_unit_id": 10,
+          "response": "attending",
+          "student_user_id": 79,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 140
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 141,
+          "menu_id": 987,
+          "mess_unit_id": 18,
+          "response": "skipping",
+          "student_user_id": 81,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 141,
+          "menu_id": 539,
+          "mess_unit_id": 10,
+          "response": "skipping",
+          "student_user_id": 81,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 141
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 142,
+          "menu_id": 987,
+          "mess_unit_id": 18,
+          "response": "attending",
+          "student_user_id": 85,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 142,
+          "menu_id": 539,
+          "mess_unit_id": 10,
+          "response": "attending",
+          "student_user_id": 85,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 142
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 143,
+          "menu_id": 991,
+          "mess_unit_id": 18,
+          "response": "attending",
+          "student_user_id": 74,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 143,
+          "menu_id": 543,
+          "mess_unit_id": 10,
+          "response": "attending",
+          "student_user_id": 74,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 143
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 144,
+          "menu_id": 991,
+          "mess_unit_id": 18,
+          "response": "attending",
+          "student_user_id": 76,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 144,
+          "menu_id": 543,
+          "mess_unit_id": 10,
+          "response": "attending",
+          "student_user_id": 76,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 144
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 145,
+          "menu_id": 991,
+          "mess_unit_id": 18,
+          "response": "attending",
+          "student_user_id": 78,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 145,
+          "menu_id": 543,
+          "mess_unit_id": 10,
+          "response": "attending",
+          "student_user_id": 78,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 145
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 146,
+          "menu_id": 991,
+          "mess_unit_id": 18,
+          "response": "skipping",
+          "student_user_id": 80,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 146,
+          "menu_id": 543,
+          "mess_unit_id": 10,
+          "response": "skipping",
+          "student_user_id": 80,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 146
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 147,
+          "menu_id": 991,
+          "mess_unit_id": 18,
+          "response": "attending",
+          "student_user_id": 84,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 147,
+          "menu_id": 543,
+          "mess_unit_id": 10,
+          "response": "attending",
+          "student_user_id": 84,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 147
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 148,
+          "menu_id": 995,
+          "mess_unit_id": 19,
+          "response": "attending",
+          "student_user_id": 86,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 148,
+          "menu_id": 547,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 86,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 148
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 149,
+          "menu_id": 995,
+          "mess_unit_id": 19,
+          "response": "attending",
+          "student_user_id": 88,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 149,
+          "menu_id": 547,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 88,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 149
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 150,
+          "menu_id": 995,
+          "mess_unit_id": 19,
+          "response": "attending",
+          "student_user_id": 90,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 150,
+          "menu_id": 547,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 90,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 150
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 151,
+          "menu_id": 995,
+          "mess_unit_id": 19,
+          "response": "skipping",
+          "student_user_id": 92,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 151,
+          "menu_id": 547,
+          "mess_unit_id": 11,
+          "response": "skipping",
+          "student_user_id": 92,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 151
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 152,
+          "menu_id": 995,
+          "mess_unit_id": 19,
+          "response": "attending",
+          "student_user_id": 96,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 152,
+          "menu_id": 547,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 96,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 152
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 153,
+          "menu_id": 995,
+          "mess_unit_id": 19,
+          "response": "attending",
+          "student_user_id": 98,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 153,
+          "menu_id": 547,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 98,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 153
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 154,
+          "menu_id": 999,
+          "mess_unit_id": 19,
+          "response": "attending",
+          "student_user_id": 87,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 154,
+          "menu_id": 551,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 87,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 154
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 155,
+          "menu_id": 999,
+          "mess_unit_id": 19,
+          "response": "attending",
+          "student_user_id": 89,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 155,
+          "menu_id": 551,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 89,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 155
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 156,
+          "menu_id": 999,
+          "mess_unit_id": 19,
+          "response": "attending",
+          "student_user_id": 91,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 156,
+          "menu_id": 551,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 91,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 156
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 157,
+          "menu_id": 999,
+          "mess_unit_id": 19,
+          "response": "skipping",
+          "student_user_id": 93,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 157,
+          "menu_id": 551,
+          "mess_unit_id": 11,
+          "response": "skipping",
+          "student_user_id": 93,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 157
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 158,
+          "menu_id": 999,
+          "mess_unit_id": 19,
+          "response": "attending",
+          "student_user_id": 97,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 158,
+          "menu_id": 551,
+          "mess_unit_id": 11,
+          "response": "attending",
+          "student_user_id": 97,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 158
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 159,
+          "menu_id": 1003,
+          "mess_unit_id": 20,
+          "response": "attending",
+          "student_user_id": 100,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 159,
+          "menu_id": 555,
+          "mess_unit_id": 12,
+          "response": "attending",
+          "student_user_id": 100,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 159
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 160,
+          "menu_id": 1003,
+          "mess_unit_id": 20,
+          "response": "attending",
+          "student_user_id": 102,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 160,
+          "menu_id": 555,
+          "mess_unit_id": 12,
+          "response": "attending",
+          "student_user_id": 102,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 160
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 161,
+          "menu_id": 1003,
+          "mess_unit_id": 20,
+          "response": "attending",
+          "student_user_id": 104,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 161,
+          "menu_id": 555,
+          "mess_unit_id": 12,
+          "response": "attending",
+          "student_user_id": 104,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 161
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 162,
+          "menu_id": 1003,
+          "mess_unit_id": 20,
+          "response": "skipping",
+          "student_user_id": 106,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 162,
+          "menu_id": 555,
+          "mess_unit_id": 12,
+          "response": "skipping",
+          "student_user_id": 106,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 162
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 163,
+          "menu_id": 1003,
+          "mess_unit_id": 20,
+          "response": "attending",
+          "student_user_id": 110,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 163,
+          "menu_id": 555,
+          "mess_unit_id": 12,
+          "response": "attending",
+          "student_user_id": 110,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 163
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 164,
+          "menu_id": 1007,
+          "mess_unit_id": 20,
+          "response": "attending",
+          "student_user_id": 99,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 164,
+          "menu_id": 559,
+          "mess_unit_id": 12,
+          "response": "attending",
+          "student_user_id": 99,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 164
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 165,
+          "menu_id": 1007,
+          "mess_unit_id": 20,
+          "response": "attending",
+          "student_user_id": 101,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 165,
+          "menu_id": 559,
+          "mess_unit_id": 12,
+          "response": "attending",
+          "student_user_id": 101,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 165
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 166,
+          "menu_id": 1007,
+          "mess_unit_id": 20,
+          "response": "attending",
+          "student_user_id": 103,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 166,
+          "menu_id": 559,
+          "mess_unit_id": 12,
+          "response": "attending",
+          "student_user_id": 103,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 166
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 167,
+          "menu_id": 1007,
+          "mess_unit_id": 20,
+          "response": "skipping",
+          "student_user_id": 105,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 167,
+          "menu_id": 559,
+          "mess_unit_id": 12,
+          "response": "skipping",
+          "student_user_id": 105,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 167
+      },
+      {
+        "action": "reassign_to_students_owned_menu",
+        "after": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 168,
+          "menu_id": 1007,
+          "mess_unit_id": 20,
+          "response": "attending",
+          "student_user_id": 109,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "before": {
+          "created_at": "2026-09-04T06:39:16",
+          "id": 168,
+          "menu_id": 559,
+          "mess_unit_id": 12,
+          "response": "attending",
+          "student_user_id": 109,
+          "updated_at": "2026-09-04T06:42:59"
+        },
+        "category": "meal_responses",
+        "reason": "The source response points across Hostel boundaries. A unique Menu exists in the Student's own Hostel and assigned Mess Unit for the same menu_date, meal, and meal_category.",
+        "record_id": 168
+      }
+    ],
+    "generated_at_utc": "2026-09-12T10:14:26.639312+00:00",
+    "mode": "apply",
+    "summary": {
+      "meal_responses": {
+        "applied_reassign": 84,
+        "checked": 168,
+        "planned_reassign": 84,
+        "unresolved": 0,
+        "valid": 84
+      },
+      "mess_supervisors": {
+        "applied_clear": 8,
+        "checked": 24,
+        "planned_clear": 8,
+        "unresolved": 0,
+        "valid": 16
+      }
+    },
+    "unresolved": []
+  }
+}

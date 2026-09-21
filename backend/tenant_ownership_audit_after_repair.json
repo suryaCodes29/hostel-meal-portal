@@ -1,0 +1,75 @@
+{
+  "categories": {
+    "forecasts": {
+      "correctly_owned": 1020,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "hostel_blocks": {
+      "correctly_owned": 31,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "hostels": {
+      "correctly_owned": 13,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "meal_responses": {
+      "correctly_owned": 168,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "menus": {
+      "correctly_owned": 1009,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "mess_units": {
+      "correctly_owned": 24,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "notifications": {
+      "correctly_owned": 22,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "staff": {
+      "correctly_owned": 30,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "students": {
+      "correctly_owned": 104,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "waste_records": {
+      "correctly_owned": 1008,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    }
+  },
+  "generated_at_utc": "2026-09-12T10:14:40.948984+00:00",
+  "issues": [],
+  "mode": "audit-only",
+  "repairs": [],
+  "seed_manager": null,
+  "totals": {
+    "correctly_owned": 3429,
+    "invalid_or_orphaned": 0,
+    "missing_ownership": 0,
+    "reassigned": 0
+  }
+}

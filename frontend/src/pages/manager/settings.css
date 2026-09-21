@@ -1,0 +1,1407 @@
+/* =========================================================
+   SETTINGS PAGE
+========================================================= */
+
+.manager-settings-page {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+
+  box-sizing: border-box;
+
+  color: #0b2945;
+}
+
+
+.manager-settings-page *,
+.manager-settings-page *::before,
+.manager-settings-page *::after {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.settings-page-header {
+  margin-bottom: 20px;
+}
+
+
+.settings-eyebrow {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #ff6500;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 1.1px;
+
+  text-transform: uppercase;
+}
+
+
+.settings-page-header h1 {
+  margin: 0;
+
+  color: #0b2945;
+
+  font-size: 28px;
+  font-weight: 800;
+
+  line-height: 1.2;
+}
+
+
+.settings-page-header p {
+  margin: 6px 0 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   SUCCESS MESSAGE
+========================================================= */
+
+.settings-message {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 16px;
+
+  padding: 11px 13px;
+
+  border: 1px solid #ccebd9;
+  border-radius: 9px;
+
+  background: #effaf4;
+
+  color: #16864e;
+
+  font-size: 11px;
+  font-weight: 650;
+}
+
+
+.settings-message svg {
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   MAIN SETTINGS LAYOUT
+========================================================= */
+
+.settings-layout {
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    220px minmax(0, 1fr);
+
+  gap: 18px;
+
+  align-items: start;
+}
+
+
+/* =========================================================
+   SETTINGS TABS
+========================================================= */
+
+.settings-tabs {
+  width: 100%;
+
+  height: fit-content;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+  padding: 9px;
+
+  border: 1px solid #dce4ec;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.03);
+}
+
+
+.settings-tabs button {
+  width: 100%;
+  min-height: 43px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0 11px;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #64748b;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+
+.settings-tabs button:hover {
+  background: #f7f9fb;
+
+  color: #0b2945;
+}
+
+
+.settings-tabs button.active {
+  background: #fff2e9;
+
+  color: #ff6500;
+
+  font-weight: 750;
+}
+
+
+.settings-tabs button.active svg {
+  color: #ff6500;
+}
+
+
+/* =========================================================
+   CONTENT CARD
+========================================================= */
+
+.settings-content-card {
+  width: 100%;
+  min-width: 0;
+
+  min-height: 470px;
+
+  padding: 22px;
+
+  border: 1px solid #dce4ec;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.03);
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.settings-section {
+  width: 100%;
+  min-width: 0;
+}
+
+
+.settings-section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 19px;
+}
+
+
+.settings-section-heading > div {
+  min-width: 0;
+}
+
+
+.settings-section-heading h2 {
+  margin: 0;
+
+  color: #0b2945;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+
+.settings-section-heading p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   COMMON BUTTONS
+========================================================= */
+
+.settings-add-button,
+.settings-secondary-button {
+  min-height: 39px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0 13px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.settings-add-button {
+  border: 1px solid #ff6500;
+
+  background: #ff6500;
+
+  color: #ffffff;
+}
+
+
+.settings-add-button:hover:not(:disabled) {
+  background: #e85c00;
+
+  border-color: #e85c00;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 6px 16px rgba(255, 101, 0, 0.17);
+}
+
+
+.settings-secondary-button {
+  border: 1px solid #dce4ec;
+
+  background: #ffffff;
+
+  color: #0b2945;
+}
+
+
+.settings-secondary-button:hover:not(:disabled) {
+  background: #f8fafc;
+
+  border-color: #c8d3dd;
+
+  transform: translateY(-1px);
+}
+
+
+.settings-add-button:disabled,
+.settings-secondary-button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   GENERAL INFORMATION GRID
+========================================================= */
+
+.settings-info-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+
+.settings-info-item,
+.settings-info-grid > div {
+  min-width: 0;
+
+  padding: 14px;
+
+  border: 1px solid #edf1f5;
+  border-radius: 9px;
+
+  background: #f8fafc;
+}
+
+
+.settings-info-grid span,
+.settings-info-grid strong {
+  display: block;
+}
+
+
+.settings-info-grid span {
+  color: #94a3b8;
+
+  font-size: 9px;
+  font-weight: 600;
+}
+
+
+.settings-info-grid strong {
+  margin-top: 4px;
+
+  color: #0b2945;
+
+  font-size: 11px;
+  font-weight: 750;
+
+  overflow-wrap: anywhere;
+}
+
+
+.settings-success-text {
+  color: #16864e !important;
+}
+
+
+/* =========================================================
+   GENERAL NOTE
+========================================================= */
+
+.settings-general-note {
+  margin-top: 16px;
+
+  padding: 15px;
+
+  border: 1px solid #dfe7ee;
+  border-radius: 10px;
+
+  background: #fbfcfd;
+}
+
+
+.settings-general-note strong {
+  display: block;
+
+  color: #0b2945;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+
+.settings-general-note p {
+  margin: 5px 0 12px;
+
+  color: #64748b;
+
+  font-size: 9px;
+
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   OPTIONS LIST
+========================================================= */
+
+.settings-options-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+
+/* =========================================================
+   OPTION ROW
+========================================================= */
+
+.settings-option-row {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 14px;
+
+  border: 1px solid #e3e8ee;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+
+.settings-option-row:hover {
+  background: #fbfcfd;
+
+  border-color: #d4dde6;
+}
+
+
+.settings-option-row > div {
+  min-width: 0;
+
+  flex: 1;
+}
+
+
+.settings-option-row strong,
+.settings-option-row div span {
+  display: block;
+}
+
+
+.settings-option-row strong {
+  color: #0b2945;
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+
+.settings-option-row div span {
+  margin-top: 3px;
+
+  color: #64748b;
+
+  font-size: 9px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   TOGGLE SWITCH
+========================================================= */
+
+.settings-toggle {
+  position: relative;
+
+  width: 44px;
+  height: 24px;
+
+  flex: 0 0 44px;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 999px;
+
+  background: #cbd5e1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.settings-toggle > span {
+  position: absolute;
+
+  top: 3px;
+  left: 3px;
+
+  width: 18px;
+  height: 18px;
+
+  margin: 0;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 2px 5px rgba(15, 23, 42, 0.18);
+
+  transition:
+    transform 0.2s ease;
+}
+
+
+.settings-toggle.enabled {
+  background: #22a765;
+}
+
+
+.settings-toggle.enabled > span {
+  transform:
+    translateX(20px);
+}
+
+
+.settings-toggle:focus-visible {
+  outline: 3px solid
+    rgba(255, 101, 0, 0.2);
+
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   ENABLED LABEL
+========================================================= */
+
+.settings-enabled {
+  flex-shrink: 0;
+
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  background: #eaf8f0;
+
+  color: #16864e;
+
+  font-size: 9px;
+  font-weight: 750;
+}
+
+
+/* =========================================================
+   BACKUP / DATA WARNING
+========================================================= */
+
+.settings-data-warning {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 11px;
+
+  margin-top: 16px;
+
+  padding: 14px;
+
+  border: 1px solid #ffe0ca;
+  border-radius: 9px;
+
+  background: #fff8f3;
+
+  color: #d95d0a;
+}
+
+
+.settings-data-warning > svg {
+  flex-shrink: 0;
+
+  margin-top: 1px;
+}
+
+
+.settings-data-warning > div {
+  min-width: 0;
+}
+
+
+.settings-data-warning strong {
+  display: block;
+
+  color: #a94708;
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+.settings-data-warning p {
+  margin: 4px 0 0;
+
+  color: #8f674c;
+
+  font-size: 9px;
+
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   BACKUP ACTIONS
+========================================================= */
+
+.settings-backup-actions {
+  display: flex;
+
+  margin-top: 18px;
+}
+
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+.settings-security-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 11px;
+}
+
+
+.settings-security-card {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 15px;
+
+  border: 1px solid #e3e8ee;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+
+.settings-security-card:hover {
+  border-color: #d4dde6;
+
+  background: #fbfcfd;
+}
+
+
+.settings-security-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 9px;
+
+  background: #eef5fb;
+
+  color: #0b527e;
+}
+
+
+.settings-security-content {
+  min-width: 0;
+
+  flex: 1;
+}
+
+
+.settings-security-content strong {
+  display: block;
+
+  color: #0b2945;
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+
+.settings-security-content span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #64748b;
+
+  font-size: 9px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   THEME PREVIEW
+========================================================= */
+
+.settings-theme-preview {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 15px;
+
+  border: 1px solid #e3e8ee;
+  border-radius: 10px;
+
+  background: #f8fafc;
+}
+
+
+.settings-theme-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 9px;
+
+  background: #0b2945;
+
+  color: #ffffff;
+}
+
+
+.settings-theme-preview strong,
+.settings-theme-preview span {
+  display: block;
+}
+
+
+.settings-theme-preview strong {
+  color: #0b2945;
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+
+.settings-theme-preview span {
+  margin-top: 3px;
+
+  color: #64748b;
+
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   APPEARANCE TITLE
+========================================================= */
+
+.settings-appearance-title {
+  margin: 20px 0 9px;
+
+  color: #526174;
+
+  font-size: 10px;
+  font-weight: 750;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* =========================================================
+   LIGHT / DARK CARDS
+========================================================= */
+
+.settings-theme-mode-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+
+.settings-theme-mode-card {
+  position: relative;
+
+  min-height: 125px;
+
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+
+  gap: 6px;
+
+  padding: 15px;
+
+  border: 1px solid #dce4ec;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #526174;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+
+.settings-theme-mode-card:hover {
+  border-color: #c7d2dc;
+
+  transform: translateY(-1px);
+}
+
+
+.settings-theme-mode-card.active {
+  border-color: #ff6500;
+
+  background: #fff8f3;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(255, 101, 0, 0.07);
+}
+
+
+.settings-theme-mode-card > svg:first-child {
+  color: #ff6500;
+}
+
+
+.settings-theme-mode-card strong {
+  margin-top: 4px;
+
+  color: #0b2945;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+
+.settings-theme-mode-card span {
+  color: #64748b;
+
+  font-size: 9px;
+
+  line-height: 1.5;
+}
+
+
+.settings-theme-check {
+  position: absolute;
+
+  top: 12px;
+  right: 12px;
+
+  color: #16864e !important;
+}
+
+
+/* =========================================================
+   COMPACT ROW
+========================================================= */
+
+.settings-compact-row {
+  margin-top: 12px;
+}
+
+
+/* =========================================================
+   THEME COLORS
+========================================================= */
+
+.settings-theme-colors {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 10px;
+
+  margin-top: 16px;
+}
+
+
+.settings-theme-color {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 12px;
+
+  border: 1px solid #e3e8ee;
+  border-radius: 9px;
+
+  background: #ffffff;
+}
+
+
+.theme-color {
+  width: 32px;
+  height: 32px;
+
+  display: block;
+
+  flex-shrink: 0;
+
+  border-radius: 8px;
+
+  border: 1px solid
+    rgba(15, 23, 42, 0.08);
+}
+
+
+.theme-color.navy {
+  background: #0b2945;
+}
+
+
+.theme-color.orange {
+  background: #ff6500;
+}
+
+
+.theme-color.white {
+  background: #ffffff;
+
+  border-color: #dce4ec;
+}
+
+
+.settings-theme-color strong,
+.settings-theme-color div span {
+  display: block;
+}
+
+
+.settings-theme-color strong {
+  color: #0b2945;
+
+  font-size: 9px;
+  font-weight: 750;
+}
+
+
+.settings-theme-color div span {
+  margin-top: 2px;
+
+  color: #64748b;
+
+  font-size: 8px;
+}
+
+
+/* =========================================================
+   RESET AREA
+========================================================= */
+
+.settings-reset-area {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: 18px;
+
+  padding-top: 15px;
+
+  border-top: 1px solid #edf1f5;
+}
+
+
+/* =========================================================
+   SPINNER
+========================================================= */
+
+.settings-spin {
+  animation:
+    settings-spin-animation
+    0.8s linear infinite;
+}
+
+
+@keyframes settings-spin-animation {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   DARK SETTINGS THEME
+========================================================= */
+
+html[data-manager-theme="dark"]
+.manager-settings-page {
+  color: #e7edf4;
+}
+
+
+html[data-manager-theme="dark"]
+.settings-page-header h1,
+html[data-manager-theme="dark"]
+.settings-section-heading h2,
+html[data-manager-theme="dark"]
+.settings-info-grid strong,
+html[data-manager-theme="dark"]
+.settings-general-note strong,
+html[data-manager-theme="dark"]
+.settings-option-row strong,
+html[data-manager-theme="dark"]
+.settings-security-content strong,
+html[data-manager-theme="dark"]
+.settings-theme-preview strong,
+html[data-manager-theme="dark"]
+.settings-theme-mode-card strong,
+html[data-manager-theme="dark"]
+.settings-theme-color strong {
+  color: #f1f5f9;
+}
+
+
+html[data-manager-theme="dark"]
+.settings-page-header p,
+html[data-manager-theme="dark"]
+.settings-section-heading p,
+html[data-manager-theme="dark"]
+.settings-option-row div span,
+html[data-manager-theme="dark"]
+.settings-security-content span,
+html[data-manager-theme="dark"]
+.settings-theme-preview span,
+html[data-manager-theme="dark"]
+.settings-theme-mode-card span,
+html[data-manager-theme="dark"]
+.settings-theme-color div span {
+  color: #9eafc1;
+}
+
+
+html[data-manager-theme="dark"]
+.settings-tabs,
+html[data-manager-theme="dark"]
+.settings-content-card,
+html[data-manager-theme="dark"]
+.settings-option-row,
+html[data-manager-theme="dark"]
+.settings-security-card,
+html[data-manager-theme="dark"]
+.settings-theme-color,
+html[data-manager-theme="dark"]
+.settings-theme-mode-card {
+  border-color: #304052;
+
+  background: #162536;
+}
+
+
+html[data-manager-theme="dark"]
+.settings-info-item,
+html[data-manager-theme="dark"]
+.settings-info-grid > div,
+html[data-manager-theme="dark"]
+.settings-theme-preview,
+html[data-manager-theme="dark"]
+.settings-general-note {
+  border-color: #304052;
+
+  background: #1c2d3e;
+}
+
+
+html[data-manager-theme="dark"]
+.settings-tabs button {
+  color: #a6b6c6;
+}
+
+
+html[data-manager-theme="dark"]
+.settings-tabs button:hover {
+  background: #203447;
+
+  color: #ffffff;
+}
+
+
+html[data-manager-theme="dark"]
+.settings-tabs button.active {
+  background: rgba(
+    255,
+    101,
+    0,
+    0.14
+  );
+
+  color: #ff8a3d;
+}
+
+
+html[data-manager-theme="dark"]
+.settings-theme-mode-card.active {
+  border-color: #ff6500;
+
+  background: rgba(
+    255,
+    101,
+    0,
+    0.08
+  );
+}
+
+
+html[data-manager-theme="dark"]
+.settings-secondary-button {
+  border-color: #405165;
+
+  background: #1b2c3d;
+
+  color: #edf3f8;
+}
+
+
+html[data-manager-theme="dark"]
+.settings-secondary-button:hover:not(:disabled) {
+  background: #22374b;
+}
+
+
+html[data-manager-theme="dark"]
+.theme-color.white {
+  background: #ffffff;
+}
+
+
+/* =========================================================
+   DARK MODE - COMMON MANAGER SHELL
+========================================================= */
+
+html[data-manager-theme="dark"]
+.manager-content,
+html[data-manager-theme="dark"]
+.manager-content-area,
+html[data-manager-theme="dark"]
+.manager-main {
+  background: #101d2a;
+}
+
+
+/* =========================================================
+   COMPACT MODE
+========================================================= */
+
+html.manager-compact-mode
+.manager-settings-page
+.settings-content-card {
+  padding: 16px;
+}
+
+
+html.manager-compact-mode
+.manager-settings-page
+.settings-summary-card,
+html.manager-compact-mode
+.manager-settings-page
+.settings-option-row,
+html.manager-compact-mode
+.manager-settings-page
+.settings-security-card {
+  padding: 10px 12px;
+}
+
+
+html.manager-compact-mode
+.manager-settings-page
+.settings-section-heading {
+  margin-bottom: 13px;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .settings-layout {
+    grid-template-columns: 1fr;
+  }
+
+
+  .settings-tabs {
+    display: grid;
+
+    grid-template-columns:
+      repeat(5, minmax(0, 1fr));
+
+    gap: 5px;
+  }
+
+
+  .settings-tabs button {
+    min-height: 58px;
+
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 4px;
+
+    padding: 6px;
+
+    text-align: center;
+  }
+
+
+  .settings-theme-colors {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE - SMALL TABLET
+========================================================= */
+
+@media (max-width: 700px) {
+  .settings-tabs {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .settings-info-grid,
+  .settings-theme-mode-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .settings-theme-colors {
+    grid-template-columns: 1fr;
+  }
+
+
+  .settings-security-card {
+    align-items: flex-start;
+
+    flex-wrap: wrap;
+  }
+
+
+  .settings-security-card
+  .settings-secondary-button {
+    width: 100%;
+
+    margin-top: 4px;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+  .settings-page-header h1 {
+    font-size: 24px;
+  }
+
+
+  .settings-content-card {
+    padding: 16px;
+  }
+
+
+  .settings-tabs {
+    grid-template-columns: 1fr;
+  }
+
+
+  .settings-tabs button {
+    min-height: 42px;
+
+    justify-content: flex-start;
+    flex-direction: row;
+
+    gap: 9px;
+
+    text-align: left;
+  }
+
+
+  .settings-option-row {
+    align-items: flex-start;
+  }
+
+
+  .settings-data-warning {
+    align-items: flex-start;
+  }
+
+
+  .settings-backup-actions {
+    display: block;
+  }
+
+
+  .settings-backup-actions
+  .settings-add-button {
+    width: 100%;
+  }
+
+
+  .settings-reset-area {
+    display: block;
+  }
+
+
+  .settings-reset-area
+  .settings-secondary-button {
+    width: 100%;
+  }
+}

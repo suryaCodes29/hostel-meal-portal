@@ -1,0 +1,1459 @@
+/* =========================================================
+   REPORTS PAGE
+========================================================= */
+
+.reports-page {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.reports-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 18px;
+
+  margin-bottom: 16px;
+}
+
+
+.reports-eyebrow {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #ff6500;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+}
+
+
+.reports-header h1 {
+  margin: 0;
+
+  color: #0b2945;
+
+  font-size: 26px;
+  font-weight: 800;
+
+  line-height: 1.2;
+}
+
+
+.reports-header p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   HEADER ACTIONS
+========================================================= */
+
+.reports-header-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  flex-wrap: wrap;
+}
+
+
+.report-action-button,
+.report-primary-button {
+  min-height: 39px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0 13px;
+
+  border-radius: 8px;
+
+  font-size: 9px;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.report-action-button {
+  border: 1px solid #dce4ec;
+
+  background: #ffffff;
+
+  color: #0b2945;
+}
+
+
+.report-action-button:hover:not(:disabled) {
+  background: #f8fafc;
+
+  border-color: #c8d3dd;
+
+  transform: translateY(-1px);
+}
+
+
+.report-primary-button {
+  border: 1px solid #ff6500;
+
+  background: #ff6500;
+
+  color: #ffffff;
+}
+
+
+.report-primary-button:hover:not(:disabled) {
+  background: #e85c00;
+
+  border-color: #e85c00;
+
+  box-shadow:
+    0 6px 16px
+    rgba(255, 101, 0, 0.18);
+
+  transform: translateY(-1px);
+}
+
+
+.report-action-button:disabled,
+.report-primary-button:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   ERROR / WARNING MESSAGES
+========================================================= */
+
+.report-error-message,
+.report-warning-message {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 15px;
+
+  padding: 12px 14px;
+
+  border-radius: 9px;
+
+  box-sizing: border-box;
+}
+
+
+.report-error-message {
+  border: 1px solid #ffd1d5;
+
+  background: #fff5f6;
+
+  color: #bd3540;
+}
+
+
+.report-error-message > div {
+  flex: 1;
+}
+
+
+.report-error-message strong,
+.report-error-message span {
+  display: block;
+}
+
+
+.report-error-message strong {
+  color: #9f2630;
+
+  font-size: 10px;
+}
+
+
+.report-error-message span {
+  margin-top: 2px;
+
+  color: #b55860;
+
+  font-size: 9px;
+}
+
+
+.report-error-message > button {
+  min-height: 31px;
+
+  padding: 0 10px;
+
+  border: 0;
+  border-radius: 7px;
+
+  background: #bd3540;
+
+  color: #ffffff;
+
+  font-size: 8px;
+  font-weight: 750;
+
+  cursor: pointer;
+}
+
+
+.report-warning-message {
+  border: 1px solid #ffdfb6;
+
+  background: #fff8ed;
+
+  color: #bd700f;
+}
+
+
+.report-warning-message span {
+  font-size: 9px;
+  font-weight: 650;
+}
+
+
+/* =========================================================
+   FILTER CARD
+========================================================= */
+
+.report-filter-card {
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, minmax(130px, 1fr))
+    auto;
+
+  align-items: end;
+
+  gap: 10px;
+
+  margin-bottom: 12px;
+
+  padding: 14px;
+
+  border: 1px solid #dce4ec;
+  border-radius: 11px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 3px 12px
+    rgba(15, 23, 42, 0.025);
+}
+
+
+.report-filter-field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+
+.report-filter-field label {
+  color: #64748b;
+
+  font-size: 8px;
+  font-weight: 750;
+}
+
+
+.report-filter-field select,
+.report-filter-field input {
+  width: 100%;
+  height: 40px;
+
+  padding: 0 10px;
+
+  border: 1px solid #dce4ec;
+  border-radius: 8px;
+
+  box-sizing: border-box;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #0b2945;
+
+  font-size: 9px;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.report-filter-field select:focus,
+.report-filter-field input:focus {
+  border-color: #ff6500;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(255, 101, 0, 0.08);
+}
+
+
+.report-clear-button {
+  min-height: 40px;
+
+  padding: 0 13px;
+
+  border: 1px solid #dce4ec;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #64748b;
+
+  font-size: 9px;
+  font-weight: 750;
+
+  cursor: pointer;
+}
+
+
+.report-clear-button:hover {
+  background: #f8fafc;
+
+  color: #0b2945;
+}
+
+
+/* =========================================================
+   SELECTION SUMMARY
+========================================================= */
+
+.report-selection-summary {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 16px;
+
+  padding: 9px 12px;
+
+  border: 1px solid #e1e8ee;
+  border-radius: 8px;
+
+  background: #f8fafc;
+
+  color: #64748b;
+}
+
+
+.report-selection-summary svg {
+  flex-shrink: 0;
+
+  color: #ff6500;
+}
+
+
+.report-selection-summary span {
+  font-size: 8px;
+
+  line-height: 1.45;
+}
+
+
+.report-selection-summary strong {
+  color: #0b2945;
+
+  font-weight: 750;
+}
+
+
+/* =========================================================
+   SUMMARY GRID
+========================================================= */
+
+.report-summary-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 13px;
+
+  margin-bottom: 16px;
+}
+
+
+.report-summary-card {
+  min-height: 100px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 14px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #dce4ec;
+  border-radius: 11px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 14px
+    rgba(15, 23, 42, 0.035);
+}
+
+
+.report-summary-icon {
+  width: 43px;
+  height: 43px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 9px;
+}
+
+
+.report-summary-icon.blue {
+  background: #edf5ff;
+
+  color: #2563eb;
+}
+
+
+.report-summary-icon.orange {
+  background: #fff3e9;
+
+  color: #ff6500;
+}
+
+
+.report-summary-icon.red {
+  background: #fff0f0;
+
+  color: #dc4c4c;
+}
+
+
+.report-summary-icon.green {
+  background: #ebf9f1;
+
+  color: #22a765;
+}
+
+
+.report-summary-card span,
+.report-summary-card strong,
+.report-summary-card small {
+  display: block;
+}
+
+
+.report-summary-card span {
+  color: #64748b;
+
+  font-size: 8px;
+  font-weight: 600;
+}
+
+
+.report-summary-card strong {
+  margin-top: 3px;
+
+  color: #0b2945;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+
+.report-summary-card small {
+  margin-top: 3px;
+
+  color: #94a3b8;
+
+  font-size: 7px;
+}
+
+
+/* =========================================================
+   CHART GRID
+========================================================= */
+
+.report-chart-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 15px;
+
+  margin-bottom: 16px;
+}
+
+
+/* =========================================================
+   CHART CARDS
+========================================================= */
+
+.report-chart-card {
+  min-width: 0;
+
+  overflow: hidden;
+
+  border: 1px solid #dce4ec;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 14px
+    rgba(15, 23, 42, 0.035);
+}
+
+
+.report-chart-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding: 14px 16px;
+
+  border-bottom: 1px solid #edf1f5;
+}
+
+
+.report-chart-header h2 {
+  margin: 0;
+
+  color: #0b2945;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+
+.report-chart-header p {
+  margin: 3px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 8px;
+}
+
+
+.report-chart-header > svg {
+  flex-shrink: 0;
+
+  color: #64748b;
+}
+
+
+/* =========================================================
+   CHART LOADING
+========================================================= */
+
+.report-chart-loading {
+  min-height: 250px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 8px;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  color: #94a3b8;
+}
+
+
+.report-chart-loading span {
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   SPINNER
+========================================================= */
+
+.report-spin {
+  animation:
+    report-spin-animation
+    0.8s linear infinite;
+}
+
+
+@keyframes report-spin-animation {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   MEAL CONSUMPTION BAR CHART
+========================================================= */
+
+.report-bar-chart {
+  display: flex;
+  flex-direction: column;
+
+  gap: 17px;
+
+  padding: 20px 18px 22px;
+}
+
+
+.report-bar-row {
+  width: 100%;
+}
+
+
+.report-bar-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-bottom: 6px;
+}
+
+
+.report-bar-label span {
+  color: #526174;
+
+  font-size: 9px;
+  font-weight: 650;
+}
+
+
+.report-bar-label strong {
+  color: #0b2945;
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+.report-bar-track {
+  width: 100%;
+  height: 13px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background: #edf1f5;
+}
+
+
+.report-bar-track span {
+  display: block;
+
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: #2563eb;
+
+  transition:
+    width 0.25s ease;
+}
+
+
+/* =========================================================
+   VEG / NON-VEG COMPARISON
+========================================================= */
+
+.report-category-comparison {
+  padding: 20px 18px 22px;
+}
+
+
+.report-category-total {
+  text-align: center;
+}
+
+
+.report-category-total strong,
+.report-category-total span {
+  display: block;
+}
+
+
+.report-category-total strong {
+  color: #0b2945;
+
+  font-size: 26px;
+  font-weight: 800;
+}
+
+
+.report-category-total span {
+  margin-top: 2px;
+
+  color: #94a3b8;
+
+  font-size: 8px;
+}
+
+
+.report-category-bar {
+  width: 100%;
+  height: 17px;
+
+  display: flex;
+
+  margin-top: 20px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background: #edf1f5;
+}
+
+
+.report-category-bar .veg {
+  height: 100%;
+
+  background: #22a765;
+}
+
+
+.report-category-bar .nonveg {
+  height: 100%;
+
+  background: #ff6500;
+}
+
+
+.report-category-legend {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+
+  margin-top: 18px;
+}
+
+
+.report-category-legend > div {
+  display: grid;
+
+  grid-template-columns:
+    auto 1fr auto;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 10px;
+
+  border: 1px solid #e8edf2;
+  border-radius: 8px;
+
+  background: #fbfcfd;
+}
+
+
+.report-category-legend i {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+}
+
+
+.report-category-legend i.veg {
+  background: #22a765;
+}
+
+
+.report-category-legend i.nonveg {
+  background: #ff6500;
+}
+
+
+.report-category-legend span {
+  color: #64748b;
+
+  font-size: 8px;
+}
+
+
+.report-category-legend strong {
+  color: #0b2945;
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+.report-category-legend small {
+  grid-column: 2 / -1;
+
+  color: #94a3b8;
+
+  font-size: 7px;
+}
+
+
+/* =========================================================
+   RESPONSE DOUGHNUT
+========================================================= */
+
+.report-response-chart {
+  min-height: 260px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 36px;
+
+  padding: 22px;
+
+  box-sizing: border-box;
+}
+
+
+.report-doughnut {
+  width: 155px;
+  height: 155px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+}
+
+
+.report-doughnut-center {
+  width: 96px;
+  height: 96px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(220, 228, 236, 0.35);
+}
+
+
+.report-doughnut-center strong {
+  color: #0b2945;
+
+  font-size: 24px;
+  font-weight: 800;
+}
+
+
+.report-doughnut-center span {
+  margin-top: 2px;
+
+  color: #94a3b8;
+
+  font-size: 8px;
+}
+
+
+.report-response-legend {
+  min-width: 150px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+
+.report-response-legend > div {
+  display: grid;
+
+  grid-template-columns:
+    auto 1fr auto;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+
+.report-response-legend i {
+  width: 9px;
+  height: 9px;
+
+  border-radius: 50%;
+}
+
+
+.report-response-legend i.attending {
+  background: #22a765;
+}
+
+
+.report-response-legend i.skipping {
+  background: #ff6500;
+}
+
+
+.report-response-legend i.unanswered {
+  background: #cbd5e1;
+}
+
+
+.report-response-legend span {
+  color: #64748b;
+
+  font-size: 8px;
+}
+
+
+.report-response-legend strong {
+  color: #0b2945;
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   WASTE TREND CHART
+========================================================= */
+
+.report-waste-chart-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+
+  padding: 8px 12px 12px;
+
+  box-sizing: border-box;
+}
+
+
+.report-waste-chart {
+  width: 100%;
+  min-width: 590px;
+
+  display: block;
+
+  height: auto;
+}
+
+
+.report-chart-grid-line {
+  stroke: #e7ecf1;
+
+  stroke-width: 1;
+
+  stroke-dasharray: 4 4;
+}
+
+
+.report-chart-label {
+  fill: #94a3b8;
+
+  font-size: 9px;
+}
+
+
+.report-waste-line {
+  fill: none;
+
+  stroke: #7c3aed;
+
+  stroke-width: 3;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+.report-waste-point {
+  fill: #7c3aed;
+
+  stroke: #ffffff;
+
+  stroke-width: 2;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   EMPTY CHART
+========================================================= */
+
+.report-chart-empty {
+  min-height: 250px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 7px;
+
+  padding: 20px;
+
+  text-align: center;
+}
+
+
+.report-chart-empty svg {
+  color: #94a3b8;
+}
+
+
+.report-chart-empty strong {
+  color: #0b2945;
+
+  font-size: 10px;
+}
+
+
+.report-chart-empty span {
+  max-width: 330px;
+
+  color: #64748b;
+
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   REPORT TABLE CARD
+========================================================= */
+
+.report-table-card {
+  width: 100%;
+
+  min-width: 0;
+
+  overflow: hidden;
+
+  border: 1px solid #dce4ec;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 14px
+    rgba(15, 23, 42, 0.035);
+}
+
+
+.report-table-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding: 14px 16px;
+
+  border-bottom: 1px solid #e8edf2;
+}
+
+
+.report-table-heading strong,
+.report-table-heading span {
+  display: block;
+}
+
+
+.report-table-heading strong {
+  color: #0b2945;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+
+.report-table-heading span {
+  margin-top: 2px;
+
+  color: #94a3b8;
+
+  font-size: 8px;
+}
+
+
+/* =========================================================
+   REPORT TABLE
+========================================================= */
+
+.report-table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+
+.report-table {
+  width: 100%;
+
+  min-width: 900px;
+
+  border-collapse: collapse;
+
+  background: #ffffff;
+}
+
+
+.report-table th,
+.report-table td {
+  padding: 11px 13px;
+
+  border-bottom: 1px solid #edf1f5;
+
+  text-align: left;
+
+  vertical-align: middle;
+
+  white-space: nowrap;
+}
+
+
+.report-table th {
+  background: #f8fafc;
+
+  color: #64748b;
+
+  font-size: 8px;
+  font-weight: 800;
+}
+
+
+.report-table td {
+  color: #526174;
+
+  font-size: 9px;
+}
+
+
+.report-table td strong {
+  color: #0b2945;
+
+  font-weight: 750;
+}
+
+
+.report-table tbody tr:hover {
+  background: #fbfcfd;
+}
+
+
+.report-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+
+/* =========================================================
+   TABLE LOADING
+========================================================= */
+
+.report-table-loading {
+  min-height: 220px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 8px;
+
+  color: #94a3b8;
+}
+
+
+.report-table-loading span {
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   RESPONSIVE - LARGE DESKTOP
+========================================================= */
+
+@media (max-width: 1250px) {
+  .report-filter-card {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+
+  .report-clear-button {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+  .reports-header {
+    flex-direction: column;
+  }
+
+
+  .reports-header-actions {
+    width: 100%;
+  }
+
+
+  .report-summary-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .report-chart-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE - SMALL TABLET
+========================================================= */
+
+@media (max-width: 760px) {
+  .report-filter-card {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .report-response-chart {
+    flex-direction: column;
+
+    gap: 22px;
+  }
+
+
+  .report-response-legend {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+========================================================= */
+
+@media (max-width: 560px) {
+  .reports-header h1 {
+    font-size: 22px;
+  }
+
+
+  .reports-header-actions {
+    display: grid;
+
+    grid-template-columns: 1fr;
+  }
+
+
+  .report-action-button,
+  .report-primary-button {
+    width: 100%;
+  }
+
+
+  .report-filter-card {
+    grid-template-columns: 1fr;
+  }
+
+
+  .report-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .report-selection-summary {
+    align-items: flex-start;
+  }
+
+
+  .report-category-legend {
+    grid-template-columns: 1fr;
+  }
+
+
+  .report-doughnut {
+    width: 135px;
+    height: 135px;
+  }
+
+
+  .report-doughnut-center {
+    width: 84px;
+    height: 84px;
+  }
+}
+
+
+/* =========================================================
+   PRINT MODE
+========================================================= */
+
+@media print {
+  body {
+    background: #ffffff !important;
+  }
+
+
+  .manager-sidebar,
+  .manager-sidebar-overlay,
+  .manager-header,
+  .global-dashboard-filters,
+  .reports-header-actions,
+  .report-filter-card,
+  .report-error-message,
+  .report-warning-message {
+    display: none !important;
+  }
+
+
+  .manager-main,
+  .manager-content,
+  .manager-content-area,
+  .manager-page-content {
+    width: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+
+  .reports-page {
+    width: 100%;
+
+    padding: 10px;
+
+    background: #ffffff;
+  }
+
+
+  .reports-header {
+    display: block;
+
+    margin-bottom: 18px;
+  }
+
+
+  .report-summary-grid {
+    grid-template-columns:
+      repeat(4, 1fr);
+
+    break-inside: avoid;
+  }
+
+
+  .report-chart-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    break-inside: avoid;
+  }
+
+
+  .report-summary-card,
+  .report-chart-card,
+  .report-table-card {
+    box-shadow: none;
+
+    break-inside: avoid;
+  }
+
+
+  .report-selection-summary {
+    border: 1px solid #dce4ec;
+
+    background: #ffffff;
+  }
+
+
+  .report-table-wrapper {
+    overflow: visible;
+  }
+
+
+  .report-table {
+    min-width: 0;
+  }
+
+
+  .report-waste-chart {
+    min-width: 0;
+  }
+
+
+  @page {
+    size: A4 landscape;
+
+    margin: 12mm;
+  }
+}

@@ -1,0 +1,1096 @@
+{
+  "categories": {
+    "forecasts": {
+      "correctly_owned": 1020,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "hostel_blocks": {
+      "correctly_owned": 31,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "hostels": {
+      "correctly_owned": 13,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "meal_responses": {
+      "correctly_owned": 84,
+      "invalid_or_orphaned": 84,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "menus": {
+      "correctly_owned": 1009,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "mess_units": {
+      "correctly_owned": 16,
+      "invalid_or_orphaned": 8,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "notifications": {
+      "correctly_owned": 22,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "staff": {
+      "correctly_owned": 30,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "students": {
+      "correctly_owned": 104,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    },
+    "waste_records": {
+      "correctly_owned": 1008,
+      "invalid_or_orphaned": 0,
+      "missing_ownership": 0,
+      "reassigned": 0
+    }
+  },
+  "generated_at_utc": "2026-09-12T10:01:32.637810+00:00",
+  "issues": [
+    {
+      "category": "mess_units",
+      "details": {
+        "block_id": null,
+        "hostel_id": 4,
+        "name": "North Mess",
+        "supervisor_user_id": 111
+      },
+      "message": "supervisor belongs to a different Hostel.",
+      "record_id": 5,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "mess_units",
+      "details": {
+        "block_id": null,
+        "hostel_id": 4,
+        "name": "South Mess",
+        "supervisor_user_id": 115
+      },
+      "message": "supervisor belongs to a different Hostel.",
+      "record_id": 6,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "mess_units",
+      "details": {
+        "block_id": null,
+        "hostel_id": 5,
+        "name": "North Mess",
+        "supervisor_user_id": 118
+      },
+      "message": "supervisor belongs to a different Hostel.",
+      "record_id": 7,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "mess_units",
+      "details": {
+        "block_id": null,
+        "hostel_id": 5,
+        "name": "South Mess",
+        "supervisor_user_id": 122
+      },
+      "message": "supervisor belongs to a different Hostel.",
+      "record_id": 8,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "mess_units",
+      "details": {
+        "block_id": null,
+        "hostel_id": 6,
+        "name": "North Mess",
+        "supervisor_user_id": 125
+      },
+      "message": "supervisor belongs to a different Hostel.",
+      "record_id": 9,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "mess_units",
+      "details": {
+        "block_id": null,
+        "hostel_id": 6,
+        "name": "South Mess",
+        "supervisor_user_id": 129
+      },
+      "message": "supervisor belongs to a different Hostel.",
+      "record_id": 10,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "mess_units",
+      "details": {
+        "block_id": null,
+        "hostel_id": 7,
+        "name": "North Mess",
+        "supervisor_user_id": 132
+      },
+      "message": "supervisor belongs to a different Hostel.",
+      "record_id": 11,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "mess_units",
+      "details": {
+        "block_id": null,
+        "hostel_id": 7,
+        "name": "South Mess",
+        "supervisor_user_id": 136
+      },
+      "message": "supervisor belongs to a different Hostel.",
+      "record_id": 12,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 499,
+        "mess_unit_id": 5,
+        "student_user_id": 11
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 85,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 499,
+        "mess_unit_id": 5,
+        "student_user_id": 13
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 86,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 499,
+        "mess_unit_id": 5,
+        "student_user_id": 15
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 87,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 499,
+        "mess_unit_id": 5,
+        "student_user_id": 17
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 88,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 499,
+        "mess_unit_id": 5,
+        "student_user_id": 21
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 89,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 499,
+        "mess_unit_id": 5,
+        "student_user_id": 23
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 90,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 503,
+        "mess_unit_id": 5,
+        "student_user_id": 12
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 91,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 503,
+        "mess_unit_id": 5,
+        "student_user_id": 14
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 92,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 503,
+        "mess_unit_id": 5,
+        "student_user_id": 16
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 93,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 503,
+        "mess_unit_id": 5,
+        "student_user_id": 18
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 94,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 503,
+        "mess_unit_id": 5,
+        "student_user_id": 22
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 95,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 507,
+        "mess_unit_id": 6,
+        "student_user_id": 25
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 96,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 507,
+        "mess_unit_id": 6,
+        "student_user_id": 27
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 97,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 507,
+        "mess_unit_id": 6,
+        "student_user_id": 29
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 98,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 507,
+        "mess_unit_id": 6,
+        "student_user_id": 31
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 99,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 507,
+        "mess_unit_id": 6,
+        "student_user_id": 35
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 100,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 511,
+        "mess_unit_id": 6,
+        "student_user_id": 24
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 101,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 511,
+        "mess_unit_id": 6,
+        "student_user_id": 26
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 102,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 511,
+        "mess_unit_id": 6,
+        "student_user_id": 28
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 103,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 511,
+        "mess_unit_id": 6,
+        "student_user_id": 30
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 104,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 511,
+        "mess_unit_id": 6,
+        "student_user_id": 34
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 105,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 515,
+        "mess_unit_id": 7,
+        "student_user_id": 36
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 106,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 515,
+        "mess_unit_id": 7,
+        "student_user_id": 38
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 107,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 515,
+        "mess_unit_id": 7,
+        "student_user_id": 40
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 108,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 515,
+        "mess_unit_id": 7,
+        "student_user_id": 42
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 109,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 515,
+        "mess_unit_id": 7,
+        "student_user_id": 46
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 110,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 515,
+        "mess_unit_id": 7,
+        "student_user_id": 48
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 111,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 519,
+        "mess_unit_id": 7,
+        "student_user_id": 37
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 112,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 519,
+        "mess_unit_id": 7,
+        "student_user_id": 39
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 113,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 519,
+        "mess_unit_id": 7,
+        "student_user_id": 41
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 114,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 519,
+        "mess_unit_id": 7,
+        "student_user_id": 43
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 115,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 519,
+        "mess_unit_id": 7,
+        "student_user_id": 47
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 116,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 523,
+        "mess_unit_id": 8,
+        "student_user_id": 50
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 117,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 523,
+        "mess_unit_id": 8,
+        "student_user_id": 52
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 118,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 523,
+        "mess_unit_id": 8,
+        "student_user_id": 54
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 119,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 523,
+        "mess_unit_id": 8,
+        "student_user_id": 56
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 120,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 523,
+        "mess_unit_id": 8,
+        "student_user_id": 60
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 121,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 527,
+        "mess_unit_id": 8,
+        "student_user_id": 49
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 122,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 527,
+        "mess_unit_id": 8,
+        "student_user_id": 51
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 123,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 527,
+        "mess_unit_id": 8,
+        "student_user_id": 53
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 124,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 527,
+        "mess_unit_id": 8,
+        "student_user_id": 55
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 125,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 527,
+        "mess_unit_id": 8,
+        "student_user_id": 59
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 126,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 531,
+        "mess_unit_id": 9,
+        "student_user_id": 61
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 127,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 531,
+        "mess_unit_id": 9,
+        "student_user_id": 63
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 128,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 531,
+        "mess_unit_id": 9,
+        "student_user_id": 65
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 129,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 531,
+        "mess_unit_id": 9,
+        "student_user_id": 67
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 130,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 531,
+        "mess_unit_id": 9,
+        "student_user_id": 71
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 131,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 531,
+        "mess_unit_id": 9,
+        "student_user_id": 73
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 132,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 535,
+        "mess_unit_id": 9,
+        "student_user_id": 62
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 133,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 535,
+        "mess_unit_id": 9,
+        "student_user_id": 64
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 134,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 535,
+        "mess_unit_id": 9,
+        "student_user_id": 66
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 135,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 535,
+        "mess_unit_id": 9,
+        "student_user_id": 68
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 136,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 535,
+        "mess_unit_id": 9,
+        "student_user_id": 72
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 137,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 539,
+        "mess_unit_id": 10,
+        "student_user_id": 75
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 138,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 539,
+        "mess_unit_id": 10,
+        "student_user_id": 77
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 139,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 539,
+        "mess_unit_id": 10,
+        "student_user_id": 79
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 140,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 539,
+        "mess_unit_id": 10,
+        "student_user_id": 81
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 141,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 539,
+        "mess_unit_id": 10,
+        "student_user_id": 85
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 142,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 543,
+        "mess_unit_id": 10,
+        "student_user_id": 74
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 143,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 543,
+        "mess_unit_id": 10,
+        "student_user_id": 76
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 144,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 543,
+        "mess_unit_id": 10,
+        "student_user_id": 78
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 145,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 543,
+        "mess_unit_id": 10,
+        "student_user_id": 80
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 146,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 543,
+        "mess_unit_id": 10,
+        "student_user_id": 84
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 147,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 547,
+        "mess_unit_id": 11,
+        "student_user_id": 86
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 148,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 547,
+        "mess_unit_id": 11,
+        "student_user_id": 88
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 149,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 547,
+        "mess_unit_id": 11,
+        "student_user_id": 90
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 150,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 547,
+        "mess_unit_id": 11,
+        "student_user_id": 92
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 151,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 547,
+        "mess_unit_id": 11,
+        "student_user_id": 96
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 152,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 547,
+        "mess_unit_id": 11,
+        "student_user_id": 98
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 153,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 551,
+        "mess_unit_id": 11,
+        "student_user_id": 87
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 154,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 551,
+        "mess_unit_id": 11,
+        "student_user_id": 89
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 155,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 551,
+        "mess_unit_id": 11,
+        "student_user_id": 91
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 156,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 551,
+        "mess_unit_id": 11,
+        "student_user_id": 93
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 157,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 551,
+        "mess_unit_id": 11,
+        "student_user_id": 97
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 158,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 555,
+        "mess_unit_id": 12,
+        "student_user_id": 100
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 159,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 555,
+        "mess_unit_id": 12,
+        "student_user_id": 102
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 160,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 555,
+        "mess_unit_id": 12,
+        "student_user_id": 104
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 161,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 555,
+        "mess_unit_id": 12,
+        "student_user_id": 106
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 162,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 555,
+        "mess_unit_id": 12,
+        "student_user_id": 110
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 163,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 559,
+        "mess_unit_id": 12,
+        "student_user_id": 99
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 164,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 559,
+        "mess_unit_id": 12,
+        "student_user_id": 101
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 165,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 559,
+        "mess_unit_id": 12,
+        "student_user_id": 103
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 166,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 559,
+        "mess_unit_id": 12,
+        "student_user_id": 105
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 167,
+      "status": "invalid_or_orphaned"
+    },
+    {
+      "category": "meal_responses",
+      "details": {
+        "menu_id": 559,
+        "mess_unit_id": 12,
+        "student_user_id": 109
+      },
+      "message": "Student belongs to a different Hostel than the Menu.",
+      "record_id": 168,
+      "status": "invalid_or_orphaned"
+    }
+  ],
+  "mode": "audit-only",
+  "repairs": [],
+  "seed_manager": null,
+  "totals": {
+    "correctly_owned": 3337,
+    "invalid_or_orphaned": 92,
+    "missing_ownership": 0,
+    "reassigned": 0
+  }
+}

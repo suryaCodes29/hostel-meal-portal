@@ -1,0 +1,884 @@
+/* =========================================================
+   GLOBAL MANAGER THEME
+   Applies to:
+   Header
+   Sidebar
+   Overview
+   Students
+   Mess Units
+   Menu Management
+   Forecasts
+   Reports
+   Staff
+   Settings
+========================================================= */
+
+
+/* =========================================================
+   DEFAULT / LIGHT VARIABLES
+========================================================= */
+
+:root {
+  --manager-bg: #f5f7fa;
+
+  --manager-surface: #ffffff;
+
+  --manager-surface-soft: #f8fafc;
+
+  --manager-surface-hover: #f4f7fa;
+
+  --manager-text: #0b2945;
+
+  --manager-text-secondary: #64748b;
+
+  --manager-text-muted: #94a3b8;
+
+  --manager-border: #dce4ec;
+
+  --manager-border-soft: #edf1f5;
+
+  --manager-primary: #0b2945;
+
+  --manager-accent: #ff6500;
+
+  --manager-accent-hover: #e85c00;
+
+  --manager-blue: #2563eb;
+
+  --manager-green: #16864e;
+
+  --manager-red: #c23c47;
+
+  --manager-warning: #c77809;
+
+  --manager-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+
+/* =========================================================
+   DARK VARIABLES
+========================================================= */
+
+html[data-manager-theme="dark"] {
+  --manager-bg: #0d1924;
+
+  --manager-surface: #152433;
+
+  --manager-surface-soft: #1b2d3e;
+
+  --manager-surface-hover: #203447;
+
+  --manager-text: #f1f5f9;
+
+  --manager-text-secondary: #a5b4c3;
+
+  --manager-text-muted: #8295a8;
+
+  --manager-border: #304052;
+
+  --manager-border-soft: #263849;
+
+  --manager-primary: #dbeafe;
+
+  --manager-accent: #ff7a22;
+
+  --manager-accent-hover: #ff6500;
+
+  --manager-blue: #60a5fa;
+
+  --manager-green: #4ade80;
+
+  --manager-red: #fb7185;
+
+  --manager-warning: #fbbf24;
+
+  --manager-shadow:
+    0 4px 18px rgba(0, 0, 0, 0.2);
+
+  color-scheme: dark;
+}
+
+
+/* =========================================================
+   MANAGER ROOT AREAS
+========================================================= */
+
+.manager-layout,
+.manager-shell,
+.manager-main,
+.manager-content,
+.manager-content-area,
+.manager-page-content {
+  background: var(--manager-bg);
+
+  color: var(--manager-text);
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+
+/* =========================================================
+   GLOBAL MANAGER HEADINGS
+========================================================= */
+
+.manager-layout h1,
+.manager-layout h2,
+.manager-layout h3,
+.manager-layout h4,
+.manager-content h1,
+.manager-content h2,
+.manager-content h3,
+.manager-content-area h1,
+.manager-content-area h2,
+.manager-content-area h3 {
+  color: var(--manager-text);
+}
+
+
+/* =========================================================
+   GLOBAL CARDS
+========================================================= */
+
+.app-card,
+
+.staff-summary-card,
+.staff-filter-card,
+.staff-table-card,
+
+.menu-summary-card,
+.menu-filter-card,
+.menu-table-card,
+
+.forecast-summary-card,
+.forecast-filter-card,
+.forecast-panel,
+.forecast-table-card,
+
+.report-summary-card,
+.report-filter-card,
+.report-chart-card,
+.report-table-card,
+
+.settings-tabs,
+.settings-content-card,
+
+.student-summary-card,
+.student-filter-card,
+.student-table-card,
+
+.mess-unit-card,
+.mess-units-card,
+
+.overview-card,
+.overview-summary-card,
+.overview-panel {
+  border-color: var(--manager-border) !important;
+
+  background: var(--manager-surface) !important;
+
+  color: var(--manager-text);
+
+  box-shadow: var(--manager-shadow);
+}
+
+
+/* =========================================================
+   SOFT CARD AREAS
+========================================================= */
+
+.staff-empty-state,
+
+.menu-empty-state,
+
+.forecast-day-card,
+.forecast-upcoming-empty,
+
+.report-selection-summary,
+
+.settings-info-item,
+.settings-info-grid > div,
+.settings-general-note,
+.settings-theme-preview,
+
+.student-empty-state {
+  background: var(--manager-surface-soft) !important;
+
+  border-color: var(--manager-border-soft) !important;
+}
+
+
+/* =========================================================
+   PARAGRAPHS / SECONDARY TEXT
+========================================================= */
+
+.staff-page p,
+.menu-management-page p,
+.forecasts-page p,
+.reports-page p,
+.manager-settings-page p,
+
+.staff-page span,
+.menu-management-page span,
+.forecasts-page span,
+.reports-page span,
+.manager-settings-page span {
+  transition:
+    color 0.2s ease;
+}
+
+
+/* =========================================================
+   COMMON INPUTS / SELECTS / TEXTAREAS
+========================================================= */
+
+.manager-layout input,
+.manager-layout select,
+.manager-layout textarea,
+
+.manager-content input,
+.manager-content select,
+.manager-content textarea {
+  border-color: var(--manager-border);
+
+  background: var(--manager-surface);
+
+  color: var(--manager-text);
+}
+
+
+.manager-layout input::placeholder,
+.manager-layout textarea::placeholder {
+  color: var(--manager-text-muted);
+}
+
+
+.manager-layout select option {
+  background: var(--manager-surface);
+
+  color: var(--manager-text);
+}
+
+
+/* =========================================================
+   TABLES
+========================================================= */
+
+.staff-table,
+.menu-table,
+.forecast-table,
+.report-table,
+.student-table {
+  background: var(--manager-surface) !important;
+}
+
+
+.staff-table th,
+.menu-table th,
+.forecast-table th,
+.report-table th,
+.student-table th {
+  background: var(--manager-surface-soft) !important;
+
+  color: var(--manager-text-secondary) !important;
+
+  border-color: var(--manager-border-soft) !important;
+}
+
+
+.staff-table td,
+.menu-table td,
+.forecast-table td,
+.report-table td,
+.student-table td {
+  color: var(--manager-text-secondary);
+
+  border-color: var(--manager-border-soft) !important;
+}
+
+
+.staff-table tbody tr:hover,
+.menu-table tbody tr:hover,
+.forecast-table tbody tr:hover,
+.report-table tbody tr:hover,
+.student-table tbody tr:hover {
+  background: var(--manager-surface-hover) !important;
+}
+
+
+/* =========================================================
+   MANAGER HEADER
+========================================================= */
+
+.manager-header {
+  border-bottom-color: var(--manager-border) !important;
+
+  background: var(--manager-surface) !important;
+
+  color: var(--manager-text);
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.manager-header-title h2 {
+  color: var(--manager-text) !important;
+}
+
+
+.manager-header-title p {
+  color: var(--manager-text-secondary) !important;
+}
+
+
+.manager-menu-button,
+.manager-icon-button,
+.manager-help-button,
+.manager-profile-button {
+  color: var(--manager-text) !important;
+}
+
+
+.manager-menu-button:hover,
+.manager-icon-button:hover,
+.manager-help-button:hover,
+.manager-profile-button:hover {
+  background: var(--manager-surface-hover) !important;
+}
+
+
+.manager-profile-info strong {
+  color: var(--manager-text) !important;
+}
+
+
+.manager-profile-info span {
+  color: var(--manager-text-secondary) !important;
+}
+
+
+/* =========================================================
+   HEADER DROPDOWNS
+========================================================= */
+
+.manager-dropdown {
+  border-color: var(--manager-border) !important;
+
+  background: var(--manager-surface) !important;
+
+  box-shadow:
+    0 14px 38px rgba(0, 0, 0, 0.16);
+}
+
+
+.dropdown-header,
+.notification-item,
+.profile-dropdown-user,
+.profile-dropdown-divider {
+  border-color: var(--manager-border-soft) !important;
+}
+
+
+.dropdown-header strong,
+.notification-item strong,
+.profile-dropdown-user strong {
+  color: var(--manager-text) !important;
+}
+
+
+.dropdown-header span,
+.notification-item span,
+.profile-dropdown-user span {
+  color: var(--manager-text-secondary) !important;
+}
+
+
+.notification-item:hover,
+.profile-dropdown-option:hover {
+  background: var(--manager-surface-hover) !important;
+}
+
+
+.profile-dropdown-option {
+  color: var(--manager-text-secondary) !important;
+}
+
+
+.profile-dropdown-option.logout-option {
+  color: var(--manager-red) !important;
+}
+
+
+.notification-empty strong {
+  color: var(--manager-text) !important;
+}
+
+
+.notification-empty span {
+  color: var(--manager-text-secondary) !important;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.manager-sidebar {
+  border-right-color: var(--manager-border) !important;
+
+  background: var(--manager-surface) !important;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.manager-sidebar-header {
+  border-bottom-color: var(--manager-border-soft) !important;
+}
+
+
+.manager-sidebar-brand h2 {
+  color: var(--manager-text) !important;
+}
+
+
+.manager-sidebar-brand span,
+.manager-sidebar-section-title {
+  color: var(--manager-text-muted) !important;
+}
+
+
+.manager-nav-item {
+  color: var(--manager-text-secondary) !important;
+}
+
+
+.manager-nav-item:hover {
+  background: var(--manager-surface-hover) !important;
+
+  color: var(--manager-text) !important;
+}
+
+
+.manager-nav-item.active {
+  background:
+    rgba(255, 101, 0, 0.12) !important;
+
+  color: var(--manager-accent) !important;
+}
+
+
+.manager-sidebar-footer {
+  border-top-color: var(--manager-border-soft) !important;
+}
+
+
+.manager-sidebar-footer strong {
+  color: var(--manager-text) !important;
+}
+
+
+.manager-sidebar-footer span {
+  color: var(--manager-text-secondary) !important;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.app-button-primary,
+.staff-primary-button,
+.menu-primary-button,
+.report-primary-button,
+.settings-add-button {
+  background: var(--manager-accent) !important;
+
+  border-color: var(--manager-accent) !important;
+
+  color: #ffffff !important;
+}
+
+
+.app-button-primary:hover,
+.staff-primary-button:hover:not(:disabled),
+.menu-primary-button:hover:not(:disabled),
+.report-primary-button:hover:not(:disabled),
+.settings-add-button:hover:not(:disabled) {
+  background: var(--manager-accent-hover) !important;
+
+  border-color: var(--manager-accent-hover) !important;
+}
+
+
+.app-button-secondary,
+.staff-secondary-button,
+.menu-secondary-button,
+.forecast-secondary-button,
+.report-action-button,
+.settings-secondary-button {
+  border-color: var(--manager-border) !important;
+
+  background: var(--manager-surface) !important;
+
+  color: var(--manager-text) !important;
+}
+
+
+.app-button-secondary:hover,
+.staff-secondary-button:hover:not(:disabled),
+.menu-secondary-button:hover:not(:disabled),
+.forecast-secondary-button:hover,
+.report-action-button:hover:not(:disabled),
+.settings-secondary-button:hover:not(:disabled) {
+  background: var(--manager-surface-hover) !important;
+}
+
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+.staff-modal,
+.staff-confirm-modal,
+
+.menu-modal,
+.menu-confirm-modal,
+
+.forecast-modal {
+  background: var(--manager-surface) !important;
+
+  color: var(--manager-text);
+
+  border:
+    1px solid var(--manager-border);
+}
+
+
+.staff-modal-header,
+.menu-modal-header,
+.forecast-modal-header {
+  border-color: var(--manager-border-soft) !important;
+}
+
+
+.staff-modal-header h2,
+.menu-modal-header h2,
+.forecast-modal-header h2,
+
+.staff-confirm-modal h2,
+.menu-confirm-modal h2 {
+  color: var(--manager-text) !important;
+}
+
+
+.staff-modal-header p,
+.menu-modal-header p,
+.forecast-modal-header p,
+
+.staff-confirm-modal p,
+.menu-confirm-modal p {
+  color: var(--manager-text-secondary) !important;
+}
+
+
+.staff-modal-header > button,
+.menu-modal-header > button,
+.forecast-modal-header > button {
+  background: var(--manager-surface-soft) !important;
+
+  color: var(--manager-text-secondary) !important;
+}
+
+
+/* =========================================================
+   STAFF PAGE
+========================================================= */
+
+.staff-page-header h1,
+.staff-table-heading strong,
+.staff-summary-card strong,
+.staff-name-cell > span {
+  color: var(--manager-text) !important;
+}
+
+
+.staff-page-header p,
+.staff-summary-card span,
+.staff-table-heading span {
+  color: var(--manager-text-secondary) !important;
+}
+
+
+/* =========================================================
+   MENU MANAGEMENT
+========================================================= */
+
+.menu-management-header h1,
+.menu-table-heading strong,
+.menu-summary-card strong {
+  color: var(--manager-text) !important;
+}
+
+
+.menu-management-header p,
+.menu-summary-card span,
+.menu-table-heading span {
+  color: var(--manager-text-secondary) !important;
+}
+
+
+.menu-items-cell {
+  color: var(--manager-text-secondary) !important;
+}
+
+
+/* =========================================================
+   FORECASTS
+========================================================= */
+
+.forecasts-header h1,
+.forecast-panel-header h2,
+.forecast-table-heading strong,
+.forecast-summary-card strong,
+.forecast-meal-row-top > div strong,
+.forecast-day-heading strong,
+.forecast-day-meal > div:first-child strong {
+  color: var(--manager-text) !important;
+}
+
+
+.forecasts-header p,
+.forecast-panel-header p,
+.forecast-table-heading span,
+.forecast-summary-card span,
+.forecast-meal-row-top > div span,
+.forecast-day-meal > div:first-child span {
+  color: var(--manager-text-secondary) !important;
+}
+
+
+.forecast-meal-progress {
+  background: var(--manager-border-soft) !important;
+}
+
+
+.forecast-chart-grid-line {
+  stroke: var(--manager-border-soft);
+}
+
+
+.forecast-chart-axis-label {
+  fill: var(--manager-text-muted);
+}
+
+
+/* =========================================================
+   REPORTS
+========================================================= */
+
+.reports-header h1,
+.report-chart-header h2,
+.report-table-heading strong,
+.report-summary-card strong,
+.report-category-total strong {
+  color: var(--manager-text) !important;
+}
+
+
+.reports-header p,
+.report-chart-header p,
+.report-table-heading span,
+.report-summary-card span,
+.report-summary-card small {
+  color: var(--manager-text-secondary) !important;
+}
+
+
+.report-bar-track,
+.report-category-bar {
+  background: var(--manager-border-soft) !important;
+}
+
+
+.report-chart-grid-line {
+  stroke: var(--manager-border-soft);
+}
+
+
+.report-chart-label {
+  fill: var(--manager-text-muted);
+}
+
+
+.report-doughnut-center {
+  background: var(--manager-surface) !important;
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+.manager-settings-page {
+  color: var(--manager-text);
+}
+
+
+.settings-page-header h1,
+.settings-section-heading h2,
+.settings-info-grid strong,
+.settings-general-note strong,
+.settings-option-row strong,
+.settings-security-content strong,
+.settings-theme-preview strong,
+.settings-theme-mode-card strong,
+.settings-theme-color strong {
+  color: var(--manager-text) !important;
+}
+
+
+.settings-page-header p,
+.settings-section-heading p,
+.settings-option-row div span,
+.settings-security-content span,
+.settings-theme-preview span,
+.settings-theme-mode-card span,
+.settings-theme-color div span {
+  color: var(--manager-text-secondary) !important;
+}
+
+
+.settings-theme-mode-card {
+  border-color: var(--manager-border) !important;
+
+  background: var(--manager-surface) !important;
+}
+
+
+.settings-theme-mode-card.active {
+  border-color: var(--manager-accent) !important;
+
+  background:
+    rgba(255, 101, 0, 0.08) !important;
+}
+
+
+/* =========================================================
+   SCROLLBAR - DARK MODE
+========================================================= */
+
+html[data-manager-theme="dark"]
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+
+html[data-manager-theme="dark"]
+::-webkit-scrollbar-track {
+  background: #142332;
+}
+
+
+html[data-manager-theme="dark"]
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  background: #465a6f;
+}
+
+
+/* =========================================================
+   COMPACT MODE
+========================================================= */
+
+html.manager-compact-mode
+.manager-content,
+html.manager-compact-mode
+.manager-content-area,
+html.manager-compact-mode
+.manager-page-content {
+  padding-top: 14px !important;
+  padding-bottom: 14px !important;
+}
+
+
+html.manager-compact-mode
+.staff-summary-grid,
+html.manager-compact-mode
+.menu-summary-grid,
+html.manager-compact-mode
+.forecast-summary-grid,
+html.manager-compact-mode
+.report-summary-grid {
+  gap: 9px;
+}
+
+
+html.manager-compact-mode
+.staff-summary-card,
+html.manager-compact-mode
+.menu-summary-card,
+html.manager-compact-mode
+.forecast-summary-card,
+html.manager-compact-mode
+.report-summary-card {
+  min-height: 82px !important;
+
+  padding: 10px 12px !important;
+}
+
+
+html.manager-compact-mode
+.staff-filter-card,
+html.manager-compact-mode
+.menu-filter-card,
+html.manager-compact-mode
+.forecast-filter-card,
+html.manager-compact-mode
+.report-filter-card {
+  padding: 11px !important;
+
+  margin-bottom: 11px !important;
+}
+
+
+html.manager-compact-mode
+.forecast-dashboard-grid,
+html.manager-compact-mode
+.report-chart-grid {
+  gap: 10px;
+
+  margin-bottom: 11px;
+}
+
+
+html.manager-compact-mode
+.settings-content-card {
+  padding: 16px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+  .manager-header {
+    background:
+      var(--manager-surface) !important;
+  }
+
+
+  .manager-sidebar {
+    background:
+      var(--manager-surface) !important;
+  }
+}
