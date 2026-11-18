@@ -1,0 +1,24 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Node
+node_modules/
+
+# Frontend build
+dist/
+build/
+
+# Logs
+*.log
+
+# Local uploads / instance data
+uploads/
+instance/

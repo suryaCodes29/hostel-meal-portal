@@ -375,173 +375,97 @@ export function ManagerProvider({
      AUTHENTICATED FETCH
   ========================================================== */
 
-  const apiFetch =
-    useCallback(
-      async (
-        endpoint,
-        options = {}
-      ) => {
-        const token =
-          getToken();
+  const apiFetch = useCallback(
+    async (endpoint, options = {}) => {
+      const token = getToken();
 
+      if (!token) {
+        const error = new Error(
+          "Authentication is required. Please sign in."
+        );
+        error.status = 401;
+        throw error;
+      }
 
-        if (!token) {
-          const error =
-            new Error(
-              "Authentication is required."
-            );
+      const requestHeaders = {
+        ...(options.body && !(options.body instanceof FormData)
+          ? { "Content-Type": "application/json" }
+          : {}),
+        ...(options.headers || {}),
+        Authorization: `Bearer ${token}`,
+      };
 
+      let response;
 
-          error.status =
-            401;
+      try {
+        response = await fetch(`${API_BASE_URL}${endpoint}`, {
+          ...options,
+          headers: requestHeaders,
+          cache: "no-store",
+        });
+      } catch (cause) {
+        // Network and CORS errors must not log out the manager.
+        const error = new Error(
+          "Unable to reach the server. Check your backend connection and try again."
+        );
+        error.cause = cause;
+        error.status = 0;
+        throw error;
+      }
 
+      let data = {};
 
-          throw error;
-        }
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
 
-
-        const requestHeaders = {
-          ...(options.body &&
-          !(
-            options.body
-            instanceof FormData
-          )
-            ? {
-                "Content-Type":
-                  "application/json",
-              }
-            : {}),
-
-          Authorization:
-            `Bearer ${token}`,
-
-          ...(options.headers ||
-            {}),
-        };
-
-
-        const response =
-          await fetch(
-            `${API_BASE_URL}${endpoint}`,
-            {
-              ...options,
-
-              headers:
-                requestHeaders,
-
-              /*
-               * Manager API responses must always be fresh.
-               *
-               * We do not want browser HTTP cache from one
-               * authenticated account reused after switching
-               * to another account.
-               */
-              cache:
-                "no-store",
-            }
-          );
-
-
-        let data = {};
-
-
-        try {
-          data =
-            await response.json();
-
-        } catch {
-          data = {};
-        }
-
+      if (response.status === 401) {
+        // Redirect only if the failed request still belongs
+        // to the currently authenticated session.
+        const currentToken = getToken();
+        const currentRole = getStoredRole();
 
         if (
-          response.status ===
-          401
+          currentToken === token &&
+          currentRole === "manager"
         ) {
           handleExpiredSession();
-
-
-          const error =
-            new Error(
-              data?.message ||
-              "Your session has expired."
-            );
-
-
-          error.status =
-            401;
-
-
-          error.data =
-            data;
-
-
-          throw error;
         }
 
+        const error = new Error(
+          data?.message || "Your session has expired."
+        );
+        error.status = 401;
+        error.data = data;
+        throw error;
+      }
 
-        /*
-         * IMPORTANT:
-         *
-         * A 403 does NOT log the Manager out.
-         *
-         * 403 can correctly occur when:
-         * - another Manager's Hostel ID is requested
-         * - another Manager's Student ID is requested
-         * - another Manager's Mess Unit is requested
-         * - the Manager lacks permission for a resource
-         */
-        if (
-          response.status ===
-          403
-        ) {
-          const error =
-            new Error(
-              data?.message ||
-              "You do not have permission to access this resource."
-            );
+      if (response.status === 403) {
+        const error = new Error(
+          data?.message ||
+            "You do not have permission to access this resource."
+        );
+        error.status = 403;
+        error.data = data;
+        throw error;
+      }
 
+      if (!response.ok) {
+        const error = new Error(
+          data?.message ||
+            `Request failed with HTTP ${response.status}.`
+        );
+        error.status = response.status;
+        error.data = data;
+        throw error;
+      }
 
-          error.status =
-            403;
-
-
-          error.data =
-            data;
-
-
-          throw error;
-        }
-
-
-        if (!response.ok) {
-          const error =
-            new Error(
-              data?.message ||
-              "Something went wrong."
-            );
-
-
-          error.status =
-            response.status;
-
-
-          error.data =
-            data;
-
-
-          throw error;
-        }
-
-
-        return data;
-      },
-      [
-        getToken,
-        handleExpiredSession,
-      ]
-    );
-
+      return data;
+    },
+    [getToken, handleExpiredSession]
+  );
 
   /* ==========================================================
      LOAD MANAGER PROFILE

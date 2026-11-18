@@ -555,3 +555,159 @@ export async function markAllNotificationsRead(
     }
   );
 }
+
+
+/* ============================================================
+   STUDENT FEEDBACK — MANAGER PORTAL
+============================================================ */
+
+export async function getManagerFeedback(
+  apiFetch,
+  params = {}
+) {
+  return apiFetch(
+    `/api/manager/feedback${buildQuery(params)}`
+  );
+}
+
+export async function replyToStudentFeedback(
+  apiFetch,
+  feedbackId,
+  reply
+) {
+  return apiFetch(
+    `/api/manager/feedback/${feedbackId}/reply`,
+    {
+      method: "PATCH",
+      body: JSON.stringify({ reply }),
+    }
+  );
+}
+
+/* ============================================================
+   MANAGER ANNOUNCEMENTS
+============================================================ */
+
+export async function getManagerAnnouncements(
+  apiFetch,
+  params = {}
+) {
+  return apiFetch(
+    `/api/manager/announcements${buildQuery(params)}`
+  );
+}
+
+export async function createManagerAnnouncement(
+  apiFetch,
+  payload
+) {
+  return apiFetch(
+    "/api/manager/announcements",
+    {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }
+  );
+}
+
+export async function updateManagerAnnouncement(
+  apiFetch,
+  announcementId,
+  payload
+) {
+  return apiFetch(
+    `/api/manager/announcements/${announcementId}`,
+    {
+      method: "PATCH",
+      body: JSON.stringify(payload),
+    }
+  );
+}
+// ============================================================
+// MANAGER FEEDBACK
+// ============================================================
+
+export async function getManagerFeedback(
+  apiFetch,
+  params = {}
+) {
+  return apiFetch(
+    `/api/manager/feedback${buildQuery(params)}`
+  );
+}
+
+export async function updateManagerFeedback(
+  apiFetch,
+  feedbackId,
+  payload
+) {
+  return apiFetch(
+    `/api/manager/feedback/${feedbackId}`,
+    {
+      method: "PATCH",
+      body: JSON.stringify(payload),
+    }
+  );
+}
+
+
+// ============================================================
+// MANAGER ANNOUNCEMENTS
+// ============================================================
+
+export async function getManagerAnnouncements(
+  apiFetch
+) {
+  return apiFetch("/api/manager/announcements");
+}
+
+export async function createManagerAnnouncement(
+  apiFetch,
+  payload
+) {
+  return apiFetch(
+    "/api/manager/announcements",
+    {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }
+  );
+}
+
+export async function updateManagerAnnouncement(
+  apiFetch,
+  announcementId,
+  payload
+) {
+  return apiFetch(
+    `/api/manager/announcements/${announcementId}`,
+    {
+      method: "PATCH",
+      body: JSON.stringify(payload),
+    }
+  );
+}
+
+export async function publishManagerAnnouncement(
+  apiFetch,
+  announcementId
+) {
+  return apiFetch(
+    `/api/manager/announcements/${announcementId}/publish`,
+    {
+      method: "POST",
+    }
+  );
+}
+
+export async function unpublishManagerAnnouncement(
+  apiFetch,
+  announcementId
+) {
+  return apiFetch(
+    `/api/manager/announcements/${announcementId}/unpublish`,
+    {
+      method: "POST",
+    }
+  );
+}

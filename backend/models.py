@@ -1181,6 +1181,29 @@ class MealResponse(db.Model):
         nullable=False
     )
 
+    # Immutable menu snapshot retained for Student Meal History.
+    # These fields allow historical response records to remain useful
+    # even when the 40-day Menu cleanup removes the original Menu row.
+    menu_date_snapshot = db.Column(
+        db.Date,
+        nullable=True
+    )
+
+    meal_snapshot = db.Column(
+        db.String(30),
+        nullable=True
+    )
+
+    meal_category_snapshot = db.Column(
+        db.String(30),
+        nullable=True
+    )
+
+    menu_items_snapshot = db.Column(
+        db.Text,
+        nullable=True
+    )
+
     created_at = db.Column(
         db.DateTime,
         default=datetime.utcnow,
@@ -1215,6 +1238,497 @@ class MealResponse(db.Model):
     mess_unit = db.relationship(
         "MessUnit",
         back_populates="responses"
+    )
+
+
+# ============================================================
+# STUDENT FEEDBACK
+# ============================================================
+
+class StudentFeedback(db.Model):
+
+    __tablename__ = "student_feedback"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    student_user_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "users.id",
+            ondelete="CASCADE"
+        ),
+        nullable=False
+    )
+
+    menu_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "menus.id",
+            ondelete="SET NULL"
+        ),
+        nullable=True
+    )
+
+    hostel_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "hostels.id",
+            ondelete="SET NULL"
+        ),
+        nullable=True
+    )
+
+    mess_unit_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "mess_units.id",
+            ondelete="SET NULL"
+        ),
+        nullable=True
+    )
+
+    meal_date = db.Column(
+        db.Date,
+        nullable=False
+    )
+
+    meal = db.Column(
+        db.String(30),
+        nullable=False
+    )
+
+    meal_category = db.Column(
+        db.String(30),
+        nullable=True
+    )
+
+    category = db.Column(
+        db.String(50),
+        nullable=False
+    )
+
+    overall_rating = db.Column(
+        db.Integer,
+        nullable=False
+    )
+
+    taste_rating = db.Column(
+        db.Integer,
+        nullable=True
+    )
+
+    hygiene_rating = db.Column(
+        db.Integer,
+        nullable=True
+    )
+
+    quantity_rating = db.Column(
+        db.Integer,
+        nullable=True
+    )
+
+    comments = db.Column(
+        db.String(2000),
+        nullable=True
+    )
+
+    photo_path = db.Column(
+        db.String(500),
+        nullable=True
+    )
+
+    status = db.Column(
+        db.Enum(
+            "pending",
+            "reviewed"
+        ),
+        nullable=False,
+        default="pending"
+    )
+
+    staff_reply = db.Column(
+        db.String(2000),
+        nullable=True
+    )
+
+    replied_by = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "users.id",
+            ondelete="SET NULL"
+        ),
+        nullable=True
+    )
+
+    replied_at = db.Column(
+        db.DateTime,
+        nullable=True
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        nullable=False
+    )
+
+    updated_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        onupdate=datetime.utcnow,
+        nullable=False
+    )
+
+    __table_args__ = (
+        db.Index(
+            "ix_student_feedback_student_date",
+            "student_user_id",
+            "meal_date"
+        ),
+        db.Index(
+            "ix_student_feedback_scope",
+            "hostel_id",
+            "mess_unit_id",
+            "meal_date"
+        ),
+        db.Index(
+            "ix_student_feedback_status",
+            "status"
+        ),
+    )
+
+    student = db.relationship(
+        "User",
+        foreign_keys=[student_user_id]
+    )
+
+    menu = db.relationship(
+        "Menu",
+        foreign_keys=[menu_id]
+    )
+
+    hostel = db.relationship(
+        "Hostel",
+        foreign_keys=[hostel_id]
+    )
+
+    mess_unit = db.relationship(
+        "MessUnit",
+        foreign_keys=[mess_unit_id]
+    )
+
+    replier = db.relationship(
+        "User",
+        foreign_keys=[replied_by]
+    )
+
+
+# ============================================================
+# ANNOUNCEMENT
+# ============================================================
+
+class Announcement(db.Model):
+
+    __tablename__ = "announcements"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    manager_user_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "users.id",
+            ondelete="CASCADE"
+        ),
+        nullable=False
+    )
+
+    recipient_user_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "users.id",
+            ondelete="CASCADE"
+        ),
+        nullable=True
+    )
+
+    hostel_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "hostels.id",
+            ondelete="CASCADE"
+        ),
+        nullable=True
+    )
+
+    mess_unit_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "mess_units.id",
+            ondelete="CASCADE"
+        ),
+        nullable=True
+    )
+
+    meal_category = db.Column(
+        db.String(30),
+        nullable=True
+    )
+
+    is_general = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=False
+    )
+
+    title = db.Column(
+        db.String(200),
+        nullable=False
+    )
+
+    message = db.Column(
+        db.Text,
+        nullable=False
+    )
+
+    sender_name = db.Column(
+        db.String(120),
+        nullable=True
+    )
+
+    priority = db.Column(
+        db.Enum(
+            "normal",
+            "important",
+            "urgent"
+        ),
+        nullable=False,
+        default="normal"
+    )
+
+    attachment_url = db.Column(
+        db.String(500),
+        nullable=True
+    )
+
+    status = db.Column(
+        db.Enum(
+            "draft",
+            "published",
+            "unpublished"
+        ),
+        nullable=False,
+        default="draft"
+    )
+
+    published_at = db.Column(
+        db.DateTime,
+        nullable=True
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        nullable=False
+    )
+
+    updated_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        onupdate=datetime.utcnow,
+        nullable=False
+    )
+
+    __table_args__ = (
+        db.Index(
+            "ix_announcements_manager_status",
+            "manager_user_id",
+            "status"
+        ),
+        db.Index(
+            "ix_announcements_recipient",
+            "recipient_user_id",
+            "status"
+        ),
+        db.Index(
+            "ix_announcements_scope",
+            "hostel_id",
+            "mess_unit_id",
+            "meal_category",
+            "status"
+        ),
+        db.Index(
+            "ix_announcements_published_at",
+            "published_at"
+        ),
+    )
+
+    manager = db.relationship(
+        "User",
+        foreign_keys=[manager_user_id]
+    )
+
+    recipient = db.relationship(
+        "User",
+        foreign_keys=[recipient_user_id]
+    )
+
+    hostel = db.relationship(
+        "Hostel",
+        foreign_keys=[hostel_id]
+    )
+
+    mess_unit = db.relationship(
+        "MessUnit",
+        foreign_keys=[mess_unit_id]
+    )
+
+    read_records = db.relationship(
+        "AnnouncementRead",
+        back_populates="announcement",
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )
+
+
+# ============================================================
+# ANNOUNCEMENT READ STATE
+# ============================================================
+
+class AnnouncementRead(db.Model):
+
+    __tablename__ = "announcement_reads"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    announcement_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "announcements.id",
+            ondelete="CASCADE"
+        ),
+        nullable=False
+    )
+
+    student_user_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "users.id",
+            ondelete="CASCADE"
+        ),
+        nullable=False
+    )
+
+    read_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        nullable=False
+    )
+
+    __table_args__ = (
+        db.UniqueConstraint(
+            "announcement_id",
+            "student_user_id",
+            name="uq_announcement_student_read"
+        ),
+        db.Index(
+            "ix_announcement_reads_student",
+            "student_user_id",
+            "read_at"
+        ),
+    )
+
+    announcement = db.relationship(
+        "Announcement",
+        back_populates="read_records"
+    )
+
+    student = db.relationship(
+        "User",
+        foreign_keys=[student_user_id]
+    )
+
+
+# ============================================================
+# STUDENT SETTINGS
+# ============================================================
+
+class StudentSettings(db.Model):
+
+    __tablename__ = "student_settings"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    student_user_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "users.id",
+            ondelete="CASCADE"
+        ),
+        nullable=False,
+        unique=True
+    )
+
+    notifications_enabled = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=True
+    )
+
+    menu_publication_notifications = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=True
+    )
+
+    response_cutoff_reminders = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=True
+    )
+
+    announcement_notifications = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=True
+    )
+
+    theme = db.Column(
+        db.Enum(
+            "system",
+            "light",
+            "dark"
+        ),
+        nullable=False,
+        default="light"
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        nullable=False
+    )
+
+    updated_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        onupdate=datetime.utcnow,
+        nullable=False
+    )
+
+    student = db.relationship(
+        "User",
+        foreign_keys=[student_user_id]
     )
 
 

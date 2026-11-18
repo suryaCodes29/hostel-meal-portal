@@ -1,3 +1,4 @@
+import SmartForecastInsights from "./SmartForecastInsights";
 import {
   AlertTriangle,
   CalendarDays,
@@ -1389,7 +1390,16 @@ function Forecasts() {
 
       </div>
 
+      {/* =====================================================
+          SMART FOOD DEMAND INSIGHTS
+      ===================================================== */}
 
+      <SmartForecastInsights
+        apiFetch={apiFetch}
+        hostelFilter={hostelFilter}
+        messFilter={messFilter}
+        categoryFilter={categoryFilter}
+      />
       {/* =====================================================
           ERROR
       ===================================================== */}

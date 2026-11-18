@@ -31,6 +31,10 @@ from routes.manager_routes import (
     manager_bp,
 )
 
+from routes.student_routes import (
+    student_bp,
+)
+
 from services.menu_history_cleanup import (
     DEFAULT_RETENTION_DAYS,
     cleanup_old_menu_history,
@@ -144,6 +148,10 @@ app.register_blueprint(
 
 app.register_blueprint(
     manager_bp
+)
+
+app.register_blueprint(
+    student_bp
 )
 
 

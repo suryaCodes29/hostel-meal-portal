@@ -1,8 +1,11 @@
+
 import {
   BarChart3,
+  Bell,
   Building2,
   ClipboardList,
   LayoutDashboard,
+  MessageSquare,
   Settings,
   TrendingUp,
   UserCog,
@@ -12,7 +15,6 @@ import {
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
-
 import { useManager } from "../../context/ManagerContext";
 
 
@@ -58,6 +60,16 @@ const managementItems = [
     path: "/manager/dashboard/staff",
     icon: UserCog,
   },
+  {
+    label: "Feedback",
+    path: "/manager/dashboard/feedback",
+    icon: MessageSquare,
+  },
+  {
+    label: "Announcements",
+    path: "/manager/dashboard/announcements",
+    icon: Bell,
+  },
 ];
 
 
@@ -69,24 +81,15 @@ const systemItems = [
   },
 ];
 
-
 function ManagerSidebar() {
-  const {
-    sidebarOpen,
-    setSidebarOpen,
-  } = useManager();
-
+  const { sidebarOpen, setSidebarOpen } = useManager();
 
   const closeSidebar = () => {
     setSidebarOpen(false);
   };
 
-
-  const renderNavigationItem = (
-    item
-  ) => {
+  const renderNavigationItem = (item) => {
     const Icon = item.icon;
-
 
     return (
       <NavLink
@@ -95,150 +98,79 @@ function ManagerSidebar() {
         end={item.end}
         onClick={closeSidebar}
         title={item.label}
-        className={({
-          isActive,
-        }) =>
-          `manager-nav-item ${
-            isActive
-              ? "active"
-              : ""
-          }`
+        className={({ isActive }) =>
+          `manager-nav-item ${isActive ? "active" : ""}`
         }
       >
-        <Icon
-          size={19}
-          strokeWidth={1.9}
-        />
-
-        <span>
-          {item.label}
-        </span>
+        <Icon size={19} strokeWidth={1.9} />
+        <span>{item.label}</span>
       </NavLink>
     );
   };
 
-
   return (
     <>
-      {/* MOBILE OVERLAY */}
-
       <div
         className={`manager-sidebar-overlay ${
-          sidebarOpen
-            ? "show"
-            : ""
+          sidebarOpen ? "show" : ""
         }`}
         onClick={closeSidebar}
       />
 
-
-      {/* SIDEBAR */}
-
       <aside
         className={`manager-sidebar ${
-          sidebarOpen
-            ? "open"
-            : ""
+          sidebarOpen ? "open" : ""
         }`}
       >
-
-        {/* BRAND */}
-
         <div className="manager-sidebar-header">
-
           <div className="manager-sidebar-brand">
-
             <div className="manager-brand-icon">
-              <UtensilsCrossed
-                size={24}
-              />
+              <UtensilsCrossed size={24} />
             </div>
-
 
             <div className="manager-sidebar-brand-text">
-
-              <h2>
-                Mess Portal
-              </h2>
-
-              <span>
-                Manager Panel
-              </span>
-
+              <h2>Mess Portal</h2>
+              <span>Manager Panel</span>
             </div>
-
           </div>
-
 
           <button
             type="button"
             className="manager-sidebar-close"
-            onClick={
-              closeSidebar
-            }
+            onClick={closeSidebar}
             aria-label="Close sidebar"
           >
             <X size={21} />
           </button>
-
         </div>
 
-
-        {/* NAVIGATION */}
-
         <nav className="manager-sidebar-navigation">
-
           <p className="manager-sidebar-section-title">
             MANAGEMENT
           </p>
 
-
-          {managementItems.map(
-            renderNavigationItem
-          )}
-
+          {managementItems.map(renderNavigationItem)}
 
           <p className="manager-sidebar-section-title manager-sidebar-system-title">
             SYSTEM
           </p>
 
-
-          {systemItems.map(
-            renderNavigationItem
-          )}
-
+          {systemItems.map(renderNavigationItem)}
         </nav>
 
-
-        {/* FOOTER */}
-
         <div className="manager-sidebar-footer">
-
           <div className="manager-sidebar-footer-icon">
-            <UtensilsCrossed
-              size={19}
-            />
+            <UtensilsCrossed size={19} />
           </div>
-
 
           <div className="manager-sidebar-footer-text">
-
-            <strong>
-              Hostel Mess
-            </strong>
-
-            <span>
-              Management Portal
-            </span>
-
+            <strong>Hostel Mess</strong>
+            <span>Management Portal</span>
           </div>
-
         </div>
-
       </aside>
     </>
   );
 }
-
 
 export default ManagerSidebar;

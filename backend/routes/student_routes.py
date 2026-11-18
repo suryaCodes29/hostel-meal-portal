@@ -1,27 +1,39 @@
 from datetime import date, datetime, timedelta
 from functools import wraps
+import csv
+import io
+import os
+import uuid
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
+from sqlalchemy import or_, and_, func
 from sqlalchemy.exc import IntegrityError
+from werkzeug.utils import secure_filename
 
 from models import (
+    Announcement,
+    AnnouncementRead,
     Hostel,
     HostelBlock,
     MealResponse,
     Menu,
+    MenuMenuItem,
     MenuNotification,
     MessUnit,
+    StudentFeedback,
+    StudentSettings,
     User,
     db,
 )
 
 
-student_bp = Blueprint(
-    "student",
-    __name__,
-    url_prefix="/api/student",
-)
+student_bp = Blueprint("student", __name__, url_prefix="/api/student")
+
+ALLOWED_IMAGE_EXTENSIONS = {"jpg", "jpeg", "png"}
+FEEDBACK_CATEGORIES = {"Food Quality", "Taste", "Hygiene", "Quantity", "Service", "Other"}
+MEALS = {"breakfast", "lunch", "snacks", "dinner"}
+RESPONSES = {"attending", "skipping"}
 
 
 # ============================================================
@@ -29,13 +41,11 @@ student_bp = Blueprint(
 # ============================================================
 
 def get_current_student():
-    user_id = get_jwt_identity()
-
+    raw_identity = get_jwt_identity()
     try:
-        user_id = int(user_id)
+        user_id = int(raw_identity)
     except (TypeError, ValueError):
         return None
-
     return db.session.get(User, user_id)
 
 
@@ -44,26 +54,13 @@ def student_required(function):
     @jwt_required()
     def decorated_function(*args, **kwargs):
         student = get_current_student()
-
         if not student or student.role != "student":
-            return jsonify({
-                "message": "Student access required."
-            }), 403
-
+            return jsonify({"message": "Student access required."}), 403
         if not student.is_active:
-            return jsonify({
-                "message":
-                    "Your account is inactive. "
-                    "Please contact the Manager."
-            }), 403
-
+            return jsonify({"message": "Your account is inactive. Please contact the Manager."}), 403
         if student.must_change_password:
-            return jsonify({
-                "message": "Password change required."
-            }), 403
-
+            return jsonify({"message": "Password change required."}), 403
         return function(*args, **kwargs)
-
     return decorated_function
 
 
@@ -78,966 +75,852 @@ def parse_iso_date(value):
         return None
 
 
+def parse_rating(value, field_name, required=False):
+    if value is None or value == "":
+        if required:
+            return None, f"{field_name} is required."
+        return None, None
+
+    try:
+        rating = float(value)
+    except (TypeError, ValueError):
+        return None, f"{field_name} must be a number between 1 and 5."
+
+    if not (1 <= rating <= 5):
+        return None, f"{field_name} must be between 1 and 5."
+
+    return round(rating, 1), None
+
+
 def student_has_assignment(student):
-    return bool(
-        student.hostel_id
-        and student.mess_unit_id
-    )
+    return bool(student.hostel_id and student.mess_unit_id and student.meal_category)
 
 
 def get_student_hostel(student):
-    if not student.hostel_id:
-        return None
-
-    return db.session.get(
-        Hostel,
-        student.hostel_id
-    )
+    return db.session.get(Hostel, student.hostel_id) if student.hostel_id else None
 
 
 def get_student_block(student):
-    if not student.block_id:
-        return None
-
-    return db.session.get(
-        HostelBlock,
-        student.block_id
-    )
+    return db.session.get(HostelBlock, student.block_id) if student.block_id else None
 
 
 def get_student_mess_unit(student):
-    if not student.mess_unit_id:
-        return None
+    return db.session.get(MessUnit, student.mess_unit_id) if student.mess_unit_id else None
 
-    return db.session.get(
-        MessUnit,
-        student.mess_unit_id
-    )
+
+def assignment_payload(student):
+    hostel = get_student_hostel(student)
+    block = get_student_block(student)
+    mess = get_student_mess_unit(student)
+    return {
+        "hostel": {"id": hostel.id, "name": hostel.name, "code": hostel.code} if hostel else None,
+        "block": {"id": block.id, "name": block.name, "code": block.code} if block else None,
+        "messUnit": {"id": mess.id, "name": mess.name, "type": mess.unit_type} if mess else None,
+        "mealCategory": student.meal_category,
+        "complete": student_has_assignment(student),
+    }
 
 
 def student_menu_query(student):
+    """
+    Return only published menus assigned to this student's
+    hostel and mess unit.
+
+    This preserves student access restrictions.
+    """
+
+    if not student or not student.hostel_id or not student.mess_unit_id:
+        return Menu.query.filter(Menu.id == -1)
+
     query = Menu.query.filter(
         Menu.hostel_id == student.hostel_id,
         Menu.mess_unit_id == student.mess_unit_id,
-        Menu.status.in_([
-            "published",
-            "completed",
-        ]),
+        Menu.status.in_(["published", "completed"]),
     )
 
-    meal_category = str(
-        student.meal_category or ""
-    ).strip().lower()
+    category = str(student.meal_category or "").strip().lower()
 
-    if meal_category in {
-        "veg",
-        "non-veg",
-    }:
+    if category in {"veg", "vegetarian"}:
         query = query.filter(
-            Menu.meal_category == meal_category
+            Menu.meal_category.in_(["veg", "vegetarian"])
+        )
+
+    elif category in {"non-veg", "non vegetarian", "nonvegetarian"}:
+        query = query.filter(
+            Menu.meal_category.in_(
+                ["non-veg", "non vegetarian", "nonvegetarian"]
+            )
         )
 
     return query
 
+def get_accessible_menu(student, menu_id, published_only=True):
+    """
+    Fetch a menu only if it belongs to the student's
+    assigned hostel and mess unit.
+    """
 
-def get_accessible_menu(student, menu_id):
     if not student_has_assignment(student):
         return None
 
-    return student_menu_query(student).filter(
-        Menu.id == menu_id
-    ).first()
+    query = Menu.query.filter(
+        Menu.id == menu_id,
+        Menu.hostel_id == student.hostel_id,
+        Menu.mess_unit_id == student.mess_unit_id,
+    )
+
+    if published_only:
+        query = query.filter(
+            Menu.status.in_(["published", "completed"])
+        )
+
+        category = str(student.meal_category or "").strip().lower()
+
+        if category in {"veg", "vegetarian"}:
+            query = query.filter(
+                Menu.meal_category.in_(["veg", "vegetarian"])
+            )
+
+        elif category in {"non-veg", "non vegetarian", "nonvegetarian"}:
+            query = query.filter(
+                Menu.meal_category.in_(
+                    ["non-veg", "non vegetarian", "nonvegetarian"]
+                )
+            )
+
+    return query.first()
 
 
 def response_is_open(menu):
     if menu.status != "published":
-        return (
-            False,
-            "Responses are closed for this Menu."
-        )
-
+        return False, "Responses are closed for this menu."
     if menu.menu_date < date.today():
-        return (
-            False,
-            "Responses are closed for past Menus."
-        )
-
-    if (
-        menu.response_cutoff
-        and datetime.utcnow()
-        > menu.response_cutoff
-    ):
-        return (
-            False,
-            "The response cutoff time has passed."
-        )
-
+        return False, "Responses are closed for past meals."
+    if menu.response_cutoff and datetime.utcnow() > menu.response_cutoff:
+        return False, "The response cutoff time has passed."
     return True, None
 
 
 def serialize_menu_item(link):
     item = link.menu_item
-
     return {
-        "id":
-            item.id if item else None,
-
-        "name":
-            item.name
-            if item
-            else "Unavailable item",
-
-        "type":
-            item.item_type
-            if item
-            else "Other",
-
-        "mealCategory":
-            item.meal_category
-            if item
-            else None,
-
-        "imageUrl":
-            item.image_url
-            if item
-            else None,
-
-        "quantityPerStudent":
-            float(
-                link.quantity_per_student
-                or 0
-            ),
-
-        "unit":
-            link.unit,
-
-        "caloriesPerServing":
-            (
-                float(
-                    item.calories_per_serving
-                    or 0
-                )
-                if item
-                else 0
-            ),
+        "id": item.id if item else None,
+        "name": item.name if item else "Unavailable item",
+        "type": item.item_type if item else "Other",
+        "mealCategory": item.meal_category if item else None,
+        "imageUrl": item.image_url if item else None,
+        "quantityPerStudent": float(link.quantity_per_student or 0),
+        "unit": link.unit,
+        "caloriesPerServing": float(item.calories_per_serving or 0) if item else 0,
     }
 
 
+def menu_item_names(menu):
+    structured = [link.menu_item.name for link in menu.item_links if link.menu_item]
+    if structured:
+        return structured
+    return [x.strip() for x in str(menu.menu_items or "").split(",") if x.strip()]
+
+
 def serialize_menu(menu, student):
-    meal_response = (
-        MealResponse.query
-        .filter_by(
-            menu_id=menu.id,
-            student_user_id=student.id,
-        )
-        .first()
-    )
-
-    items = [
-        serialize_menu_item(link)
-        for link in menu.item_links
-    ]
-
-    legacy_items = [
-        value.strip()
-        for value
-        in str(
-            menu.menu_items or ""
-        ).split(",")
-        if value.strip()
-    ]
-
-    response_open, closed_reason = (
-        response_is_open(menu)
-    )
-
+    meal_response = MealResponse.query.filter_by(menu_id=menu.id, student_user_id=student.id).first()
+    response_open, closed_reason = response_is_open(menu)
     return {
-        "id":
-            menu.id,
-
-        "date":
-            menu.menu_date.isoformat(),
-
-        "meal":
-            menu.meal,
-
-        "mealCategory":
-            menu.meal_category,
-
-        "status":
-            menu.status,
-
-        "items":
-            items,
-
-        "legacyItems":
-            legacy_items,
-
-        "menuItems":
-            menu.menu_items or "",
-
-        "hostel":
-            (
-                {
-                    "id":
-                        menu.hostel.id,
-
-                    "name":
-                        menu.hostel.name,
-
-                    "code":
-                        menu.hostel.code,
-                }
-                if menu.hostel
-                else None
-            ),
-
-        "messUnit":
-            (
-                {
-                    "id":
-                        menu.mess_unit.id,
-
-                    "name":
-                        menu.mess_unit.name,
-
-                    "type":
-                        menu.mess_unit.unit_type,
-                }
-                if menu.mess_unit
-                else None
-            ),
-
-        "responseCutoff":
-            (
-                menu.response_cutoff.isoformat()
-                if menu.response_cutoff
-                else None
-            ),
-
-        "responseOpen":
-            response_open,
-
-        "responseClosedReason":
-            closed_reason,
-
-        "myResponse":
-            (
-                meal_response.response
-                if meal_response
-                else None
-            ),
-
-        "respondedAt":
-            (
-                meal_response.updated_at.isoformat()
-                if (
-                    meal_response
-                    and meal_response.updated_at
-                )
-                else None
-            ),
+        "id": menu.id,
+        "date": menu.menu_date.isoformat(),
+        "meal": menu.meal,
+        "mealCategory": menu.meal_category,
+        "status": menu.status,
+        "items": [serialize_menu_item(link) for link in menu.item_links],
+        "menuItems": menu.menu_items or "",
+        "itemNames": menu_item_names(menu),
+        "hostel": {"id": menu.hostel.id, "name": menu.hostel.name, "code": menu.hostel.code} if menu.hostel else None,
+        "messUnit": {"id": menu.mess_unit.id, "name": menu.mess_unit.name, "type": menu.mess_unit.unit_type} if menu.mess_unit else None,
+        "responseCutoff": menu.response_cutoff.isoformat() if menu.response_cutoff else None,
+        "responseOpen": response_open,
+        "responseClosedReason": closed_reason,
+        "myResponse": meal_response.response if meal_response else None,
+        "respondedAt": meal_response.updated_at.isoformat() if meal_response and meal_response.updated_at else None,
     }
 
 
 def serialize_notification(notification):
     return {
-        "id":
-            notification.id,
-
-        "menuId":
-            notification.menu_id,
-
-        "type":
-            notification.notification_type,
-
-        "title":
-            notification.title,
-
-        "message":
-            notification.message,
-
-        "isRead":
-            bool(notification.is_read),
-
-        "createdAt":
-            (
-                notification.created_at.isoformat()
-                if notification.created_at
-                else None
-            ),
+        "id": notification.id,
+        "menuId": notification.menu_id,
+        "type": notification.notification_type,
+        "title": notification.title,
+        "message": notification.message,
+        "isRead": bool(notification.is_read),
+        "createdAt": notification.created_at.isoformat() if notification.created_at else None,
     }
 
 
+def serialize_announcement(announcement, student, read_ids=None):
+    read_ids = read_ids or set()
+    return {
+        "id": announcement.id,
+        "title": announcement.title,
+        "message": announcement.message,
+        "sender": announcement.sender_name or (announcement.manager.name if announcement.manager else "Manager"),
+        "publishedAt": announcement.published_at.isoformat() if announcement.published_at else None,
+        "priority": announcement.priority,
+        "attachmentUrl": announcement.attachment_url,
+        "isRead": announcement.id in read_ids,
+        "scope": {
+            "general": bool(announcement.is_general),
+            "hostelId": announcement.hostel_id,
+            "messUnitId": announcement.mess_unit_id,
+            "mealCategory": announcement.meal_category,
+            "recipientUserId": announcement.recipient_user_id,
+        },
+    }
+
+
+def serialize_feedback(feedback):
+    return {
+        "id": feedback.id,
+        "date": feedback.meal_date.isoformat(),
+        "meal": feedback.meal,
+        "category": feedback.category,
+        "overallRating": feedback.overall_rating,
+        "tasteRating": feedback.taste_rating,
+        "hygieneRating": feedback.hygiene_rating,
+        "quantityRating": feedback.quantity_rating,
+        "comments": feedback.comments or "",
+        "photoUrl": feedback.photo_path,
+        "status": feedback.status,
+        "staffReply": feedback.staff_reply,
+        "replyDate": feedback.replied_at.isoformat() if feedback.replied_at else None,
+        "createdAt": feedback.created_at.isoformat() if feedback.created_at else None,
+    }
+
+
+def serialize_student(student):
+    assignment = assignment_payload(student)
+    return {
+        "id": student.id,
+        "studentId": student.student_id,
+        "name": student.name,
+        "email": student.email,
+        "mobile": student.mobile,
+        "role": student.role,
+        "isActive": bool(student.is_active),
+        "accountStatus": "Active" if student.is_active else "Inactive",
+        "createdAt": student.created_at.isoformat() if student.created_at else None,
+        "assignment": assignment,
+        "hostel": assignment["hostel"],
+        "block": assignment["block"],
+        "messUnit": assignment["messUnit"],
+        "mealCategory": assignment["mealCategory"],
+    }
+
+
+def ensure_settings(student):
+    settings = StudentSettings.query.filter_by(student_user_id=student.id).first()
+    if settings:
+        return settings
+    settings = StudentSettings(student_user_id=student.id)
+    db.session.add(settings)
+    try:
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        settings = StudentSettings.query.filter_by(student_user_id=student.id).first()
+    return settings
+
+
+def serialize_settings(settings):
+    return {
+        "notificationsEnabled": bool(settings.notifications_enabled),
+        "menuPublicationNotifications": bool(settings.menu_publication_notifications),
+        "responseCutoffReminders": bool(settings.response_cutoff_reminders),
+        "announcementNotifications": bool(settings.announcement_notifications),
+        "theme": settings.theme,
+    }
+
+def announcement_scope_filter(student):
+    """Return only announcements intended for this student."""
+
+    hostel = (
+        db.session.get(Hostel, student.hostel_id)
+        if student.hostel_id
+        else None
+    )
+
+    # Do not expose announcements when the student's manager
+    # cannot be established.
+    if not hostel or not hostel.manager_user_id:
+        return Announcement.id == -1
+
+    return and_(
+        Announcement.manager_user_id == hostel.manager_user_id,
+        or_(
+            # General announcements from this manager
+            Announcement.is_general.is_(True),
+
+            # Direct announcements for this student
+            Announcement.recipient_user_id == student.id,
+
+            # Announcements for the entire hostel
+            and_(
+                Announcement.is_general.is_(False),
+                Announcement.recipient_user_id.is_(None),
+                Announcement.hostel_id == student.hostel_id,
+                Announcement.mess_unit_id.is_(None),
+                Announcement.meal_category.is_(None),
+            ),
+
+            # Announcements for the student's mess
+            and_(
+                Announcement.is_general.is_(False),
+                Announcement.recipient_user_id.is_(None),
+                Announcement.hostel_id == student.hostel_id,
+                Announcement.mess_unit_id == student.mess_unit_id,
+                Announcement.meal_category.is_(None),
+            ),
+
+            # Announcements for the student's meal category
+            and_(
+                Announcement.is_general.is_(False),
+                Announcement.recipient_user_id.is_(None),
+                Announcement.hostel_id == student.hostel_id,
+                Announcement.mess_unit_id.is_(None),
+                Announcement.meal_category == student.meal_category,
+            ),
+        ),
+    )
+
 # ============================================================
-# STUDENT DASHBOARD
+# DASHBOARD
 # ============================================================
 
-@student_bp.route(
-    "/dashboard",
-    methods=["GET"]
-)
+@student_bp.route("/dashboard", methods=["GET"])
 @student_required
 def student_dashboard():
     student = get_current_student()
-
-    hostel = get_student_hostel(
-        student
-    )
-
-    block = get_student_block(
-        student
-    )
-
-    mess_unit = get_student_mess_unit(
-        student
-    )
-
     if not student_has_assignment(student):
         return jsonify({
-            "message":
-                "Your Hostel and Mess Unit "
-                "assignment is incomplete.",
-
-            "assignmentRequired":
-                True,
-
-            "student": {
-                "id":
-                    student.id,
-
-                "studentId":
-                    student.student_id,
-
-                "name":
-                    student.name,
-
-                "email":
-                    student.email,
-
-                "mealCategory":
-                    student.meal_category,
-            },
-
-            "menus":
-                [],
-
-            "summary": {
-                "availableMenus":
-                    0,
-
-                "attending":
-                    0,
-
-                "skipping":
-                    0,
-
-                "pending":
-                    0,
-
-                "unreadNotifications":
-                    0,
-            },
+            "student": serialize_student(student),
+            "assignmentRequired": True,
+            "menus": [],
+            "summary": {"availableMenus": 0, "attending": 0, "skipping": 0, "pending": 0, "unreadNotifications": 0, "unreadAnnouncements": 0},
         }), 200
 
     today = date.today()
-    end_date = today + timedelta(days=7)
-
-    menus = (
-        student_menu_query(student)
-        .filter(
-            Menu.menu_date >= today,
-            Menu.menu_date <= end_date,
-        )
-        .order_by(
-            Menu.menu_date.asc(),
-            Menu.meal.asc(),
-        )
-        .all()
-    )
-
-    menu_ids = [
-        menu.id
-        for menu in menus
-    ]
-
-    if menu_ids:
-        responses = {
-            row.menu_id: row.response
-            for row
-            in MealResponse.query.filter(
-                MealResponse.student_user_id
-                == student.id,
-
-                MealResponse.menu_id.in_(
-                    menu_ids
-                ),
-            ).all()
-        }
-    else:
-        responses = {}
-
-    attending = sum(
-        1
-        for value in responses.values()
-        if value == "attending"
-    )
-
-    skipping = sum(
-        1
-        for value in responses.values()
-        if value == "skipping"
-    )
-
-    unread_notifications = (
-        MenuNotification.query
-        .filter_by(
-            recipient_user_id=student.id,
-            is_read=False,
-        )
-        .count()
-    )
+    menus = student_menu_query(student).filter(Menu.menu_date == today).order_by(Menu.meal.asc()).all()
+    response_rows = MealResponse.query.filter(
+        MealResponse.student_user_id == student.id,
+        MealResponse.menu_id.in_([m.id for m in menus]) if menus else False,
+    ).all() if menus else []
+    response_map = {r.menu_id: r.response for r in response_rows}
+    unread_notifications = MenuNotification.query.filter_by(recipient_user_id=student.id, is_read=False).count()
+    announcements = Announcement.query.filter(
+        Announcement.status == "published",
+        announcement_scope_filter(student),
+    ).order_by(Announcement.published_at.desc()).limit(20).all()
+    read_ids = {r.announcement_id for r in AnnouncementRead.query.filter_by(student_user_id=student.id).all()}
+    unread_announcements = sum(1 for a in announcements if a.id not in read_ids)
+    upcoming = student_menu_query(student).filter(Menu.menu_date >= today).order_by(Menu.response_cutoff.asc()).all()
+    next_cutoff = next((m.response_cutoff for m in upcoming if m.response_cutoff and m.status == "published" and m.response_cutoff >= datetime.utcnow()), None)
 
     return jsonify({
-        "student": {
-            "id":
-                student.id,
-
-            "studentId":
-                student.student_id,
-
-            "name":
-                student.name,
-
-            "email":
-                student.email,
-
-            "mobile":
-                student.mobile,
-
-            "mealCategory":
-                student.meal_category,
-
-            "hostel":
-                (
-                    {
-                        "id":
-                            hostel.id,
-
-                        "name":
-                            hostel.name,
-                    }
-                    if hostel
-                    else None
-                ),
-
-            "block":
-                (
-                    {
-                        "id":
-                            block.id,
-
-                        "name":
-                            block.name,
-                    }
-                    if block
-                    else None
-                ),
-
-            "messUnit":
-                (
-                    {
-                        "id":
-                            mess_unit.id,
-
-                        "name":
-                            mess_unit.name,
-
-                        "type":
-                            mess_unit.unit_type,
-                    }
-                    if mess_unit
-                    else None
-                ),
-        },
-
-        "menus": [
-            serialize_menu(
-                menu,
-                student
-            )
-            for menu in menus
-        ],
-
+        "student": serialize_student(student),
+        "assignmentRequired": False,
+        "today": today.isoformat(),
+        "menus": [serialize_menu(m, student) for m in menus],
         "summary": {
-            "availableMenus":
-                len(menus),
-
-            "attending":
-                attending,
-
-            "skipping":
-                skipping,
-
-            "pending":
-                len(menus) - len(responses),
-
-            "unreadNotifications":
-                unread_notifications,
+            "availableMenus": len(menus),
+            "attending": sum(1 for v in response_map.values() if v == "attending"),
+            "skipping": sum(1 for v in response_map.values() if v == "skipping"),
+            "pending": len(menus) - len(response_map),
+            "unreadNotifications": unread_notifications,
+            "unreadAnnouncements": unread_announcements,
         },
+        "nextResponseCutoff": next_cutoff.isoformat() if next_cutoff else None,
+        "recentAnnouncement": serialize_announcement(announcements[0], student, read_ids) if announcements else None,
     }), 200
 
 
 # ============================================================
-# STUDENT MENUS
+# PROFILE
 # ============================================================
 
-@student_bp.route(
-    "/menus",
-    methods=["GET"]
-)
+@student_bp.route("/profile", methods=["GET"])
+@student_required
+def get_student_profile():
+    return jsonify({"student": serialize_student(get_current_student())}), 200
+
+
+@student_bp.route("/profile", methods=["PATCH"])
+@student_required
+def update_student_profile():
+    student = get_current_student()
+    data = request.get_json(silent=True) or {}
+    if "studentId" in data or "email" in data or "role" in data or "managerId" in data or "hostelId" in data or "blockId" in data or "messUnitId" in data or "mealCategory" in data:
+        return jsonify({"message": "Student ID, email, role and assignment fields cannot be changed here."}), 400
+    if "name" in data:
+        name = str(data.get("name") or "").strip()
+        if not name or len(name) > 100:
+            return jsonify({"message": "Name is invalid."}), 400
+        student.name = name
+    if "mobile" in data:
+        mobile = str(data.get("mobile") or "").strip()
+        if len(mobile) > 15:
+            return jsonify({"message": "Mobile number is too long."}), 400
+        student.mobile = mobile or None
+    try:
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        return jsonify({"message": "Unable to update profile."}), 500
+    return jsonify({"message": "Profile updated successfully.", "student": serialize_student(student)}), 200
+
+
+# ============================================================
+# MENUS
+# ============================================================
+
+@student_bp.route("/menus", methods=["GET"])
 @student_required
 def list_student_menus():
     student = get_current_student()
-
     if not student_has_assignment(student):
-        return jsonify({
-            "message":
-                "Your Hostel and Mess Unit "
-                "assignment is incomplete.",
-
-            "menus":
-                [],
-        }), 200
-
-    start_date = parse_iso_date(
-        request.args.get(
-            "dateFrom",
-            date.today().isoformat()
-        )
-    )
-
-    end_date = parse_iso_date(
-        request.args.get(
-            "dateTo",
-            (
-                date.today()
-                + timedelta(days=7)
-            ).isoformat(),
-        )
-    )
-
+        return jsonify({"message": "Your hostel or mess assignment is incomplete. Please contact your Manager.", "assignmentRequired": True, "menus": []}), 200
+    start_date = parse_iso_date(request.args.get("dateFrom", date.today().isoformat()))
+    end_date = parse_iso_date(request.args.get("dateTo", (date.today() + timedelta(days=7)).isoformat()))
     if not start_date or not end_date:
-        return jsonify({
-            "message":
-                "Dates must use YYYY-MM-DD format."
-        }), 400
-
+        return jsonify({"message": "Dates must use YYYY-MM-DD format."}), 400
     if end_date < start_date:
-        return jsonify({
-            "message":
-                "dateTo cannot be earlier than dateFrom."
-        }), 400
-
-    if (
-        end_date - start_date
-    ).days > 31:
-        return jsonify({
-            "message":
-                "You can request a maximum "
-                "range of 31 days."
-        }), 400
-
-    menus = (
-        student_menu_query(student)
-        .filter(
-            Menu.menu_date >= start_date,
-            Menu.menu_date <= end_date,
-        )
-        .order_by(
-            Menu.menu_date.asc(),
-            Menu.meal.asc(),
-        )
-        .all()
-    )
-
-    return jsonify({
-        "menus": [
-            serialize_menu(
-                menu,
-                student
-            )
-            for menu in menus
-        ],
-
-        "dateFrom":
-            start_date.isoformat(),
-
-        "dateTo":
-            end_date.isoformat(),
-    }), 200
+        return jsonify({"message": "dateTo cannot be earlier than dateFrom."}), 400
+    if (end_date - start_date).days > 31:
+        return jsonify({"message": "You can request a maximum range of 31 days."}), 400
+    menus = student_menu_query(student).filter(Menu.menu_date.between(start_date, end_date)).order_by(Menu.menu_date.asc(), Menu.meal.asc()).all()
+    return jsonify({"menus": [serialize_menu(m, student) for m in menus], "dateFrom": start_date.isoformat(), "dateTo": end_date.isoformat()}), 200
 
 
-# ============================================================
-# SAVE OR UPDATE MEAL RESPONSE
-# ============================================================
+@student_bp.route("/menus/today", methods=["GET"])
+@student_required
+def today_menus():
+    student = get_current_student()
+    if not student_has_assignment(student):
+        return jsonify({"assignmentRequired": True, "date": date.today().isoformat(), "menus": []}), 200
+    menus = student_menu_query(student).filter(Menu.menu_date == date.today()).order_by(Menu.meal.asc()).all()
+    return jsonify({"date": date.today().isoformat(), "menus": [serialize_menu(m, student) for m in menus]}), 200
 
-@student_bp.route(
-    "/menus/<int:menu_id>/response",
-    methods=["PUT"]
-)
+
+@student_bp.route("/menus/calendar", methods=["GET"])
+@student_required
+def menu_calendar():
+    student = get_current_student()
+    if not student_has_assignment(student):
+        return jsonify({"assignmentRequired": True, "menus": []}), 200
+    month = request.args.get("month")
+    year = request.args.get("year")
+    selected = parse_iso_date(request.args.get("date")) or date.today()
+    try:
+        year = int(year) if year else selected.year
+        month = int(month) if month else selected.month
+        if month < 1 or month > 12:
+            raise ValueError
+    except ValueError:
+        return jsonify({"message": "Invalid month or year."}), 400
+    start = date(year, month, 1)
+    next_month = date(year + (1 if month == 12 else 0), 1 if month == 12 else month + 1, 1)
+    end = next_month - timedelta(days=1)
+    menus = student_menu_query(student).filter(Menu.menu_date.between(start, end)).order_by(Menu.menu_date.asc(), Menu.meal.asc()).all()
+    grouped = {}
+    for menu in menus:
+        grouped.setdefault(menu.menu_date.isoformat(), []).append(serialize_menu(menu, student))
+    selected_menus = grouped.get(selected.isoformat(), [])
+    return jsonify({"year": year, "month": month, "selectedDate": selected.isoformat(), "menusByDate": grouped, "selectedMenus": selected_menus}), 200
+
+
+@student_bp.route("/menus/<int:menu_id>/response", methods=["PUT"])
 @student_required
 def save_meal_response(menu_id):
     student = get_current_student()
-
-    if not student_has_assignment(student):
-        return jsonify({
-            "message":
-                "Your Hostel and Mess Unit "
-                "assignment is incomplete."
-        }), 409
-
-    menu = get_accessible_menu(
-        student,
-        menu_id
-    )
-
+    menu = get_accessible_menu(student, menu_id)
     if not menu:
-        return jsonify({
-            "message":
-                "Menu not found."
-        }), 404
-
-    response_open, closed_reason = (
-        response_is_open(menu)
-    )
-
-    if not response_open:
-        return jsonify({
-            "message":
-                closed_reason
-        }), 409
-
-    data = (
-        request.get_json(
-            silent=True
-        )
-        or {}
-    )
-
-    response_value = (
-        str(
-            data.get(
-                "response",
-                ""
-            )
-        )
-        .strip()
-        .lower()
-    )
-
-    if response_value not in {
-        "attending",
-        "skipping",
-    }:
-        return jsonify({
-            "message":
-                "Response must be "
-                "attending or skipping."
-        }), 400
-
-    meal_response = (
-        MealResponse.query
-        .filter_by(
-            menu_id=menu.id,
-            student_user_id=student.id,
-        )
-        .first()
-    )
-
-    created = meal_response is None
-
+        return jsonify({"message": "Menu not found."}), 404
+    open_state, reason = response_is_open(menu)
+    if not open_state:
+        return jsonify({"message": reason}), 409
+    data = request.get_json(silent=True) or {}
+    value = str(data.get("response", "")).strip().lower()
+    if value not in RESPONSES:
+        return jsonify({"message": "Response must be attending or skipping."}), 400
+    note = str(data.get("note") or "").strip()
+    if len(note) > 200:
+        return jsonify({"message": "Note cannot exceed 200 characters."}), 400
+    row = MealResponse.query.filter_by(menu_id=menu.id, student_user_id=student.id).first()
+    created = row is None
     if created:
-        meal_response = MealResponse(
-            menu_id=
-                menu.id,
-
-            student_user_id=
-                student.id,
-
-            mess_unit_id=
-                student.mess_unit_id,
-
-            response=
-                response_value,
-        )
-
-        db.session.add(
-            meal_response
-        )
-
+        row = MealResponse(menu_id=menu.id, student_user_id=student.id, mess_unit_id=student.mess_unit_id, response=value)
+        db.session.add(row)
     else:
-        meal_response.response = (
-            response_value
-        )
-
-        meal_response.mess_unit_id = (
-            student.mess_unit_id
-        )
-
+        row.response = value
+        row.mess_unit_id = student.mess_unit_id
+    if hasattr(row, "menu_date_snapshot") and not row.menu_date_snapshot:
+        row.menu_date_snapshot = menu.menu_date
+        row.meal_snapshot = menu.meal
+        row.meal_category_snapshot = menu.meal_category
+        row.menu_items_snapshot = ", ".join(menu_item_names(menu))
     try:
         db.session.commit()
-
     except IntegrityError:
         db.session.rollback()
-
-        return jsonify({
-            "message":
-                "Your response was already updated. "
-                "Please refresh."
-        }), 409
-
-    except Exception as error:
+        return jsonify({"message": "Your response was already updated. Please refresh."}), 409
+    except Exception:
         db.session.rollback()
-
-        print(
-            "Student meal response error:",
-            error
-        )
-
-        return jsonify({
-            "message":
-                "Unable to save your response. "
-                "No changes were saved."
-        }), 500
-
-    return jsonify({
-        "message":
-            (
-                "Meal response submitted successfully."
-                if created
-                else "Meal response updated successfully."
-            ),
-
-        "response": {
-            "id":
-                meal_response.id,
-
-            "menuId":
-                meal_response.menu_id,
-
-            "value":
-                meal_response.response,
-
-            "updatedAt":
-                (
-                    meal_response.updated_at.isoformat()
-                    if meal_response.updated_at
-                    else None
-                ),
-        },
-    }), 201 if created else 200
+        return jsonify({"message": "Unable to save your response. No changes were saved."}), 500
+    return jsonify({"message": "Meal response submitted successfully." if created else "Meal response updated successfully.", "response": {"id": row.id, "menuId": row.menu_id, "value": row.response, "updatedAt": row.updated_at.isoformat() if row.updated_at else None}}), 201 if created else 200
 
 
 # ============================================================
-# RESPONSE HISTORY
+# RESPONSES
 # ============================================================
 
-@student_bp.route(
-    "/responses",
-    methods=["GET"]
-)
+@student_bp.route("/responses", methods=["GET"])
 @student_required
 def list_my_responses():
     student = get_current_student()
+    start = parse_iso_date(request.args.get("dateFrom"))
+    end = parse_iso_date(request.args.get("dateTo"))
+    query = MealResponse.query.filter(MealResponse.student_user_id == student.id)
+    if start or end:
+        if start:
+            query = query.filter(or_(MealResponse.menu_date_snapshot >= start, MealResponse.menu.has(Menu.menu_date >= start)))
+        if end:
+            query = query.filter(or_(MealResponse.menu_date_snapshot <= end, MealResponse.menu.has(Menu.menu_date <= end)))
+    rows = query.order_by(MealResponse.updated_at.desc()).limit(500).all()
+    result = []
+    for row in rows:
+        menu = row.menu
+        meal_date = menu.menu_date if menu else row.menu_date_snapshot
+        meal = menu.meal if menu else row.meal_snapshot
+        category = menu.meal_category if menu else row.meal_category_snapshot
+        cutoff = menu.response_cutoff if menu else None
+        locked = not menu or not response_is_open(menu)[0]
+        result.append({"id": row.id, "menuId": row.menu_id, "date": meal_date.isoformat() if meal_date else None, "meal": meal, "mealCategory": category, "response": row.response, "cutoff": cutoff.isoformat() if cutoff else None, "locked": locked, "updatedAt": row.updated_at.isoformat() if row.updated_at else None})
+    submitted = len(result)
+    pending = 0
+    if student_has_assignment(student):
+        today = date.today()
+        future = student_menu_query(student).filter(Menu.menu_date >= today).all()
+        existing = {r.menu_id for r in rows}
+        pending = sum(1 for m in future if m.id not in existing and response_is_open(m)[0])
+    return jsonify({"responses": result, "submittedCount": submitted, "pendingCount": pending}), 200
 
-    responses = (
-        MealResponse.query
-        .join(
-            Menu,
-            MealResponse.menu_id == Menu.id,
-        )
-        .filter(
-            MealResponse.student_user_id
-            == student.id,
-        )
-        .order_by(
-            Menu.menu_date.desc(),
-            Menu.meal.asc(),
-        )
-        .limit(100)
-        .all()
+
+# ============================================================
+# MEAL HISTORY
+# ============================================================
+
+@student_bp.route("/meal-history", methods=["GET"])
+@student_required
+def meal_history():
+    student = get_current_student()
+    start = parse_iso_date(request.args.get("dateFrom"))
+    end = parse_iso_date(request.args.get("dateTo"))
+    meal = str(request.args.get("meal") or "").strip().lower()
+    status = str(request.args.get("status") or "").strip().lower()
+    page = max(int(request.args.get("page", 1) or 1), 1)
+    per_page = min(max(int(request.args.get("perPage", 6) or 6), 1), 100)
+
+    query = MealResponse.query.filter(MealResponse.student_user_id == student.id)
+    rows = query.order_by(MealResponse.updated_at.desc()).all()
+    records = []
+    for row in rows:
+        menu = row.menu
+        record_date = menu.menu_date if menu else row.menu_date_snapshot
+        record_meal = menu.meal if menu else row.meal_snapshot
+        items = menu_item_names(menu) if menu else [x.strip() for x in str(row.menu_items_snapshot or "").split(",") if x.strip()]
+        if not record_date:
+            continue
+        if start and record_date < start:
+            continue
+        if end and record_date > end:
+            continue
+        if meal and record_meal != meal:
+            continue
+        record_status = "Attended" if row.response == "attending" else "Skipped"
+        if status and status not in {record_status.lower(), row.response}:
+            continue
+        records.append({"id": row.id, "date": record_date.isoformat(), "meal": record_meal, "menu": ", ".join(items), "status": record_status})
+
+    # A response row represents a recorded meal. Unrecorded meals are derived from published menus.
+    if student_has_assignment(student):
+        menu_query = student_menu_query(student).filter(Menu.menu_date < date.today())
+        if start:
+            menu_query = menu_query.filter(Menu.menu_date >= start)
+        if end:
+            menu_query = menu_query.filter(Menu.menu_date <= end)
+        menus = menu_query.order_by(Menu.menu_date.desc()).all()
+        recorded_keys = {(r["date"], r["meal"]) for r in records}
+        for menu in menus:
+            key = (menu.menu_date.isoformat(), menu.meal)
+            if key in recorded_keys:
+                continue
+            if meal and menu.meal != meal:
+                continue
+            if status and status not in {"not recorded", "not_recorded"}:
+                continue
+            records.append({"id": f"menu-{menu.id}", "date": menu.menu_date.isoformat(), "meal": menu.meal, "menu": ", ".join(menu_item_names(menu)), "status": "Not recorded"})
+
+    records.sort(key=lambda r: (r["date"], r["meal"]), reverse=True)
+    counts = {"Attended": 0, "Skipped": 0, "Not recorded": 0}
+    for r in records:
+        counts[r["status"]] += 1
+    total_recorded = counts["Attended"] + counts["Skipped"]
+    attendance_percentage = round((counts["Attended"] / total_recorded) * 100, 1) if total_recorded else 0
+    total = len(records)
+    offset = (page - 1) * per_page
+    page_records = records[offset:offset + per_page]
+
+    weekly = {}
+    for r in records:
+        d = date.fromisoformat(r["date"])
+        monday = d - timedelta(days=d.weekday())
+        key = monday.isoformat()
+        weekly.setdefault(key, {"weekStart": key, "attended": 0, "skipped": 0, "notRecorded": 0})
+        if r["status"] == "Attended": weekly[key]["attended"] += 1
+        elif r["status"] == "Skipped": weekly[key]["skipped"] += 1
+        else: weekly[key]["notRecorded"] += 1
+
+    return jsonify({"records": page_records, "total": total, "page": page, "perPage": per_page, "totalPages": (total + per_page - 1) // per_page, "summary": {"attended": counts["Attended"], "skipped": counts["Skipped"], "notRecorded": counts["Not recorded"], "attendancePercentage": attendance_percentage}, "weeklyAttendance": sorted(weekly.values(), key=lambda x: x["weekStart"])}), 200
+
+
+@student_bp.route("/meal-history/export", methods=["GET"])
+@student_required
+def export_meal_history():
+    student = get_current_student()
+    start = parse_iso_date(request.args.get("dateFrom"))
+    end = parse_iso_date(request.args.get("dateTo"))
+    query = MealResponse.query.filter(MealResponse.student_user_id == student.id).order_by(MealResponse.updated_at.asc())
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["Date", "Meal", "Menu", "Status"])
+    for row in query.all():
+        menu = row.menu
+        record_date = menu.menu_date if menu else row.menu_date_snapshot
+        if not record_date or (start and record_date < start) or (end and record_date > end):
+            continue
+        record_meal = menu.meal if menu else row.meal_snapshot
+        items = menu_item_names(menu) if menu else [x.strip() for x in str(row.menu_items_snapshot or "").split(",") if x.strip()]
+        writer.writerow([record_date.isoformat(), record_meal, ", ".join(items), "Attended" if row.response == "attending" else "Skipped"])
+    return Response(output.getvalue(), mimetype="text/csv", headers={"Content-Disposition": "attachment; filename=meal-history.csv"})
+
+
+# ============================================================
+# FEEDBACK
+# ============================================================
+
+@student_bp.route("/feedback", methods=["GET"])
+@student_required
+def list_feedback():
+    student = get_current_student()
+    page = max(int(request.args.get("page", 1) or 1), 1)
+    per_page = min(max(int(request.args.get("perPage", 6) or 6), 1), 50)
+    query = StudentFeedback.query.filter_by(student_user_id=student.id).order_by(StudentFeedback.created_at.desc())
+    total = query.count()
+    rows = query.offset((page - 1) * per_page).limit(per_page).all()
+    return jsonify({"feedback": [serialize_feedback(r) for r in rows], "total": total, "page": page, "perPage": per_page, "totalPages": (total + per_page - 1) // per_page}), 200
+
+
+@student_bp.route("/feedback", methods=["POST"])
+@student_required
+def create_feedback():
+    student = get_current_student()
+    if not student_has_assignment(student):
+        return jsonify({"message": "Your hostel or mess assignment is incomplete."}), 409
+    data = request.form.to_dict() if request.form else (request.get_json(silent=True) or {})
+    meal_date = parse_iso_date(data.get("mealDate") or data.get("date"))
+    meal = str(data.get("meal") or "").strip().lower()
+    category = str(data.get("category") or "").strip()
+    if not meal_date or meal not in MEALS:
+        return jsonify({"message": "A valid meal date and meal are required."}), 400
+    if meal_date > date.today():
+        return jsonify({"message": "Feedback cannot be submitted for a future meal."}), 400
+    if category not in FEEDBACK_CATEGORIES:
+        return jsonify({"message": "Invalid feedback category."}), 400
+    overall, error = parse_rating(data.get("overallRating"), "Overall rating", True)
+    if error: return jsonify({"message": error}), 400
+    taste, error = parse_rating(data.get("tasteRating"), "Taste rating")
+    if error: return jsonify({"message": error}), 400
+    hygiene, error = parse_rating(data.get("hygieneRating"), "Hygiene rating")
+    if error: return jsonify({"message": error}), 400
+    quantity, error = parse_rating(data.get("quantityRating"), "Quantity rating")
+    if error: return jsonify({"message": error}), 400
+    comments = str(data.get("comments") or "").strip()
+    if len(comments) > 2000:
+        return jsonify({"message": "Comments cannot exceed 2000 characters."}), 400
+
+    menu = Menu.query.filter(
+        Menu.menu_date == meal_date,
+        Menu.meal == meal,
+        Menu.hostel_id == student.hostel_id,
+        Menu.mess_unit_id == student.mess_unit_id,
+        Menu.status == "published",
+        Menu.meal_category == student.meal_category,
+    ).first()
+    if not menu:
+        return jsonify({"message": "Published meal not found for your assignment."}), 404
+
+    photo_path = None
+    file = request.files.get("photo") if request.files else None
+    if file and file.filename:
+        original = secure_filename(file.filename)
+        extension = original.rsplit(".", 1)[-1].lower() if "." in original else ""
+        if extension not in ALLOWED_IMAGE_EXTENSIONS:
+            return jsonify({"message": "Only JPG, JPEG and PNG images are allowed."}), 400
+        file.seek(0, os.SEEK_END)
+        size = file.tell()
+        file.seek(0)
+        if size > 5 * 1024 * 1024:
+            return jsonify({"message": "Photo must be 5 MB or smaller."}), 400
+        upload_dir = os.path.join(os.getcwd(), "uploads", "student-feedback")
+        os.makedirs(upload_dir, exist_ok=True)
+        filename = f"feedback-{student.id}-{uuid.uuid4().hex}.{extension}"
+        file.save(os.path.join(upload_dir, filename))
+        photo_path = f"/uploads/student-feedback/{filename}"
+
+    row = StudentFeedback(
+        student_user_id=student.id,
+        menu_id=menu.id,
+        hostel_id=student.hostel_id,
+        mess_unit_id=student.mess_unit_id,
+        meal_date=meal_date,
+        meal=meal,
+        meal_category=menu.meal_category,
+        category=category,
+        overall_rating=overall,
+        taste_rating=taste,
+        hygiene_rating=hygiene,
+        quantity_rating=quantity,
+        comments=comments or None,
+        photo_path=photo_path,
     )
+    db.session.add(row)
+    try:
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        return jsonify({"message": "Unable to submit feedback."}), 500
+    return jsonify({"message": "Feedback submitted successfully.", "feedback": serialize_feedback(row)}), 201
 
-    return jsonify({
-        "responses": [
-            {
-                "id":
-                    row.id,
 
-                "menuId":
-                    row.menu_id,
+# ============================================================
+# ANNOUNCEMENTS
+# ============================================================
 
-                "date":
-                    row.menu.menu_date.isoformat(),
+@student_bp.route("/announcements", methods=["GET"])
+@student_required
+def list_announcements():
+    student = get_current_student()
+    unread_only = str(request.args.get("filter", "all")).lower() == "unread"
+    rows = Announcement.query.filter(Announcement.status == "published", announcement_scope_filter(student)).order_by(Announcement.published_at.desc(), Announcement.created_at.desc()).limit(200).all()
+    read_ids = {r.announcement_id for r in AnnouncementRead.query.filter_by(student_user_id=student.id).all()}
+    if unread_only:
+        rows = [r for r in rows if r.id not in read_ids]
+    return jsonify({"announcements": [serialize_announcement(r, student, read_ids) for r in rows], "unreadCount": sum(1 for r in rows if r.id not in read_ids)}), 200
 
-                "meal":
-                    row.menu.meal,
 
-                "mealCategory":
-                    row.menu.meal_category,
-
-                "response":
-                    row.response,
-
-                "updatedAt":
-                    (
-                        row.updated_at.isoformat()
-                        if row.updated_at
-                        else None
-                    ),
-            }
-            for row in responses
-        ]
-    }), 200
+@student_bp.route("/announcements/<int:announcement_id>/read", methods=["PATCH"])
+@student_required
+def mark_announcement_read(announcement_id):
+    student = get_current_student()
+    announcement = Announcement.query.filter(Announcement.id == announcement_id, Announcement.status == "published", announcement_scope_filter(student)).first()
+    if not announcement:
+        return jsonify({"message": "Announcement not found."}), 404
+    existing = AnnouncementRead.query.filter_by(announcement_id=announcement.id, student_user_id=student.id).first()
+    if not existing:
+        db.session.add(AnnouncementRead(announcement_id=announcement.id, student_user_id=student.id))
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+    return jsonify({"message": "Announcement marked as read."}), 200
 
 
 # ============================================================
 # NOTIFICATIONS
 # ============================================================
 
-@student_bp.route(
-    "/notifications",
-    methods=["GET"]
-)
+@student_bp.route("/notifications", methods=["GET"])
 @student_required
 def list_student_notifications():
     student = get_current_student()
-
-    notifications = (
-        MenuNotification.query
-        .filter_by(
-            recipient_user_id=student.id
-        )
-        .order_by(
-            MenuNotification.created_at.desc()
-        )
-        .limit(100)
-        .all()
-    )
-
-    return jsonify({
-        "notifications": [
-            serialize_notification(
-                notification
-            )
-            for notification in notifications
-        ],
-
-        "unreadCount":
-            sum(
-                1
-                for notification
-                in notifications
-                if not notification.is_read
-            ),
-    }), 200
+    rows = MenuNotification.query.filter_by(recipient_user_id=student.id).order_by(MenuNotification.created_at.desc()).limit(100).all()
+    return jsonify({"notifications": [serialize_notification(r) for r in rows], "unreadCount": sum(1 for r in rows if not r.is_read)}), 200
 
 
-@student_bp.route(
-    "/notifications/<int:notification_id>/read",
-    methods=["PATCH"],
-)
+@student_bp.route("/notifications/<int:notification_id>/read", methods=["PATCH"])
 @student_required
-def mark_student_notification_read(
-    notification_id
-):
+def mark_student_notification_read(notification_id):
     student = get_current_student()
-
-    notification = (
-        MenuNotification.query
-        .filter_by(
-            id=notification_id,
-            recipient_user_id=student.id,
-        )
-        .first()
-    )
-
-    if not notification:
-        return jsonify({
-            "message":
-                "Notification not found."
-        }), 404
-
+    row = MenuNotification.query.filter_by(id=notification_id, recipient_user_id=student.id).first()
+    if not row:
+        return jsonify({"message": "Notification not found."}), 404
+    row.is_read = True
     try:
-        notification.is_read = True
         db.session.commit()
-
-    except Exception as error:
+    except Exception:
         db.session.rollback()
-
-        print(
-            "Student notification update error:",
-            error
-        )
-
-        return jsonify({
-            "message":
-                "Unable to update the Notification."
-        }), 500
-
-    return jsonify({
-        "message":
-            "Notification marked as read."
-    }), 200
+        return jsonify({"message": "Unable to update notification."}), 500
+    return jsonify({"message": "Notification marked as read."}), 200
 
 
-@student_bp.route(
-    "/notifications/read-all",
-    methods=["PATCH"]
-)
+@student_bp.route("/notifications/read-all", methods=["PATCH"])
 @student_required
 def mark_all_student_notifications_read():
     student = get_current_student()
-
     try:
-        updated_count = (
-            MenuNotification.query
-            .filter_by(
-                recipient_user_id=student.id,
-                is_read=False,
-            )
-            .update(
-                {
-                    MenuNotification.is_read:
-                        True
-                },
-                synchronize_session=False,
-            )
-        )
-
+        count = MenuNotification.query.filter_by(recipient_user_id=student.id, is_read=False).update({"is_read": True}, synchronize_session=False)
         db.session.commit()
-
-    except Exception as error:
+    except Exception:
         db.session.rollback()
+        return jsonify({"message": "Unable to update notifications."}), 500
+    return jsonify({"message": "All notifications marked as read.", "updatedCount": int(count or 0)}), 200
 
-        print(
-            "Student notifications update error:",
-            error
-        )
 
-        return jsonify({
-            "message":
-                "Unable to update Notifications."
-        }), 500
+# ============================================================
+# SETTINGS
+# ============================================================
 
-    return jsonify({
-        "message":
-            "All Notifications marked as read.",
+@student_bp.route("/settings", methods=["GET"])
+@student_required
+def get_student_settings():
+    student = get_current_student()
+    settings = ensure_settings(student)
+    return jsonify({"settings": serialize_settings(settings)}), 200
 
-        "updatedCount":
-            int(
-                updated_count
-                or 0
-            ),
-    }), 200
+
+@student_bp.route("/settings", methods=["PATCH"])
+@student_required
+def update_student_settings():
+    student = get_current_student()
+    settings = ensure_settings(student)
+    data = request.get_json(silent=True) or {}
+    mapping = {
+        "notificationsEnabled": "notifications_enabled",
+        "menuPublicationNotifications": "menu_publication_notifications",
+        "responseCutoffReminders": "response_cutoff_reminders",
+        "announcementNotifications": "announcement_notifications",
+    }
+    for key, attr in mapping.items():
+        if key in data:
+            if not isinstance(data[key], bool):
+                return jsonify({"message": f"{key} must be true or false."}), 400
+            setattr(settings, attr, data[key])
+    if "theme" in data:
+        theme = str(data.get("theme") or "").lower()
+        if theme not in {"system", "light", "dark"}:
+            return jsonify({"message": "Theme must be system, light or dark."}), 400
+        settings.theme = theme
+    try:
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        return jsonify({"message": "Unable to update settings."}), 500
+    return jsonify({"message": "Settings updated successfully.", "settings": serialize_settings(settings)}), 200

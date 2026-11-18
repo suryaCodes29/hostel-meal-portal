@@ -5,7 +5,7 @@ import App from "./App.jsx";
 import "./index.css";
 import { applySavedManagerTheme } from "./utils/managerTheme";
 applySavedManagerTheme();
-
+import "./styles/studentTheme.css";
 createRoot(
   document.getElementById("root")
 ).render(

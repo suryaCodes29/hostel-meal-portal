@@ -38,6 +38,7 @@ from werkzeug.security import (  # type: ignore[import-not-found]
 
 from models import (
     db,
+    Announcement,
     Forecast,
     Hostel,
     HostelBlock,
@@ -50,10 +51,10 @@ from models import (
     MenuTemplateItem,
     MessUnit,
     Notification,
+    StudentFeedback,
     User,
-    WasteRecord
+    WasteRecord,
 )
-
 
 manager_bp = Blueprint(
     "manager",
@@ -9262,4 +9263,873 @@ def manager_dashboard():
 
         }
 
+    }), 200
+
+    
+# ============================================================
+# STUDENT FEEDBACK — MANAGER PORTAL
+# ============================================================
+
+@manager_bp.route("/feedback", methods=["GET"])
+@manager_required
+def list_manager_feedback():
+    manager = get_current_user()
+
+    # Only include feedback from hostels owned by this manager.
+    owned_hostel_ids = manager_hostel_ids(manager.id)
+
+    query = StudentFeedback.query.filter(
+        StudentFeedback.hostel_id.in_(owned_hostel_ids)
+    )
+
+    status = (request.args.get("status") or "").strip().lower()
+    if status in {"pending", "reviewed"}:
+        query = query.filter(StudentFeedback.status == status)
+
+    rows = query.order_by(
+        StudentFeedback.created_at.desc()
+    ).limit(200).all()
+
+    feedback_items = []
+
+    for item in rows:
+        student = db.session.get(User, item.student_user_id)
+
+        feedback_items.append({
+            "id": item.id,
+            "studentName": student.name if student else "Student",
+            "studentId": student.student_id if student else None,
+            "mealDate": item.meal_date.isoformat() if item.meal_date else None,
+            "meal": item.meal,
+            "category": item.category,
+            "overallRating": item.overall_rating,
+            "tasteRating": item.taste_rating,
+            "hygieneRating": item.hygiene_rating,
+            "quantityRating": item.quantity_rating,
+            "comments": item.comments or "",
+            "photoUrl": item.photo_path,
+            "status": item.status,
+            "staffReply": item.staff_reply,
+            "createdAt": item.created_at.isoformat() if item.created_at else None,
+            "repliedAt": item.replied_at.isoformat() if item.replied_at else None,
+        })
+
+    return jsonify({
+        "feedback": feedback_items,
+        "total": len(feedback_items),
+    }), 200
+
+
+@manager_bp.route("/feedback/<int:feedback_id>/reply", methods=["PATCH"])
+@manager_required
+def reply_to_student_feedback(feedback_id):
+    manager = get_current_user()
+
+    owned_hostel_ids = manager_hostel_ids(manager.id)
+
+    feedback = StudentFeedback.query.filter(
+        StudentFeedback.id == feedback_id,
+        StudentFeedback.hostel_id.in_(owned_hostel_ids),
+    ).first()
+
+    if not feedback:
+        return jsonify({
+            "message": "Feedback not found."
+        }), 404
+
+    data = request.get_json(silent=True) or {}
+    reply = str(data.get("reply") or "").strip()
+
+    if not reply:
+        return jsonify({
+            "message": "Reply cannot be empty."
+        }), 400
+
+    if len(reply) > 2000:
+        return jsonify({
+            "message": "Reply cannot exceed 2000 characters."
+        }), 400
+
+    feedback.staff_reply = reply
+    feedback.replied_by = manager.id
+    feedback.replied_at = datetime.utcnow()
+    feedback.status = "reviewed"
+
+    try:
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        return jsonify({
+            "message": "Unable to save the reply."
+        }), 500
+
+    return jsonify({
+        "message": "Reply saved successfully.",
+        "feedback": {
+            "id": feedback.id,
+            "status": feedback.status,
+            "staffReply": feedback.staff_reply,
+            "repliedAt": feedback.replied_at.isoformat() if feedback.replied_at else None,
+        },
+    }), 200
+
+# ============================================================
+# MANAGER ANNOUNCEMENTS
+# ============================================================
+
+def serialize_manager_announcement(item):
+    return {
+        "id": item.id,
+        "title": item.title,
+        "message": item.message,
+        "priority": item.priority,
+        "status": item.status,
+        "is_general": item.is_general,
+        "hostel_id": item.hostel_id,
+        "mess_unit_id": item.mess_unit_id,
+        "meal_category": item.meal_category,
+        "recipient_user_id": item.recipient_user_id,
+        "attachment_url": item.attachment_url,
+        "sender_name": item.sender_name,
+        "published_at": (
+            item.published_at.isoformat()
+            if item.published_at else None
+        ),
+        "created_at": (
+            item.created_at.isoformat()
+            if item.created_at else None
+        ),
+        "updated_at": (
+            item.updated_at.isoformat()
+            if item.updated_at else None
+        ),
+    }
+
+
+def validate_announcement_payload(manager, data):
+    title = str(data.get("title") or "").strip()
+    message = str(data.get("message") or "").strip()
+    priority = str(data.get("priority") or "normal").strip().lower()
+    status = str(data.get("status") or "draft").strip().lower()
+
+    if not title or len(title) > 200:
+        return None, "Title is required and must be at most 200 characters."
+
+    if not message or len(message) > 10000:
+        return None, "Message is required and must be at most 10000 characters."
+
+    if priority not in {"normal", "important", "urgent"}:
+        return None, "Invalid priority."
+
+    if status not in {"draft", "published", "unpublished"}:
+        return None, "Invalid announcement status."
+
+    def optional_int(key):
+        value = data.get(key)
+        if value in (None, ""):
+            return None
+        try:
+            number = int(value)
+            return number if number > 0 else None
+        except (TypeError, ValueError):
+            return None
+
+    hostel_id = optional_int("hostel_id")
+    mess_unit_id = optional_int("mess_unit_id")
+    recipient_user_id = optional_int("recipient_user_id")
+    meal_category = str(data.get("meal_category") or "").strip()
+    attachment_url = str(data.get("attachment_url") or "").strip() or None
+
+    if attachment_url and len(attachment_url) > 500:
+        return None, "Attachment URL must be at most 500 characters."
+
+    is_general = data.get("is_general") is True
+
+    # General announcements are visible only within this manager's tenant.
+    if is_general:
+        hostel_id = None
+        mess_unit_id = None
+        recipient_user_id = None
+        meal_category = None
+
+    else:
+        # An individual recipient must be a student owned by this manager.
+        if recipient_user_id:
+            student = get_owned_user(
+                manager.id,
+                recipient_user_id,
+                "student",
+            )
+            if not student:
+                return None, "Student not found in your assigned hostels."
+
+            hostel_id = student.hostel_id
+            mess_unit_id = None
+            meal_category = None
+
+        elif mess_unit_id:
+            mess = manager_owns_mess(manager.id, mess_unit_id)
+            if not mess:
+                return None, "Mess unit not found in your assigned hostels."
+
+            if hostel_id and mess.hostel_id != hostel_id:
+                return None, "The selected mess unit does not belong to that hostel."
+
+            hostel_id = mess.hostel_id
+            meal_category = None
+
+        elif hostel_id:
+            if not get_owned_hostel(manager.id, hostel_id):
+                return None, "Hostel not found in your account."
+
+        elif meal_category:
+            return None, "Select a hostel when targeting a meal category."
+
+        else:
+            return None, "Select a valid announcement audience."
+
+        if meal_category and meal_category.lower() not in {
+            "veg", "non-veg"
+        }:
+            return None, "Meal category must be Veg or Non-Veg."
+
+        if meal_category:
+            meal_category = (
+                "Veg" if meal_category.lower() == "veg"
+                else "Non-Veg"
+            )
+
+    return {
+        "title": title,
+        "message": message,
+        "priority": priority,
+        "status": status,
+        "is_general": is_general,
+        "hostel_id": hostel_id,
+        "mess_unit_id": mess_unit_id,
+        "meal_category": meal_category or None,
+        "recipient_user_id": recipient_user_id,
+        "attachment_url": attachment_url,
+    }, None
+
+
+@manager_bp.route("/announcements", methods=["GET"])
+@manager_required
+def list_manager_announcements():
+    manager = get_current_user()
+
+    query = Announcement.query.filter_by(
+        manager_user_id=manager.id
+    )
+
+    status = (request.args.get("status") or "").strip().lower()
+
+    if status == "unpublished":
+        query = query.filter(
+            Announcement.status == "unpublished"
+        )
+    elif status in {"draft", "published"}:
+        query = query.filter(
+            Announcement.status == status
+        )
+    elif status and status != "all":
+        return jsonify({"message": "Invalid status filter."}), 400
+
+    rows = query.order_by(
+        Announcement.created_at.desc()
+    ).limit(200).all()
+
+    return jsonify({
+        "announcements": [
+            serialize_manager_announcement(item)
+            for item in rows
+        ],
+        "total": len(rows),
+    }), 200
+
+
+@manager_bp.route("/announcements", methods=["POST"])
+@manager_required
+def create_manager_announcement():
+    manager = get_current_user()
+    data = request.get_json(silent=True) or {}
+
+    payload, error = validate_announcement_payload(manager, data)
+
+    if error:
+        return jsonify({"message": error}), 400
+
+    now = datetime.utcnow()
+
+    item = Announcement(
+        manager_user_id=manager.id,
+        sender_name=manager.name,
+        published_at=now if payload["status"] == "published" else None,
+        **payload,
+    )
+
+    try:
+        db.session.add(item)
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        return jsonify({
+            "message": "Unable to save the announcement."
+        }), 500
+
+    return jsonify({
+        "message": (
+            "Announcement published successfully."
+            if item.status == "published"
+            else "Announcement draft saved successfully."
+        ),
+        "announcement": serialize_manager_announcement(item),
+    }), 201
+
+
+@manager_bp.route("/announcements/<int:announcement_id>", methods=["PATCH"])
+@manager_required
+def update_manager_announcement(announcement_id):
+    manager = get_current_user()
+
+    item = Announcement.query.filter_by(
+        id=announcement_id,
+        manager_user_id=manager.id,
+    ).first()
+
+    if not item:
+        return jsonify({"message": "Announcement not found."}), 404
+
+    data = request.get_json(silent=True) or {}
+
+    # Merge partial updates with the existing announcement.
+    merged = {
+        "title": item.title,
+        "message": item.message,
+        "priority": item.priority,
+        "status": item.status,
+        "is_general": item.is_general,
+        "hostel_id": item.hostel_id,
+        "mess_unit_id": item.mess_unit_id,
+        "meal_category": item.meal_category,
+        "recipient_user_id": item.recipient_user_id,
+        "attachment_url": item.attachment_url,
+    }
+    merged.update(data)
+
+    payload, error = validate_announcement_payload(manager, merged)
+
+    if error:
+        return jsonify({"message": error}), 400
+
+    was_published = item.status == "published"
+
+    try:
+        for key, value in payload.items():
+            setattr(item, key, value)
+
+        if item.status == "published" and not was_published:
+            item.published_at = datetime.utcnow()
+        elif item.status != "published":
+            item.published_at = None
+
+        item.sender_name = manager.name
+        db.session.commit()
+
+    except Exception:
+        db.session.rollback()
+        return jsonify({
+            "message": "Unable to update the announcement."
+        }), 500
+
+    return jsonify({
+        "message": "Announcement updated successfully.",
+        "announcement": serialize_manager_announcement(item),
+    }), 200
+# ============================================================
+# SMART FORECAST INSIGHTS API
+# Add this at the bottom of manager_routes.py
+# ============================================================
+
+@manager_bp.route(
+    "/forecasts/insights",
+    methods=["GET"]
+)
+@manager_required
+def get_forecast_insights():
+
+    manager = get_current_user()
+
+    forecast_date = parse_date(
+        request.args.get("date")
+    ) or date.today()
+
+    hostel_id = get_integer_query("hostel_id")
+    mess_unit_id = get_integer_query("mess_unit_id")
+
+    meal_category = normalize_category(
+        request.args.get("meal_category")
+    )
+
+    valid, message = validate_global_filters(
+        manager.id,
+        hostel_id,
+        None,
+        mess_unit_id
+    )
+
+    if not valid:
+        return jsonify({
+            "message": message
+        }), 400
+
+    # --------------------------------------------------------
+    # MANAGER-OWNED HOSTELS
+    # --------------------------------------------------------
+
+    hostel_query = Hostel.query.filter(
+        Hostel.manager_user_id == manager.id
+    )
+
+    if hostel_id:
+        hostel_query = hostel_query.filter(
+            Hostel.id == hostel_id
+        )
+
+    owned_hostels = hostel_query.all()
+
+    owned_hostel_ids = [
+        hostel.id for hostel in owned_hostels
+    ]
+
+    if not owned_hostel_ids:
+        return jsonify({
+            "date": forecast_date.isoformat(),
+            "forecasts": [],
+            "summary": {
+                "expectedStudents": 0,
+                "confirmedYes": 0,
+                "confirmedNo": 0,
+                "noResponse": 0,
+                "recommendedPreparation": 0
+            },
+            "message": "No hostel data found."
+        }), 200
+
+    # --------------------------------------------------------
+    # TARGET MENUS
+    # --------------------------------------------------------
+
+    menu_query = (
+        Menu.query
+        .filter(
+            Menu.hostel_id.in_(owned_hostel_ids),
+            Menu.menu_date == forecast_date
+        )
+    )
+
+    if mess_unit_id:
+        menu_query = menu_query.filter(
+            Menu.mess_unit_id == mess_unit_id
+        )
+
+    if meal_category:
+        menu_query = menu_query.filter(
+            Menu.meal_category == meal_category
+        )
+
+    menus = (
+        menu_query
+        .order_by(
+            Menu.meal.asc(),
+            Menu.meal_category.asc()
+        )
+        .all()
+    )
+
+    # --------------------------------------------------------
+    # FORECAST EACH MENU SEPARATELY
+    # --------------------------------------------------------
+
+    forecast_rows = []
+
+    for menu in menus:
+
+        # Population assigned to this hostel/mess unit
+        student_query = User.query.filter(
+            User.role == "student",
+            User.is_active == True,
+            User.hostel_id == menu.hostel_id,
+            User.mess_unit_id == menu.mess_unit_id
+        )
+
+        population = student_query.count()
+
+        # ----------------------------------------------------
+        # RESPONSES
+        # ----------------------------------------------------
+
+        responses = MealResponse.query.filter(
+            MealResponse.menu_id == menu.id
+        ).all()
+
+        yes_count = sum(
+            1 for response in responses
+            if response.response == "attending"
+        )
+
+        no_count = sum(
+            1 for response in responses
+            if response.response == "skipping"
+        )
+
+        response_count = yes_count + no_count
+
+        no_response_count = max(
+            population - response_count,
+            0
+        )
+
+        response_coverage = (
+            response_count / population
+            if population > 0
+            else 0
+        )
+
+        # ----------------------------------------------------
+        # HISTORICAL ACTUAL ATTENDANCE
+        # Same meal + category + mess unit
+        # Same weekday, previous 8 weeks
+        # ----------------------------------------------------
+
+        history_start = (
+            forecast_date - timedelta(days=56)
+        )
+
+        history_query = (
+            WasteRecord.query
+            .join(
+                Hostel,
+                WasteRecord.hostel_id == Hostel.id
+            )
+            .filter(
+                Hostel.manager_user_id == manager.id,
+                WasteRecord.hostel_id == menu.hostel_id,
+                WasteRecord.mess_unit_id == menu.mess_unit_id,
+                WasteRecord.meal == menu.meal,
+                WasteRecord.meal_category == menu.meal_category,
+                WasteRecord.record_date >= history_start,
+                WasteRecord.record_date < forecast_date
+            )
+        )
+
+        historical_records = history_query.all()
+
+        # Keep only records matching target weekday
+        same_weekday_records = [
+            record
+            for record in historical_records
+            if record.record_date.weekday()
+            == forecast_date.weekday()
+        ]
+
+        if not same_weekday_records:
+            same_weekday_records = historical_records
+
+        historical_attendance_values = [
+            int(record.students_served or 0)
+            for record in same_weekday_records
+        ]
+
+        historical_average = (
+            sum(historical_attendance_values)
+            / len(historical_attendance_values)
+            if historical_attendance_values
+            else 0
+        )
+
+        historical_attendance_rate = (
+            historical_average / population
+            if population > 0
+            else 0
+        )
+
+        historical_attendance_rate = max(
+            0,
+            min(
+                historical_attendance_rate,
+                1
+            )
+        )
+
+        # ----------------------------------------------------
+        # ESTIMATE NON-RESPONDERS
+        # ----------------------------------------------------
+
+        estimated_non_responder_attendance = round(
+            no_response_count
+            * historical_attendance_rate
+        )
+
+        expected_students = (
+            yes_count
+            + estimated_non_responder_attendance
+        )
+
+        expected_students = max(
+            0,
+            min(
+                expected_students,
+                population
+            )
+        )
+
+        # ----------------------------------------------------
+        # CONFIDENCE
+        # ----------------------------------------------------
+
+        history_count = len(
+            same_weekday_records
+        )
+
+        if (
+            history_count >= 6
+            and response_coverage >= 0.60
+        ):
+            confidence = "High"
+
+        elif (
+            history_count >= 3
+            or response_coverage >= 0.40
+        ):
+            confidence = "Medium"
+
+        else:
+            confidence = "Low"
+
+        confidence_reasons = []
+
+        if history_count < 3:
+            confidence_reasons.append(
+                "Limited historical attendance data"
+            )
+
+        if response_coverage < 0.40:
+            confidence_reasons.append(
+                "Low student response coverage"
+            )
+
+        if history_count >= 6:
+            confidence_reasons.append(
+                "Sufficient historical records"
+            )
+
+        if response_coverage >= 0.60:
+            confidence_reasons.append(
+                "Good response coverage"
+            )
+
+        # ----------------------------------------------------
+        # FOOD ITEM QUANTITY CALCULATION
+        # Uses configured quantity per student.
+        # No invented portion sizes.
+        # ----------------------------------------------------
+
+        food_items = []
+
+        for link in menu.item_links:
+
+            item = link.menu_item
+
+            quantity_per_student = float(
+                link.quantity_per_student or 0
+            )
+
+            recommended_quantity = round(
+                expected_students
+                * quantity_per_student,
+                2
+            )
+
+            food_items.append({
+                "menuItemId": item.id,
+                "name": item.name,
+                "quantityPerStudent": quantity_per_student,
+                "unit": link.unit,
+                "expectedPortions": expected_students,
+                "recommendedQuantity": recommended_quantity
+            })
+
+        # ----------------------------------------------------
+        # HISTORICAL WASTE ANALYSIS
+        # ----------------------------------------------------
+
+        historical_waste = sum(
+            float(record.waste_kg or 0)
+            for record in same_weekday_records
+        )
+
+        average_waste = (
+            historical_waste / history_count
+            if history_count > 0
+            else 0
+        )
+
+        waste_recommendation = None
+
+        if average_waste >= 5:
+            waste_recommendation = (
+                "Historical food waste is relatively high. "
+                "Review preparation quantities after serving."
+            )
+
+        elif average_waste > 0:
+            waste_recommendation = (
+                "Use historical waste records when adjusting "
+                "preparation quantities."
+            )
+
+        # ----------------------------------------------------
+        # EXISTING FORECAST RECORD
+        # ----------------------------------------------------
+
+        existing_forecast = Forecast.query.filter(
+            Forecast.hostel_id == menu.hostel_id,
+            Forecast.mess_unit_id == menu.mess_unit_id,
+            Forecast.forecast_date == forecast_date,
+            Forecast.meal == menu.meal,
+            Forecast.meal_category == menu.meal_category
+        ).first()
+
+        actual_students = (
+            existing_forecast.actual_students
+            if existing_forecast
+            else None
+        )
+
+        forecast_rows.append({
+
+            "menuId": menu.id,
+
+            "forecastId": (
+                existing_forecast.id
+                if existing_forecast
+                else None
+            ),
+
+            "date": forecast_date.isoformat(),
+
+            "meal": menu.meal,
+
+            "mealCategory": menu.meal_category,
+
+            "hostelId": menu.hostel_id,
+
+            "hostel": menu.hostel.name,
+
+            "messUnitId": menu.mess_unit_id,
+
+            "messUnit": menu.mess_unit.name,
+
+            "population": population,
+
+            "confirmedYes": yes_count,
+
+            "confirmedNo": no_count,
+
+            "responded": response_count,
+
+            "noResponse": no_response_count,
+
+            "responseCoverage": round(
+                response_coverage * 100,
+                1
+            ),
+
+            "historicalRecords": history_count,
+
+            "historicalAverageAttendance": round(
+                historical_average,
+                1
+            ),
+
+            "historicalAttendanceRate": round(
+                historical_attendance_rate * 100,
+                1
+            ),
+
+            "estimatedNonResponderAttendance":
+                estimated_non_responder_attendance,
+
+            "expectedStudents": expected_students,
+
+            "actualStudents": actual_students,
+
+            "confidence": confidence,
+
+            "confidenceReasons": confidence_reasons,
+
+            "foodItems": food_items,
+
+            "historicalAverageWasteKg": round(
+                average_waste,
+                2
+            ),
+
+            "recommendation": waste_recommendation,
+
+            "preparationStatus": (
+                existing_forecast.preparation_status
+                if existing_forecast
+                else "not_saved"
+            )
+        })
+
+    # --------------------------------------------------------
+    # SUMMARY
+    # --------------------------------------------------------
+
+    summary = {
+        "expectedStudents": sum(
+            row["expectedStudents"]
+            for row in forecast_rows
+        ),
+
+        "confirmedYes": sum(
+            row["confirmedYes"]
+            for row in forecast_rows
+        ),
+
+        "confirmedNo": sum(
+            row["confirmedNo"]
+            for row in forecast_rows
+        ),
+
+        "noResponse": sum(
+            row["noResponse"]
+            for row in forecast_rows
+        ),
+
+        "menuCount": len(forecast_rows),
+
+        "highConfidence": sum(
+            1 for row in forecast_rows
+            if row["confidence"] == "High"
+        ),
+
+        "mediumConfidence": sum(
+            1 for row in forecast_rows
+            if row["confidence"] == "Medium"
+        ),
+
+        "lowConfidence": sum(
+            1 for row in forecast_rows
+            if row["confidence"] == "Low"
+        )
+    }
+
+    return jsonify({
+        "date": forecast_date.isoformat(),
+        "summary": summary,
+        "forecasts": forecast_rows
     }), 200
