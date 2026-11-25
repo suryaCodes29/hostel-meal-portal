@@ -32,8 +32,10 @@ from sqlalchemy import (  # type: ignore[import-not-found]
 )
 
 from sqlalchemy.exc import (  # type: ignore[import-not-found]
-    IntegrityError
+    IntegrityError,
+    SQLAlchemyError
 )
+from sqlalchemy.orm import joinedload
 
 from werkzeug.security import (  # type: ignore[import-not-found]
     generate_password_hash
@@ -9788,22 +9790,35 @@ def list_manager_feedback():
     # Only include feedback from hostels owned by this manager.
     owned_hostel_ids = manager_hostel_ids(manager.id)
 
-    query = StudentFeedback.query.filter(
-        StudentFeedback.hostel_id.in_(owned_hostel_ids)
-    )
+    try:
+        query = StudentFeedback.query.options(
+            joinedload(StudentFeedback.student)
+        ).filter(
+            StudentFeedback.hostel_id.in_(owned_hostel_ids)
+        )
 
-    status = (request.args.get("status") or "").strip().lower()
-    if status in {"pending", "reviewed"}:
-        query = query.filter(StudentFeedback.status == status)
+        status = (request.args.get("status") or "").strip().lower()
+        if status in {"pending", "reviewed"}:
+            query = query.filter(StudentFeedback.status == status)
 
-    rows = query.order_by(
-        StudentFeedback.created_at.desc()
-    ).limit(200).all()
+        rows = query.order_by(
+            StudentFeedback.created_at.desc()
+        ).limit(200).all()
+    except SQLAlchemyError as error:
+        db.session.rollback()
+        current_app.logger.exception(
+            "Failed to list Manager feedback at endpoint=%s: %s",
+            request.endpoint,
+            error,
+        )
+        return jsonify({
+            "message": "Unable to load feedback."
+        }), 500
 
     feedback_items = []
 
     for item in rows:
-        student = db.session.get(User, item.student_user_id)
+        student = item.student
 
         feedback_items.append({
             "id": item.id,
@@ -9867,8 +9882,13 @@ def reply_to_student_feedback(feedback_id):
 
     try:
         db.session.commit()
-    except Exception:
+    except SQLAlchemyError as error:
         db.session.rollback()
+        current_app.logger.exception(
+            "Failed to save Student feedback reply at endpoint=%s: %s",
+            request.endpoint,
+            error,
+        )
         return jsonify({
             "message": "Unable to save the reply."
         }), 500

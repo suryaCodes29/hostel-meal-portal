@@ -6,10 +6,10 @@ import io
 import os
 import uuid
 from config import Config
-from flask import Blueprint, jsonify, request, Response
+from flask import Blueprint, current_app, jsonify, request, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from sqlalchemy import or_, and_, func
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from werkzeug.utils import secure_filename
 from services.meal_qr_service import generate_meal_qr_token
 from models import (
@@ -399,7 +399,10 @@ def serialize_announcement(announcement, student, read_ids=None):
 def serialize_feedback(feedback):
     return {
         "id": feedback.id,
-        "date": feedback.meal_date.isoformat(),
+        "date": (
+            feedback.meal_date.isoformat()
+            if feedback.meal_date else None
+        ),
         "meal": feedback.meal,
         "category": feedback.category,
         "overallRating": feedback.overall_rating,
@@ -1101,12 +1104,18 @@ def create_feedback():
         quantity_rating=quantity,
         comments=comments or None,
         photo_path=photo_path,
+        status="pending",
     )
     db.session.add(row)
     try:
         db.session.commit()
-    except Exception:
+    except SQLAlchemyError as error:
         db.session.rollback()
+        current_app.logger.exception(
+            "Failed to submit Student feedback at endpoint=%s: %s",
+            request.endpoint,
+            error,
+        )
         return jsonify({"message": "Unable to submit feedback."}), 500
     return jsonify({"message": "Feedback submitted successfully.", "feedback": serialize_feedback(row)}), 201
 

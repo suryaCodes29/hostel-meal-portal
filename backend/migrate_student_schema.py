@@ -178,7 +178,8 @@ def add_foreign_key_if_missing(
     table_name,
     constraint_name,
     column,
-    referenced_table
+    referenced_table,
+    on_delete="CASCADE"
 ):
     foreign_keys = inspector.get_foreign_keys(table_name)
 
@@ -196,7 +197,7 @@ def add_foreign_key_if_missing(
             f"ADD CONSTRAINT `{constraint_name}` "
             f"FOREIGN KEY (`{column}`) "
             f"REFERENCES `{referenced_table}` (`id`) "
-            "ON DELETE CASCADE"
+            f"ON DELETE {on_delete}"
         )
     )
     print(f"  [DONE] Added foreign key for `{column}`")
@@ -325,55 +326,151 @@ def run_migration():
                 """
                 CREATE TABLE `student_feedback` (
                     `id` INT NOT NULL AUTO_INCREMENT,
-
                     `student_user_id` INT NOT NULL,
-
                     `menu_id` INT NULL,
-
+                    `hostel_id` INT NULL,
+                    `mess_unit_id` INT NULL,
+                    `meal_date` DATE NOT NULL,
                     `feedback_date` DATE NULL,
-
-                    `meal` VARCHAR(50) NULL,
-
-                    `category` VARCHAR(100) NULL,
-
-                    `overall_rating` INT NULL,
-
+                    `meal` VARCHAR(30) NOT NULL,
+                    `meal_category` VARCHAR(30) NULL,
+                    `category` VARCHAR(50) NOT NULL,
+                    `overall_rating` INT NOT NULL,
                     `taste_rating` INT NULL,
-
                     `hygiene_rating` INT NULL,
-
                     `quantity_rating` INT NULL,
-
-                    `comments` TEXT NULL,
-
+                    `comments` VARCHAR(2000) NULL,
                     `photo_path` VARCHAR(500) NULL,
-
+                    `status` ENUM('pending', 'reviewed')
+                        NOT NULL DEFAULT 'pending',
+                    `staff_reply` VARCHAR(2000) NULL,
+                    `replied_by` INT NULL,
+                    `replied_at` DATETIME NULL,
                     `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
                     `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
                         ON UPDATE CURRENT_TIMESTAMP,
-
                     PRIMARY KEY (`id`),
-
                     INDEX `idx_feedback_student`
                         (`student_user_id`),
-
                     INDEX `idx_feedback_menu`
                         (`menu_id`),
-
+                    INDEX `ix_student_feedback_student_date`
+                        (`student_user_id`, `meal_date`),
+                    INDEX `ix_student_feedback_scope`
+                        (`hostel_id`, `mess_unit_id`, `meal_date`),
+                    INDEX `ix_student_feedback_status`
+                        (`status`),
                     CONSTRAINT `fk_feedback_student`
                         FOREIGN KEY (`student_user_id`)
                         REFERENCES `users` (`id`)
                         ON DELETE CASCADE,
-
                     CONSTRAINT `fk_feedback_menu`
                         FOREIGN KEY (`menu_id`)
                         REFERENCES `menus` (`id`)
+                        ON DELETE SET NULL,
+                    CONSTRAINT `fk_feedback_hostel`
+                        FOREIGN KEY (`hostel_id`)
+                        REFERENCES `hostels` (`id`)
+                        ON DELETE SET NULL,
+                    CONSTRAINT `fk_feedback_mess_unit`
+                        FOREIGN KEY (`mess_unit_id`)
+                        REFERENCES `mess_units` (`id`)
+                        ON DELETE SET NULL,
+                    CONSTRAINT `fk_feedback_replier`
+                        FOREIGN KEY (`replied_by`)
+                        REFERENCES `users` (`id`)
                         ON DELETE SET NULL
-
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
                 """
             )
+
+            inspector = inspect(connection)
+            feedback_columns = get_columns(
+                inspector,
+                "student_feedback"
+            )
+
+            for column_name, definition in (
+                ("hostel_id", "INT NULL"),
+                ("mess_unit_id", "INT NULL"),
+                ("meal_date", "DATE NULL"),
+                ("meal_category", "VARCHAR(30) NULL"),
+                ("status", "ENUM('pending', 'reviewed') NOT NULL DEFAULT 'pending'"),
+                ("staff_reply", "VARCHAR(2000) NULL"),
+                ("replied_by", "INT NULL"),
+                ("replied_at", "DATETIME NULL"),
+            ):
+                add_column_if_missing(
+                    connection,
+                    inspector,
+                    "student_feedback",
+                    column_name,
+                    definition
+                )
+                inspector = inspect(connection)
+
+            if "status" not in feedback_columns:
+                connection.execute(
+                    text(
+                        "UPDATE `student_feedback` "
+                        "SET `status` = 'pending' "
+                        "WHERE `status` IS NULL"
+                    )
+                )
+
+            for index_name, columns in (
+                (
+                    "ix_student_feedback_student_date",
+                    ("student_user_id", "meal_date")
+                ),
+                (
+                    "ix_student_feedback_scope",
+                    ("hostel_id", "mess_unit_id", "meal_date")
+                ),
+                (
+                    "ix_student_feedback_status",
+                    ("status",)
+                ),
+            ):
+                add_index_if_missing(
+                    connection,
+                    inspector,
+                    "student_feedback",
+                    index_name,
+                    columns
+                )
+                inspector = inspect(connection)
+
+            for constraint_name, column, referenced_table, on_delete in (
+                (
+                    "fk_feedback_hostel",
+                    "hostel_id",
+                    "hostels",
+                    "SET NULL"
+                ),
+                (
+                    "fk_feedback_mess_unit",
+                    "mess_unit_id",
+                    "mess_units",
+                    "SET NULL"
+                ),
+                (
+                    "fk_feedback_replier",
+                    "replied_by",
+                    "users",
+                    "SET NULL"
+                ),
+            ):
+                add_foreign_key_if_missing(
+                    connection,
+                    inspector,
+                    "student_feedback",
+                    constraint_name,
+                    column,
+                    referenced_table,
+                    on_delete
+                )
+                inspector = inspect(connection)
 
             # ------------------------------------------------
             # 3. ANNOUNCEMENTS
