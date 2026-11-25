@@ -12,10 +12,7 @@
 // - This service automatically sends the JWT.
 // ============================================================
 
-
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  "http://localhost:5000";
+import { API_BASE_URL } from "./apiConfig";
 
 
 // ============================================================
@@ -26,9 +23,11 @@ const API_BASE_URL =
 export function getStoredToken() {
   return (
     localStorage.getItem("token") ||
-    sessionStorage.getItem("token") ||
     localStorage.getItem("accessToken") ||
+    localStorage.getItem("authToken") ||
+    sessionStorage.getItem("token") ||
     sessionStorage.getItem("accessToken") ||
+    sessionStorage.getItem("authToken") ||
     ""
   );
 }
@@ -38,7 +37,9 @@ export function getStoredToken() {
 export function getStoredUser() {
   const raw =
     localStorage.getItem("user") ||
-    sessionStorage.getItem("user");
+    sessionStorage.getItem("user") ||
+    localStorage.getItem("currentUser") ||
+    sessionStorage.getItem("currentUser");
 
   if (!raw) {
     return null;
@@ -53,11 +54,20 @@ export function getStoredUser() {
 
 
 export function clearStudentSession() {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
+  const sessionKeys = [
+    "token",
+    "accessToken",
+    "authToken",
+    "user",
+    "currentUser",
+    "role",
+    "hostelMealQrPasses",
+  ];
 
-  sessionStorage.removeItem("token");
-  sessionStorage.removeItem("user");
+  sessionKeys.forEach((key) => {
+    localStorage.removeItem(key);
+    sessionStorage.removeItem(key);
+  });
 }
 
 
@@ -96,6 +106,18 @@ async function request(
   options = {}
 ) {
   const token = getStoredToken();
+
+  if (!token) {
+    const error = new Error("Your session has expired. Please sign in again.");
+    error.status = 401;
+    clearStudentSession();
+    window.dispatchEvent(
+      new CustomEvent("auth-session-expired", {
+        detail: { role: "student", message: error.message },
+      })
+    );
+    throw error;
+  }
 
   const {
     method = "GET",
@@ -155,9 +177,12 @@ async function request(
       }
     );
   } catch (error) {
-    throw new Error(
+    const networkError = new Error(
       "Unable to connect to the server. Please make sure the backend is running."
     );
+    networkError.status = 0;
+    networkError.cause = error;
+    throw networkError;
   }
 
 
@@ -249,40 +274,14 @@ async function request(
     if (
       response.status === 401
     ) {
-      clearStudentSession();
-
-      window.dispatchEvent(
-        new CustomEvent(
-          "student-auth-error",
-          {
-            detail: {
-              status: 401,
-              message,
-            },
-          }
-        )
-      );
-    }
-
-
-    // --------------------------------------------------------
-    // Forbidden
-    // --------------------------------------------------------
-
-    if (
-      response.status === 403
-    ) {
-      window.dispatchEvent(
-        new CustomEvent(
-          "student-auth-error",
-          {
-            detail: {
-              status: 403,
-              message,
-            },
-          }
-        )
-      );
+      if (getStoredToken() === token) {
+        clearStudentSession();
+        window.dispatchEvent(
+          new CustomEvent("auth-session-expired", {
+            detail: { role: "student", status: 401, message },
+          })
+        );
+      }
     }
 
 
@@ -387,6 +386,18 @@ export async function saveMealResponse(
   );
 }
 
+// ============================================================
+// MEAL QR TOKEN
+// ============================================================
+
+export async function generateMealQrToken(menuId) {
+  return request(
+    `/api/student/menus/${menuId}/qr-token`,
+    {
+      method: "POST",
+    }
+  );
+}
 
 // ============================================================
 // RESPONSES
@@ -667,7 +678,8 @@ export const studentApi = {
         payload
       );
     },
-
+    generateMealQrToken:
+  generateMealQrToken,
 
   // Responses
   getResponses:

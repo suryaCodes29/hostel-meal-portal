@@ -92,6 +92,19 @@ function StudentLayout() {
   }, [location.pathname]);
 
   useEffect(() => {
+    const handleSessionExpired = (event) => {
+      if (event.detail?.role === "student") {
+        navigate("/login", { replace: true });
+      }
+    };
+
+    window.addEventListener("auth-session-expired", handleSessionExpired);
+    return () => {
+      window.removeEventListener("auth-session-expired", handleSessionExpired);
+    };
+  }, [navigate]);
+
+  useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 900) {
         setSidebarOpen(false);

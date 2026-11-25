@@ -1,17 +1,20 @@
-
-import secrets
-import re
 from datetime import (
     date,
     datetime,
     timedelta,
-    timezone
+    timezone,
+    time
 )
+from zoneinfo import ZoneInfo
+from config import Config
+import re
+import secrets
 
 from functools import wraps
 
 from flask import (  # type: ignore[import-not-found]
     Blueprint,
+    current_app,
     jsonify,
     request
 )
@@ -50,7 +53,9 @@ from models import (
     MenuTemplate,
     MenuTemplateItem,
     MessUnit,
+    MealQRVerification,
     Notification,
+    StaffFeedback,
     StudentFeedback,
     User,
     WasteRecord,
@@ -205,6 +210,17 @@ def normalize_category(
     return None
 
 
+def normalize_staff_category(value):
+    normalized = str(value or "").strip().lower()
+    if normalized in {"veg", "vegetarian"}:
+        return "veg"
+    if normalized in {"non-veg", "nonveg", "non_veg", "non vegetarian"}:
+        return "non-veg"
+    if normalized == "both":
+        return "both"
+    return None
+
+
 def normalize_mess_unit_type(
     value
 ):
@@ -297,7 +313,23 @@ def parse_date(
 
         return None
 
+def parse_menu_time(value):
+    """
+    Parse a meal time supplied by the frontend in HH:MM format.
+    Returns datetime.time or None when invalid.
+    """
+    if not value:
+        return None
 
+    try:
+        return datetime.strptime(
+            str(value).strip(),
+            "%H:%M"
+        ).time()
+
+    except ValueError:
+        return None
+    
 def manager_hostel_ids(
     manager_id
 ):
@@ -689,7 +721,8 @@ def create_notification(
     manager_id,
     notification_type,
     title,
-    message
+    message,
+    recipient_user_id=None,
 ):
 
     notification = Notification(
@@ -706,6 +739,9 @@ def create_notification(
         message=
             message,
 
+        recipient_user_id=
+            recipient_user_id,
+
         is_read=
             False
     )
@@ -713,6 +749,24 @@ def create_notification(
     db.session.add(
         notification
     )
+
+
+def create_staff_assignment_notification(manager_id, staff_member, title, message):
+    existing = Notification.query.filter_by(
+        manager_user_id=manager_id,
+        recipient_user_id=staff_member.id,
+        notification_type="staff_assignment",
+        title=title,
+        message=message,
+    ).first()
+    if not existing:
+        create_notification(
+            manager_id,
+            "staff_assignment",
+            title,
+            message,
+            recipient_user_id=staff_member.id,
+        )
 
 # ============================================================
 # MANAGER PROFILE
@@ -4995,7 +5049,15 @@ def get_students():
                 ) else None,
 
                 "mealCategory":
-                    user.meal_category,
+                    (
+                        "both"
+                        if str(user.meal_category or "").lower() == "both"
+                        else "veg"
+                        if str(user.meal_category or "").lower() in {"veg", "vegetarian"}
+                        else "non-veg"
+                        if str(user.meal_category or "").lower() in {"non-veg", "non vegetarian", "nonvegetarian"}
+                        else None
+                    ),
 
                 "status":
                     (
@@ -5731,6 +5793,9 @@ def get_staff():
                 "staffRole":
                     user.staff_role,
 
+                "mealCategory":
+                    user.meal_category,
+
                 "email":
                     user.email,
 
@@ -5835,6 +5900,10 @@ def create_staff():
         "messUnitId"
     )
 
+    meal_category = normalize_staff_category(
+        data.get("mealCategory")
+    )
+
 
     if not all([
         name,
@@ -5842,12 +5911,13 @@ def create_staff():
         mobile,
         staff_role,
         hostel_id,
-        mess_unit_id
+        mess_unit_id,
+        meal_category
     ]):
 
         return jsonify({
             "message":
-                "Name, email, mobile, Staff role, Hostel and Mess Unit are required."
+                "Name, email, mobile, Staff role, Hostel, Mess Unit and meal category are required."
         }), 400
 
 
@@ -5894,8 +5964,12 @@ def create_staff():
 
     if (
         User.query
-        .filter_by(
-            email=email
+        .filter(
+            func.lower(
+                func.trim(
+                    User.email
+                )
+            ) == email
         )
         .first()
     ):
@@ -5937,6 +6011,14 @@ def create_staff():
         hostel_id
     ) if block_id else None
 
+    staff_id = next_staff_id()
+
+    if User.query.filter_by(staff_id=staff_id).first():
+        return jsonify({
+            "message":
+                "Unable to generate a unique Staff ID. Please try again."
+        }), 409
+
 
     staff = User(
 
@@ -5944,7 +6026,7 @@ def create_staff():
             name,
 
         staff_id=
-            next_staff_id(),
+            staff_id,
 
         student_id=
             None,
@@ -5978,6 +6060,9 @@ def create_staff():
         mess_unit_id=
             mess_unit_id or None,
 
+        meal_category=
+            meal_category,
+
         is_active=
             True,
 
@@ -6001,22 +6086,58 @@ def create_staff():
         staff
     )
 
+    try:
+        db.session.flush()
 
-    create_notification(
+        create_notification(
 
-        manager.id,
+            manager.id,
 
-        "staff",
+            "staff",
 
-        "Staff added",
+            "Staff added",
 
-        f"{name} was added "
-        "to the Staff list."
-    )
+            f"{name} was added "
+            "to the Staff list."
+        )
+        create_staff_assignment_notification(
+            manager.id,
+            staff,
+            "Staff account created",
+            "Your Staff account and hostel, mess-unit and category assignment are ready.",
+        )
 
+        db.session.commit()
 
-    db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
 
+        if (
+            User.query
+            .filter(
+                func.lower(
+                    func.trim(
+                        User.email
+                    )
+                ) == email
+            )
+            .first()
+        ):
+            return jsonify({
+                "message":
+                    "This email is already registered."
+            }), 409
+
+        if User.query.filter_by(staff_id=staff_id).first():
+            return jsonify({
+                "message":
+                    "This Staff ID is already in use. Please try again."
+            }), 409
+
+        return jsonify({
+            "message":
+                "A Staff account with one of these unique values already exists."
+        }), 409
 
     return jsonify({
 
@@ -6031,11 +6152,303 @@ def create_staff():
             "staffId":
                 staff.staff_id,
 
+            "name":
+                staff.name,
+
+            "email":
+                staff.email,
+
+            "mobile":
+                staff.mobile,
+
+            "staffRole":
+                staff.staff_role,
+
+            "hostel": {
+                "id": staff.hostel_id,
+                "name": staff.hostel,
+            },
+
+            "block": {
+                "id": staff.block_id,
+                "name": staff.hostel_block,
+            } if staff.block_id else None,
+
+            "messUnit": {
+                "id": staff.mess_unit_id,
+                "name": staff.mess_unit,
+            },
+
+            "mealCategory":
+                staff.meal_category,
+
+            "status":
+                "active" if staff.is_active else "inactive",
+
+            "mustChangePassword":
+                staff.must_change_password,
+
             "temporaryPassword":
                 "Mess@123"
         }
 
     }), 201
+
+
+@manager_bp.route(
+    "/staff/<int:user_id>",
+    methods=["PATCH", "PUT"]
+)
+@manager_required
+def update_staff(user_id):
+    manager = get_current_user()
+    staff_member = get_owned_user(manager.id, user_id, "staff")
+    if not staff_member:
+        return jsonify({"message": "Staff member not found."}), 404
+
+    data = request.get_json(silent=True) or {}
+    name = str(data.get("name", staff_member.name)).strip()
+    email = str(data.get("email", staff_member.email)).strip().lower()
+    mobile = str(data.get("mobile", staff_member.mobile or "")).strip()
+    staff_role = str(data.get("staffRole", staff_member.staff_role or "")).strip()
+    meal_category = normalize_staff_category(
+        data.get("mealCategory", staff_member.meal_category)
+    )
+
+    if not name or len(name) > 100:
+        return jsonify({"message": "Name is required and must be at most 100 characters."}), 400
+    if not re.match(EMAIL_PATTERN, email):
+        return jsonify({"message": "Please enter a valid email address."}), 400
+    if not re.match(MOBILE_PATTERN, mobile):
+        return jsonify({"message": "Please enter a valid 10-digit mobile number."}), 400
+
+    allowed_roles = ["Cook", "Helper", "Supervisor", "Cleaner", "Store Manager", "Mess Staff"]
+    if staff_role not in allowed_roles:
+        return jsonify({"message": "Invalid Staff role."}), 400
+    if not meal_category:
+        return jsonify({"message": "Select Veg, Non-Veg or Both responsibility."}), 400
+
+    duplicate = User.query.filter(User.email == email, User.id != staff_member.id).first()
+    if duplicate:
+        return jsonify({"message": "This email is already registered."}), 409
+
+    staff_member.name = name
+    staff_member.email = email
+    staff_member.mobile = mobile
+    staff_member.staff_role = staff_role
+    staff_member.meal_category = meal_category
+    try:
+        create_staff_assignment_notification(
+            manager.id,
+            staff_member,
+            "Staff details updated",
+            "Your Staff details or food category assignment have been updated by your Manager.",
+        )
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        return jsonify({"message": "Unable to update Staff."}), 500
+    return jsonify({"message": "Staff details updated successfully."}), 200
+
+
+@manager_bp.route("/staff/<int:user_id>/assign", methods=["PUT"])
+@manager_required
+def assign_staff(user_id):
+    manager = get_current_user()
+    staff_member = get_owned_user(manager.id, user_id, "staff")
+    if not staff_member:
+        return jsonify({"message": "Staff member not found."}), 404
+
+    data = request.get_json(silent=True) or {}
+    try:
+        hostel_id = int(data["hostelId"])
+        mess_unit_id = int(data["messUnitId"])
+        block_id = int(data["blockId"]) if data.get("blockId") else None
+    except (KeyError, TypeError, ValueError):
+        return jsonify({"message": "Hostel and Mess Unit are required."}), 400
+
+    meal_category = normalize_staff_category(
+        data.get("mealCategory", staff_member.meal_category)
+    )
+    if not meal_category:
+        return jsonify({"message": "Select Veg, Non-Veg or Both responsibility."}), 400
+
+    valid, message = validate_global_filters(manager.id, hostel_id, block_id, mess_unit_id)
+    if not valid:
+        return jsonify({"message": message}), 404
+
+    hostel = get_owned_hostel(manager.id, hostel_id)
+    mess = manager_owns_mess(manager.id, mess_unit_id)
+    block = get_owned_block(manager.id, block_id, hostel_id) if block_id else None
+    if not hostel or not mess or mess.hostel_id != hostel_id:
+        return jsonify({"message": "Invalid hostel or mess-unit assignment."}), 400
+
+    staff_member.hostel_id = hostel_id
+    staff_member.block_id = block_id
+    staff_member.mess_unit_id = mess_unit_id
+    staff_member.meal_category = meal_category
+    staff_member.hostel = hostel.name
+    staff_member.hostel_block = block.name if block else None
+    staff_member.mess_unit = mess.name
+    create_staff_assignment_notification(
+        manager.id,
+        staff_member,
+        "Mess assignment updated",
+        f"Your hostel, mess unit or food category assignment changed to {meal_category.upper()}.",
+    )
+    db.session.commit()
+    return jsonify({"message": "Staff assignment updated successfully."}), 200
+
+
+@manager_bp.route("/staff/<int:user_id>/status", methods=["PATCH"])
+@manager_required
+def set_staff_status(user_id):
+    manager = get_current_user()
+    staff_member = get_owned_user(manager.id, user_id, "staff")
+    if not staff_member:
+        return jsonify({"message": "Staff member not found."}), 404
+    data = request.get_json(silent=True) or {}
+    if "isActive" not in data:
+        return jsonify({"message": "isActive is required."}), 400
+    staff_member.is_active = bool(data["isActive"])
+    create_staff_assignment_notification(
+        manager.id,
+        staff_member,
+        "Staff account status updated",
+        "Your Staff account is now active." if staff_member.is_active else "Your Staff account is now inactive.",
+    )
+    db.session.commit()
+    return jsonify({
+        "message": "Staff activated successfully." if staff_member.is_active else "Staff deactivated successfully.",
+        "status": "active" if staff_member.is_active else "inactive",
+    }), 200
+
+
+@manager_bp.route("/staff/<int:user_id>/reset-password", methods=["POST"])
+@manager_required
+def reset_staff_password(user_id):
+    manager = get_current_user()
+    staff_member = get_owned_user(manager.id, user_id, "staff")
+    if not staff_member:
+        return jsonify({"message": "Staff member not found."}), 404
+    staff_member.password_hash = generate_password_hash("Mess@123")
+    staff_member.must_change_password = True
+    create_staff_assignment_notification(
+        manager.id,
+        staff_member,
+        "Staff password reset",
+        "Your Manager reset your password. A secure password change is required at next login.",
+    )
+    db.session.commit()
+    return jsonify({
+        "message": "Staff password reset successfully.",
+        "temporaryPassword": "Mess@123",
+    }), 200
+
+
+@manager_bp.route("/attendance/summary", methods=["GET"])
+@manager_required
+def manager_attendance_summary():
+    manager = get_current_user()
+    menu_id = request.args.get("menuId", type=int)
+    if not menu_id:
+        return jsonify({"message": "menuId is required."}), 400
+    menu = get_owned_menu(manager.id, menu_id)
+    if not menu:
+        return jsonify({"message": "Menu not found."}), 404
+
+    expected = (
+        MealResponse.query
+        .filter(
+            MealResponse.menu_id == menu.id,
+            MealResponse.response == "attending",
+        )
+        .with_entities(MealResponse.student_user_id)
+        .distinct()
+        .count()
+    )
+    attended = (
+        MealQRVerification.query
+        .filter(
+            MealQRVerification.menu_id == menu.id,
+            MealQRVerification.verification_status == "approved",
+        )
+        .with_entities(MealQRVerification.student_user_id)
+        .distinct()
+        .count()
+    )
+    remaining = max(expected - attended, 0)
+    percentage = round(attended / expected * 100, 2) if expected else 0
+    return jsonify({
+        "menuId": menu.id,
+        "meal": menu.meal,
+        "mealDate": menu.menu_date.isoformat(),
+        "mealCategory": menu.meal_category,
+        "expectedAttending": expected,
+        "successfullyScanned": attended,
+        "remainingToScan": remaining,
+        "attendancePercentage": percentage,
+    }), 200
+
+
+@manager_bp.route("/staff-feedback", methods=["GET"])
+@manager_required
+def list_staff_feedback():
+    manager = get_current_user()
+    owned_staff_ids = [
+        user.id
+        for user in manager_owned_user_query(manager.id, "staff").all()
+    ]
+    rows = (
+        StaffFeedback.query
+        .filter(StaffFeedback.manager_user_id == manager.id)
+        .filter(StaffFeedback.staff_user_id.in_(owned_staff_ids) if owned_staff_ids else False)
+        .order_by(StaffFeedback.created_at.desc())
+        .all()
+    )
+    return jsonify({
+        "feedback": [
+            {
+                "id": row.id,
+                "staffId": row.staff.staff_id if row.staff else None,
+                "staffName": row.staff.name if row.staff else "Staff",
+                "hostel": row.hostel.name if row.hostel else None,
+                "messUnit": row.mess_unit.name if row.mess_unit else None,
+                "mealCategory": row.meal_category,
+                "category": row.category,
+                "subject": row.subject,
+                "description": row.description,
+                "status": row.status,
+                "managerReply": row.manager_reply,
+                "repliedAt": row.replied_at.isoformat() if row.replied_at else None,
+                "createdAt": row.created_at.isoformat() if row.created_at else None,
+            }
+            for row in rows
+        ]
+    }), 200
+
+
+@manager_bp.route("/staff-feedback/<int:feedback_id>", methods=["PATCH"])
+@manager_required
+def reply_staff_feedback(feedback_id):
+    manager = get_current_user()
+    row = StaffFeedback.query.filter_by(id=feedback_id, manager_user_id=manager.id).first()
+    if not row:
+        return jsonify({"message": "Staff feedback not found."}), 404
+    data = request.get_json(silent=True) or {}
+    reply = str(data.get("reply") or "").strip()
+    status = str(data.get("status") or row.status).strip().lower()
+    if status not in {"pending", "reviewed", "resolved"}:
+        return jsonify({"message": "Invalid feedback status."}), 400
+    if reply and len(reply) > 5000:
+        return jsonify({"message": "Reply must be at most 5000 characters."}), 400
+    if reply:
+        row.manager_reply = reply
+        row.replied_by = manager.id
+        row.replied_at = datetime.utcnow()
+    row.status = status
+    db.session.commit()
+    return jsonify({"message": "Staff feedback updated successfully."}), 200
 
 
 # ============================================================
@@ -6181,10 +6594,49 @@ VALID_MENU_ITEM_TYPES = {
     "Other",
 }
 
+APP_TZ = ZoneInfo(Config.APP_TIMEZONE)
+
+MEAL_SCHEDULE = {
+    "breakfast": ("07:00", "09:00"),
+    "lunch": ("12:00", "14:00"),
+    "snacks": ("16:00", "17:00"),
+    "dinner": ("19:00", "21:00"),
+}
+
 
 def menu_utc_today():
-    return datetime.utcnow().date()
+    return datetime.now(APP_TZ).date()
 
+
+def get_central_meal_schedule(menu_date, meal):
+    """
+    Return the centrally configured meal start, end and response
+    deadline. Database DateTime values are stored as naive UTC.
+    """
+    schedule = MEAL_SCHEDULE.get(str(meal or "").lower())
+
+    if not schedule:
+        raise ValueError("Invalid meal type.")
+
+    start_text, end_text = schedule
+
+    start_time = datetime.strptime(start_text, "%H:%M").time()
+    end_time = datetime.strptime(end_text, "%H:%M").time()
+
+    meal_start = datetime.combine(
+        menu_date,
+        start_time
+    ).replace(tzinfo=APP_TZ)
+
+    response_deadline = meal_start - timedelta(hours=3)
+
+    response_cutoff_utc = (
+        response_deadline
+        .astimezone(ZoneInfo("UTC"))
+        .replace(tzinfo=None)
+    )
+
+    return start_time, end_time, response_cutoff_utc
 
 def normalize_menu_meal(value):
     value = str(value or "").strip().lower()
@@ -6286,6 +6738,7 @@ def get_accessible_menu_item(manager_id, item_id):
     )
 
 
+
 def menu_duplicate_query(
     manager_id,
     hostel_id,
@@ -6293,6 +6746,8 @@ def menu_duplicate_query(
     menu_date,
     meal,
     meal_category,
+    start_time=None,
+    end_time=None,
     exclude_menu_id=None,
 ):
     query = (
@@ -6309,9 +6764,12 @@ def menu_duplicate_query(
             Menu.meal_category == meal_category,
         )
     )
+
     if exclude_menu_id:
         query = query.filter(Menu.id != exclude_menu_id)
+
     return query
+
 
 
 def serialize_food_item(item):
@@ -6387,6 +6845,15 @@ def serialize_menu(menu, include_items=True):
     links = list(menu.item_links) if include_items else []
     structured_items = [serialize_menu_link(link) for link in links]
     calories = round(sum(menu_link_calories(link) for link in links), 1)
+    try:
+        central_start, central_end, central_cutoff = get_central_meal_schedule(
+            menu.menu_date,
+            menu.meal,
+        )
+    except ValueError:
+        central_start = menu.start_time
+        central_end = menu.end_time
+        central_cutoff = menu.response_cutoff
 
     if links:
         legacy_snapshot = ", ".join(
@@ -6420,10 +6887,9 @@ def serialize_menu(menu, include_items=True):
             "name": menu.mess_unit.name,
             "type": menu.mess_unit.unit_type,
         } if menu.mess_unit else None,
-        "responseCutoff": (
-            menu.response_cutoff.isoformat()
-            if menu.response_cutoff else None
-        ),
+        "startTime": central_start.strftime("%H:%M") if central_start else None,
+        "endTime": central_end.strftime("%H:%M") if central_end else None,
+        "responseCutoff": central_cutoff.isoformat() if central_cutoff else None,
         "status": menu.status,
         "publishedAt": (
             menu.published_at.isoformat()
@@ -6599,22 +7065,26 @@ def parse_menu_scope_payload(manager_id, data, existing_menu=None):
         "hostelId",
         existing_menu.hostel_id if existing_menu else None,
     )
+
     mess_unit_id = data.get(
         "messUnitId",
         existing_menu.mess_unit_id if existing_menu else None,
     )
+
     menu_date = parse_date(
         data.get(
             "date",
             existing_menu.menu_date.isoformat() if existing_menu else None,
         )
     )
+
     meal = normalize_menu_meal(
         data.get(
             "meal",
             existing_menu.meal if existing_menu else None,
         )
     )
+
     meal_category = normalize_category(
         data.get(
             "mealCategory",
@@ -6628,8 +7098,27 @@ def parse_menu_scope_payload(manager_id, data, existing_menu=None):
     except (TypeError, ValueError):
         return None, "Required menu information is missing."
 
-    if not all([hostel_id, mess_unit_id, menu_date, meal, meal_category]):
+    if not all([
+        hostel_id,
+        mess_unit_id,
+        menu_date,
+        meal,
+        meal_category,
+    ]):
         return None, "Required menu information is missing."
+
+    try:
+        default_start_time, default_end_time, _ = get_central_meal_schedule(
+            menu_date,
+            meal,
+        )
+    except ValueError as error:
+        return None, str(error)
+
+    # Frontend-provided meal times are intentionally ignored. The central
+    # application schedule is the only source of truth.
+    start_time = default_start_time
+    end_time = default_end_time
 
     valid, message = validate_global_filters(
         manager_id,
@@ -6637,10 +7126,12 @@ def parse_menu_scope_payload(manager_id, data, existing_menu=None):
         None,
         mess_unit_id,
     )
+
     if not valid:
         return None, message
 
     mess = manager_owns_mess(manager_id, mess_unit_id)
+
     if not mess or mess.hostel_id != hostel_id:
         return None, "Selected Mess Unit does not belong to the selected Hostel."
 
@@ -6650,8 +7141,9 @@ def parse_menu_scope_payload(manager_id, data, existing_menu=None):
         "menu_date": menu_date,
         "meal": meal,
         "meal_category": meal_category,
+        "start_time": start_time,
+        "end_time": end_time,
     }, None
-
 
 def menu_query_for_manager(manager_id):
     return (
@@ -6821,6 +7313,9 @@ def create_custom_menu_item():
     try:
         db.session.add(item)
         db.session.commit()
+        if item.status == "published":
+            notify_staff_for_announcement(manager, item)
+            db.session.commit()
     except IntegrityError:
         db.session.rollback()
         return jsonify({"message": "A food item with this name already exists."}), 409
@@ -6897,12 +7392,10 @@ def create_menu():
     elif not legacy_items:
         return jsonify({"message": "Select at least one menu item."}), 400
 
-    response_cutoff = None
-    if data.get("responseCutoff"):
-        response_cutoff = parse_iso_datetime(data.get("responseCutoff"))
-        if response_cutoff is None:
-            return jsonify({"message": "Invalid response cutoff."}), 400
-
+    _, _, response_cutoff = get_central_meal_schedule(
+        scope["menu_date"],
+        scope["meal"],
+    )
     # New structured Menu Management saves as Draft for today/past or
     # Scheduled for a future date. Legacy clients that explicitly send a
     # status remain compatible until their page is replaced.
@@ -6915,16 +7408,18 @@ def create_menu():
             status = "draft"
 
     menu = Menu(
-        hostel_id=scope["hostel_id"],
-        mess_unit_id=scope["mess_unit_id"],
-        menu_date=scope["menu_date"],
-        meal=scope["meal"],
-        meal_category=scope["meal_category"],
-        menu_items=legacy_items,
-        response_cutoff=response_cutoff,
-        status=status,
-        created_by=manager.id,
-    )
+    hostel_id=scope["hostel_id"],
+    mess_unit_id=scope["mess_unit_id"],
+    menu_date=scope["menu_date"],
+    meal=scope["meal"],
+    meal_category=scope["meal_category"],
+    start_time=scope["start_time"],
+    end_time=scope["end_time"],
+    menu_items=legacy_items,
+    response_cutoff=response_cutoff,
+    status=status,
+    created_by=manager.id,
+)
 
     try:
         db.session.add(menu)
@@ -7000,14 +7495,10 @@ def update_menu(menu_id):
         if item_error:
             return jsonify({"message": item_error}), 400
 
-    response_cutoff = menu.response_cutoff
-    if "responseCutoff" in data:
-        if data.get("responseCutoff"):
-            response_cutoff = parse_iso_datetime(data.get("responseCutoff"))
-            if response_cutoff is None:
-                return jsonify({"message": "Invalid response cutoff."}), 400
-        else:
-            response_cutoff = None
+    _, _, response_cutoff = get_central_meal_schedule(
+        scope["menu_date"],
+        scope["meal"],
+    )
 
     was_published = menu.status == "published"
 
@@ -7017,6 +7508,10 @@ def update_menu(menu_id):
         menu.menu_date = scope["menu_date"]
         menu.meal = scope["meal"]
         menu.meal_category = scope["meal_category"]
+
+        menu.start_time = scope["start_time"]
+        menu.end_time = scope["end_time"]
+
         menu.response_cutoff = response_cutoff
 
         if normalized_items is not None:
@@ -7162,14 +7657,21 @@ def copy_menu(menu_id):
     if not source_links and not str(source.menu_items or "").strip():
         return jsonify({"message": "The source Menu has no items to copy."}), 400
 
+    start_time, end_time, response_cutoff = get_central_meal_schedule(
+        scope["menu_date"],
+        scope["meal"],
+    )
+
     target = Menu(
         hostel_id=scope["hostel_id"],
         mess_unit_id=scope["mess_unit_id"],
         menu_date=scope["menu_date"],
         meal=scope["meal"],
         meal_category=scope["meal_category"],
+        start_time=start_time,
+        end_time=end_time,
         menu_items=source.menu_items or "",
-        response_cutoff=None,
+        response_cutoff=response_cutoff,
         status="draft",
         created_by=manager.id,
     )
@@ -7669,12 +8171,20 @@ def use_menu_template(template_id):
     if not template.items:
         return jsonify({"message": "This Menu Template has no food items."}), 400
 
+    start_time, end_time, response_cutoff = get_central_meal_schedule(
+        scope["menu_date"],
+        scope["meal"],
+    )
+
     menu = Menu(
         hostel_id=scope["hostel_id"],
         mess_unit_id=scope["mess_unit_id"],
         menu_date=scope["menu_date"],
         meal=scope["meal"],
         meal_category=scope["meal_category"],
+        start_time=start_time,
+        end_time=end_time,
+        response_cutoff=response_cutoff,
         menu_items=", ".join(
             link.menu_item.name for link in template.items if link.menu_item
         ),
@@ -9378,6 +9888,19 @@ def reply_to_student_feedback(feedback_id):
 # ============================================================
 
 def serialize_manager_announcement(item):
+    published_at = (
+        item.published_at.isoformat()
+        if item.published_at else None
+    )
+    created_at = (
+        item.created_at.isoformat()
+        if item.created_at else None
+    )
+    updated_at = (
+        item.updated_at.isoformat()
+        if item.updated_at else None
+    )
+
     return {
         "id": item.id,
         "title": item.title,
@@ -9390,20 +9913,71 @@ def serialize_manager_announcement(item):
         "meal_category": item.meal_category,
         "recipient_user_id": item.recipient_user_id,
         "attachment_url": item.attachment_url,
+        "expires_at": item.expires_at.isoformat() if item.expires_at else None,
         "sender_name": item.sender_name,
-        "published_at": (
-            item.published_at.isoformat()
-            if item.published_at else None
-        ),
-        "created_at": (
-            item.created_at.isoformat()
-            if item.created_at else None
-        ),
-        "updated_at": (
-            item.updated_at.isoformat()
-            if item.updated_at else None
-        ),
+        "published_at": published_at,
+        "created_at": created_at,
+        "updated_at": updated_at,
+        "isGeneral": item.is_general,
+        "hostelId": item.hostel_id,
+        "hostelName": item.hostel.name if item.hostel else None,
+        "messUnitId": item.mess_unit_id,
+        "messUnitName": item.mess_unit.name if item.mess_unit else None,
+        "mealCategory": item.meal_category,
+        "recipientUserId": item.recipient_user_id,
+        "attachmentUrl": item.attachment_url,
+        "expiresAt": item.expires_at.isoformat() if item.expires_at else None,
+        "publishedAt": published_at,
+        "createdAt": created_at,
+        "updatedAt": updated_at,
     }
+
+
+def notify_staff_for_announcement(manager, announcement):
+    staff_query = manager_owned_user_query(manager.id, "staff").filter(
+        User.is_active.is_(True)
+    )
+
+    staff_members = staff_query.all()
+    for staff_member in staff_members:
+        eligible = False
+
+        if announcement.is_general:
+            eligible = True
+        elif announcement.recipient_user_id == staff_member.id:
+            eligible = True
+        elif (
+            announcement.recipient_user_id is None
+            and announcement.hostel_id == staff_member.hostel_id
+        ):
+            if (
+                announcement.mess_unit_id is None
+                or announcement.mess_unit_id == staff_member.mess_unit_id
+            ):
+                eligible = True
+
+            if announcement.meal_category:
+                announcement_category = normalize_staff_category(
+                    announcement.meal_category
+                )
+                staff_category = str(
+                    staff_member.meal_category or ""
+                ).strip().lower()
+                if (
+                    staff_category != "both"
+                    and staff_category != announcement_category
+                ):
+                    eligible = False
+
+        if not eligible:
+            continue
+
+        create_staff_assignment_notification(
+            manager.id,
+            staff_member,
+            "New announcement published",
+            announcement.title,
+        )
 
 
 def validate_announcement_payload(manager, data):
@@ -9439,9 +10013,12 @@ def validate_announcement_payload(manager, data):
     recipient_user_id = optional_int("recipient_user_id")
     meal_category = str(data.get("meal_category") or "").strip()
     attachment_url = str(data.get("attachment_url") or "").strip() or None
+    expires_at = parse_iso_datetime(data.get("expires_at") or data.get("expiresAt"))
 
     if attachment_url and len(attachment_url) > 500:
         return None, "Attachment URL must be at most 500 characters."
+    if (data.get("expires_at") or data.get("expiresAt")) and expires_at is None:
+        return None, "Expiry date must be a valid date and time."
 
     is_general = data.get("is_general") is True
 
@@ -9455,15 +10032,21 @@ def validate_announcement_payload(manager, data):
     else:
         # An individual recipient must be a student owned by this manager.
         if recipient_user_id:
-            student = get_owned_user(
+            recipient = get_owned_user(
                 manager.id,
                 recipient_user_id,
                 "student",
             )
-            if not student:
-                return None, "Student not found in your assigned hostels."
+            if not recipient:
+                recipient = get_owned_user(
+                    manager.id,
+                    recipient_user_id,
+                    "staff",
+                )
+            if not recipient:
+                return None, "Student or Staff member not found in your assigned hostels."
 
-            hostel_id = student.hostel_id
+            hostel_id = recipient.hostel_id
             mess_unit_id = None
             meal_category = None
 
@@ -9510,6 +10093,7 @@ def validate_announcement_payload(manager, data):
         "meal_category": meal_category or None,
         "recipient_user_id": recipient_user_id,
         "attachment_url": attachment_url,
+        "expires_at": expires_at,
     }, None
 
 
@@ -9571,8 +10155,14 @@ def create_manager_announcement():
     try:
         db.session.add(item)
         db.session.commit()
-    except Exception:
+    except Exception as error:
         db.session.rollback()
+        current_app.logger.exception(
+            "Failed to create manager announcement at endpoint=%s (%s: %s)",
+            request.endpoint,
+            type(error).__name__,
+            error,
+        )
         return jsonify({
             "message": "Unable to save the announcement."
         }), 500
@@ -9635,9 +10225,18 @@ def update_manager_announcement(announcement_id):
 
         item.sender_name = manager.name
         db.session.commit()
+        if item.status == "published":
+            notify_staff_for_announcement(manager, item)
+            db.session.commit()
 
-    except Exception:
+    except Exception as error:
         db.session.rollback()
+        current_app.logger.exception(
+            "Failed to update manager announcement at endpoint=%s (%s: %s)",
+            request.endpoint,
+            type(error).__name__,
+            error,
+        )
         return jsonify({
             "message": "Unable to update the announcement."
         }), 500
@@ -9646,6 +10245,21 @@ def update_manager_announcement(announcement_id):
         "message": "Announcement updated successfully.",
         "announcement": serialize_manager_announcement(item),
     }), 200
+
+
+@manager_bp.route("/announcements/<int:announcement_id>", methods=["DELETE"])
+@manager_required
+def delete_manager_announcement(announcement_id):
+    manager = get_current_user()
+    item = Announcement.query.filter_by(
+        id=announcement_id,
+        manager_user_id=manager.id,
+    ).first()
+    if not item:
+        return jsonify({"message": "Announcement not found."}), 404
+    db.session.delete(item)
+    db.session.commit()
+    return jsonify({"message": "Announcement deleted successfully."}), 200
 # ============================================================
 # SMART FORECAST INSIGHTS API
 # Add this at the bottom of manager_routes.py

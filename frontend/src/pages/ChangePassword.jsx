@@ -13,6 +13,9 @@ import {
   ShieldCheck
 } from "lucide-react";
 
+import { getStoredToken } from "../services/studentApi";
+import { API_BASE_URL } from "../services/apiConfig";
+
 import "../styles/auth.css";
 
 
@@ -74,28 +77,13 @@ function ChangePassword() {
     };
 
 
-  const token =
-    localStorage.getItem(
-      "token"
-    )
-    ||
-    sessionStorage.getItem(
-      "token"
-    );
-
-
-  const storage =
-    localStorage.getItem(
-      "token"
-    )
-      ? localStorage
-      : sessionStorage;
-
+  const token = getStoredToken();
 
   const userString =
-    storage.getItem(
-      "user"
-    );
+    localStorage.getItem("user") ||
+    sessionStorage.getItem("user") ||
+    localStorage.getItem("currentUser") ||
+    sessionStorage.getItem("currentUser");
 
 
   const handleSubmit =
@@ -190,7 +178,7 @@ function ChangePassword() {
 
         const response =
           await fetch(
-            "http://127.0.0.1:5000/api/auth/change-password",
+            `${API_BASE_URL}/api/auth/change-password`,
             {
 
               method:

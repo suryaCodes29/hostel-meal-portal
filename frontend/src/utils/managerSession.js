@@ -5,6 +5,7 @@ const AUTH_STORAGE_KEYS = [
   "user",
   "currentUser",
   "role",
+  "hostelMealQrPasses",
 ];
 
 

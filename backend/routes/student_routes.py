@@ -1,22 +1,25 @@
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 from functools import wraps
 import csv
 import io
 import os
 import uuid
-
+from config import Config
 from flask import Blueprint, jsonify, request, Response
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from sqlalchemy import or_, and_, func
 from sqlalchemy.exc import IntegrityError
 from werkzeug.utils import secure_filename
-
+from services.meal_qr_service import generate_meal_qr_token
 from models import (
     Announcement,
     AnnouncementRead,
     Hostel,
     HostelBlock,
     MealResponse,
+    MealQRToken,
+    MealQRVerification,
     Menu,
     MenuMenuItem,
     MenuNotification,
@@ -73,8 +76,59 @@ def parse_iso_date(value):
         return date.fromisoformat(str(value))
     except (TypeError, ValueError):
         return None
+APP_TZ = ZoneInfo(Config.APP_TIMEZONE)
 
 
+def get_local_now():
+    """Get the current time in the application timezone."""
+    return datetime.now(APP_TZ)
+
+
+def get_meal_schedule(menu):
+    """
+    Central meal schedule in the configured application timezone.
+    Response deadline is exactly two hours before meal start.
+    """
+
+    schedule = {
+        "breakfast": ("07:00", "09:00"),
+        "lunch": ("12:00", "14:00"),
+        "snacks": ("16:00", "17:00"),
+        "dinner": ("19:00", "21:00"),
+    }
+
+    meal_times = schedule.get(
+        str(menu.meal or "").lower()
+    )
+
+    if not meal_times:
+        return None, None, None
+
+    start_text, end_text = meal_times
+
+    start_time = datetime.strptime(
+        start_text,
+        "%H:%M"
+    ).time()
+
+    end_time = datetime.strptime(
+        end_text,
+        "%H:%M"
+    ).time()
+
+    meal_start = datetime.combine(
+        menu.menu_date,
+        start_time
+    ).replace(tzinfo=APP_TZ)
+
+    meal_end = datetime.combine(
+        menu.menu_date,
+        end_time
+    ).replace(tzinfo=APP_TZ)
+
+    response_deadline = meal_start - timedelta(hours=3)
+
+    return meal_start, response_deadline, meal_end
 def parse_rating(value, field_name, required=False):
     if value is None or value == "":
         if required:
@@ -194,12 +248,25 @@ def get_accessible_menu(student, menu_id, published_only=True):
 def response_is_open(menu):
     if menu.status != "published":
         return False, "Responses are closed for this menu."
-    if menu.menu_date < date.today():
+
+    meal_start, response_deadline, meal_end = get_meal_schedule(menu)
+
+    if not meal_start or not response_deadline or not meal_end:
+        return False, "Meal start and end times have not been configured."
+
+    now = get_local_now()
+
+    if now.date() > menu.menu_date:
         return False, "Responses are closed for past meals."
-    if menu.response_cutoff and datetime.utcnow() > menu.response_cutoff:
-        return False, "The response cutoff time has passed."
+
+    if now >= response_deadline:
+        return False, "The 3-hour meal response deadline has passed."
+
     return True, None
 
+def response_is_open_deadline(menu):
+    _, response_deadline, _ = get_meal_schedule(menu)
+    return response_deadline
 
 def serialize_menu_item(link):
     item = link.menu_item
@@ -224,7 +291,30 @@ def menu_item_names(menu):
 
 def serialize_menu(menu, student):
     meal_response = MealResponse.query.filter_by(menu_id=menu.id, student_user_id=student.id).first()
+    qr_verification = (
+        MealQRVerification.query
+        .filter_by(
+            menu_id=menu.id,
+            student_user_id=student.id,
+            verification_status="approved",
+        )
+        .order_by(MealQRVerification.verified_at.desc())
+        .first()
+    )
     response_open, closed_reason = response_is_open(menu)
+    meal_start, response_deadline, meal_end = get_meal_schedule(menu)
+    now = get_local_now()
+    qr_verified_at = qr_verification.verified_at if qr_verification else None
+    if qr_verified_at:
+        if qr_verified_at.tzinfo is None:
+            qr_verified_at = qr_verified_at.replace(tzinfo=timezone.utc)
+        qr_verified_at = qr_verified_at.astimezone(APP_TZ)
+    if now >= meal_end:
+        session_status = "completed"
+    elif now < meal_start:
+        session_status = "upcoming"
+    else:
+        session_status = "active"
     return {
         "id": menu.id,
         "date": menu.menu_date.isoformat(),
@@ -236,12 +326,41 @@ def serialize_menu(menu, student):
         "itemNames": menu_item_names(menu),
         "hostel": {"id": menu.hostel.id, "name": menu.hostel.name, "code": menu.hostel.code} if menu.hostel else None,
         "messUnit": {"id": menu.mess_unit.id, "name": menu.mess_unit.name, "type": menu.mess_unit.unit_type} if menu.mess_unit else None,
-        "responseCutoff": menu.response_cutoff.isoformat() if menu.response_cutoff else None,
+        "startTime": meal_start.strftime("%H:%M") if meal_start else None,
+        "endTime": meal_end.strftime("%H:%M") if meal_end else None,
+        "qrOpenTime": (
+            (meal_start - timedelta(minutes=10)).isoformat()
+            if meal_start else None
+        ),
+
+        "responseDeadline": (
+            response_deadline.isoformat()
+            if response_deadline else None
+        ),
+
+        "responseCutoff": (
+            response_deadline.isoformat()
+            if response_deadline else None
+        ),
         "responseOpen": response_open,
         "responseClosedReason": closed_reason,
+        "mealStart": meal_start.isoformat() if meal_start else None,
+        "mealEnd": meal_end.isoformat() if meal_end else None,
+        "sessionStatus": session_status,
         "myResponse": meal_response.response if meal_response else None,
         "respondedAt": meal_response.updated_at.isoformat() if meal_response and meal_response.updated_at else None,
+        "qrAttendance": {
+            "status": "scanned",
+            "verifiedAt": qr_verified_at.isoformat(),
+        } if qr_verification else None,
     }
+
+
+def active_student_menu(menu):
+    meal_start, _, meal_end = get_meal_schedule(menu)
+    if not meal_end:
+        return False
+    return get_local_now() < meal_end
 
 
 def serialize_notification(notification):
@@ -407,8 +526,9 @@ def student_dashboard():
             "summary": {"availableMenus": 0, "attending": 0, "skipping": 0, "pending": 0, "unreadNotifications": 0, "unreadAnnouncements": 0},
         }), 200
 
-    today = date.today()
+    today = get_local_now().date()
     menus = student_menu_query(student).filter(Menu.menu_date == today).order_by(Menu.meal.asc()).all()
+    menus = [menu for menu in menus if active_student_menu(menu)]
     response_rows = MealResponse.query.filter(
         MealResponse.student_user_id == student.id,
         MealResponse.menu_id.in_([m.id for m in menus]) if menus else False,
@@ -487,8 +607,8 @@ def list_student_menus():
     student = get_current_student()
     if not student_has_assignment(student):
         return jsonify({"message": "Your hostel or mess assignment is incomplete. Please contact your Manager.", "assignmentRequired": True, "menus": []}), 200
-    start_date = parse_iso_date(request.args.get("dateFrom", date.today().isoformat()))
-    end_date = parse_iso_date(request.args.get("dateTo", (date.today() + timedelta(days=7)).isoformat()))
+    start_date = parse_iso_date(request.args.get("dateFrom", get_local_now().date().isoformat()))
+    end_date = parse_iso_date(request.args.get("dateTo", (get_local_now().date() + timedelta(days=7)).isoformat()))
     if not start_date or not end_date:
         return jsonify({"message": "Dates must use YYYY-MM-DD format."}), 400
     if end_date < start_date:
@@ -496,6 +616,26 @@ def list_student_menus():
     if (end_date - start_date).days > 31:
         return jsonify({"message": "You can request a maximum range of 31 days."}), 400
     menus = student_menu_query(student).filter(Menu.menu_date.between(start_date, end_date)).order_by(Menu.menu_date.asc(), Menu.meal.asc()).all()
+    scanned_menu_ids = set()
+    menu_ids = [menu.id for menu in menus]
+    if menu_ids:
+        scanned_menu_ids = {
+            row[0]
+            for row in db.session.query(MealQRVerification.menu_id)
+            .filter(
+                MealQRVerification.student_user_id == student.id,
+                MealQRVerification.verification_status == "approved",
+                MealQRVerification.menu_id.in_(menu_ids),
+            )
+            .distinct()
+            .all()
+        }
+    menus = [
+        menu for menu in menus
+        if menu.menu_date > get_local_now().date()
+        or active_student_menu(menu)
+        or menu.id in scanned_menu_ids
+    ]
     return jsonify({"menus": [serialize_menu(m, student) for m in menus], "dateFrom": start_date.isoformat(), "dateTo": end_date.isoformat()}), 200
 
 
@@ -504,9 +644,10 @@ def list_student_menus():
 def today_menus():
     student = get_current_student()
     if not student_has_assignment(student):
-        return jsonify({"assignmentRequired": True, "date": date.today().isoformat(), "menus": []}), 200
-    menus = student_menu_query(student).filter(Menu.menu_date == date.today()).order_by(Menu.meal.asc()).all()
-    return jsonify({"date": date.today().isoformat(), "menus": [serialize_menu(m, student) for m in menus]}), 200
+        return jsonify({"assignmentRequired": True, "date": get_local_now().date().isoformat(), "menus": []}), 200
+    menus = student_menu_query(student).filter(Menu.menu_date == get_local_now().date()).order_by(Menu.meal.asc()).all()
+    menus = [menu for menu in menus if active_student_menu(menu)]
+    return jsonify({"date": get_local_now().date().isoformat(), "menus": [serialize_menu(m, student) for m in menus]}), 200
 
 
 @student_bp.route("/menus/calendar", methods=["GET"])
@@ -517,7 +658,7 @@ def menu_calendar():
         return jsonify({"assignmentRequired": True, "menus": []}), 200
     month = request.args.get("month")
     year = request.args.get("year")
-    selected = parse_iso_date(request.args.get("date")) or date.today()
+    selected = parse_iso_date(request.args.get("date")) or get_local_now().date()
     try:
         year = int(year) if year else selected.year
         month = int(month) if month else selected.month
@@ -540,43 +681,203 @@ def menu_calendar():
 @student_required
 def save_meal_response(menu_id):
     student = get_current_student()
+
     menu = get_accessible_menu(student, menu_id)
+
     if not menu:
-        return jsonify({"message": "Menu not found."}), 404
+        return jsonify({
+            "message": "Menu not found."
+        }), 404
+
+    # Check the response deadline.
     open_state, reason = response_is_open(menu)
+
     if not open_state:
-        return jsonify({"message": reason}), 409
+        return jsonify({
+            "message": reason
+        }), 409
+
     data = request.get_json(silent=True) or {}
-    value = str(data.get("response", "")).strip().lower()
+
+    value = str(
+        data.get("response", "")
+    ).strip().lower()
+
     if value not in RESPONSES:
-        return jsonify({"message": "Response must be attending or skipping."}), 400
+        return jsonify({
+            "message": "Response must be attending or skipping."
+        }), 400
+
     note = str(data.get("note") or "").strip()
+
     if len(note) > 200:
-        return jsonify({"message": "Note cannot exceed 200 characters."}), 400
-    row = MealResponse.query.filter_by(menu_id=menu.id, student_user_id=student.id).first()
-    created = row is None
-    if created:
-        row = MealResponse(menu_id=menu.id, student_user_id=student.id, mess_unit_id=student.mess_unit_id, response=value)
-        db.session.add(row)
-    else:
-        row.response = value
-        row.mess_unit_id = student.mess_unit_id
-    if hasattr(row, "menu_date_snapshot") and not row.menu_date_snapshot:
-        row.menu_date_snapshot = menu.menu_date
-        row.meal_snapshot = menu.meal
-        row.meal_category_snapshot = menu.meal_category
-        row.menu_items_snapshot = ", ".join(menu_item_names(menu))
+        return jsonify({
+            "message": "Note cannot exceed 200 characters."
+        }), 400
+
+    if get_local_now() >= response_is_open_deadline(menu):
+        return jsonify({
+            "message": "The 3-hour meal response deadline has passed."
+        }), 409
+
+    existing_response = (
+        MealResponse.query
+        .filter_by(menu_id=menu.id, student_user_id=student.id)
+        .with_for_update()
+        .first()
+    )
+
     try:
+        if existing_response:
+            if get_local_now() >= response_is_open_deadline(menu):
+                db.session.rollback()
+                return jsonify({"message": "The 3-hour meal response deadline has passed."}), 409
+            existing_response.response = value
+            existing_response.updated_at = datetime.utcnow()
+            row = existing_response
+        else:
+            row = MealResponse(
+                menu_id=menu.id,
+                student_user_id=student.id,
+                mess_unit_id=student.mess_unit_id,
+                response=value,
+            )
+            if hasattr(row, "menu_date_snapshot"):
+                row.menu_date_snapshot = menu.menu_date
+                row.meal_snapshot = menu.meal
+                row.meal_category_snapshot = menu.meal_category
+                row.menu_items_snapshot = ", ".join(menu_item_names(menu))
+            db.session.add(row)
+
         db.session.commit()
+
     except IntegrityError:
         db.session.rollback()
-        return jsonify({"message": "Your response was already updated. Please refresh."}), 409
+
+        return jsonify({
+            "message": "Your meal response has already been submitted."
+        }), 409
+
     except Exception:
         db.session.rollback()
-        return jsonify({"message": "Unable to save your response. No changes were saved."}), 500
-    return jsonify({"message": "Meal response submitted successfully." if created else "Meal response updated successfully.", "response": {"id": row.id, "menuId": row.menu_id, "value": row.response, "updatedAt": row.updated_at.isoformat() if row.updated_at else None}}), 201 if created else 200
 
+        return jsonify({
+            "message": "Unable to save your response. No changes were saved."
+        }), 500
 
+    return jsonify({
+        "message": "Meal response submitted successfully.",
+        "response": {
+            "id": row.id,
+            "menuId": row.menu_id,
+            "value": row.response,
+            "updatedAt": (
+                row.updated_at.isoformat()
+                if row.updated_at else None
+            )
+        }
+    }), 201
+# ============================================================
+# STUDENT MEAL QR GENERATION
+# ============================================================
+
+@student_bp.route(
+    "/menus/<int:menu_id>/qr-token",
+    methods=["POST"]
+)
+@student_required
+def generate_student_meal_qr(menu_id):
+    student = get_current_student()
+
+    menu = get_accessible_menu(
+        student,
+        menu_id
+    )
+
+    if not menu:
+        return jsonify({
+            "message": "Menu not found."
+        }), 404
+
+    meal_start, _, meal_end = get_meal_schedule(menu)
+
+    if not meal_start or not meal_end:
+        return jsonify({
+            "message": "Meal start and end times have not been configured."
+        }), 409
+
+    now = get_local_now()
+
+    # QR opens exactly 10 minutes before meal start.
+    qr_open_time = meal_start - timedelta(minutes=10)
+
+    if now < qr_open_time:
+        return jsonify({
+            "message": "Meal QR will become available 10 minutes before meal start.",
+            "qrAvailableAt": qr_open_time.isoformat()
+        }), 409
+
+    # QR expires at meal end.
+    if now >= meal_end:
+        return jsonify({
+            "message": "Meal QR has expired because the meal has ended."
+        }), 409
+
+    meal_response = MealResponse.query.filter_by(
+        menu_id=menu.id,
+        student_user_id=student.id
+    ).first()
+
+    if not meal_response:
+        return jsonify({
+            "message": "Please submit your meal response first."
+        }), 400
+
+    if meal_response.response != "attending":
+        return jsonify({
+            "message": "QR is available only for attending students."
+        }), 403
+
+    # Convert meal end to naive UTC for database storage.
+    expires_at_utc = (
+        meal_end
+        .astimezone(timezone.utc)
+        .replace(tzinfo=None)
+    )
+
+    try:
+        qr_data = generate_meal_qr_token(
+            meal_response,
+            expires_at=expires_at_utc
+        )
+
+    except ValueError as error:
+        return jsonify({
+            "code": "qr_unavailable",
+            "message": str(error)
+        }), 409
+
+    except Exception:
+        db.session.rollback()
+
+        return jsonify({
+            "message": "Unable to generate meal QR."
+        }), 500
+
+    return jsonify({
+        "message": (
+            "Active meal QR reused."
+            if qr_data.get("reused")
+            else "Meal QR generated successfully."
+        ),
+        "qr": {
+            "token": qr_data["token"],
+            "expiresAt": qr_data["expires_at"],
+            "expiresInMinutes": qr_data["expires_in_minutes"],
+            "menuId": menu.id,
+            "mealResponseId": meal_response.id
+        }
+    }), 200
 # ============================================================
 # RESPONSES
 # ============================================================
@@ -606,7 +907,7 @@ def list_my_responses():
     submitted = len(result)
     pending = 0
     if student_has_assignment(student):
-        today = date.today()
+        today = get_local_now().date()
         future = student_menu_query(student).filter(Menu.menu_date >= today).all()
         existing = {r.menu_id for r in rows}
         pending = sum(1 for m in future if m.id not in existing and response_is_open(m)[0])
@@ -651,7 +952,7 @@ def meal_history():
 
     # A response row represents a recorded meal. Unrecorded meals are derived from published menus.
     if student_has_assignment(student):
-        menu_query = student_menu_query(student).filter(Menu.menu_date < date.today())
+        menu_query = student_menu_query(student).filter(Menu.menu_date < get_local_now().date())
         if start:
             menu_query = menu_query.filter(Menu.menu_date >= start)
         if end:
@@ -740,7 +1041,7 @@ def create_feedback():
     category = str(data.get("category") or "").strip()
     if not meal_date or meal not in MEALS:
         return jsonify({"message": "A valid meal date and meal are required."}), 400
-    if meal_date > date.today():
+    if meal_date > get_local_now().date():
         return jsonify({"message": "Feedback cannot be submitted for a future meal."}), 400
     if category not in FEEDBACK_CATEGORIES:
         return jsonify({"message": "Invalid feedback category."}), 400

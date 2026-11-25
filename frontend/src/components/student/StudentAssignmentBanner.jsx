@@ -29,25 +29,42 @@ function StudentAssignmentBanner() {
     studentKeys = [],
     fallback = "Not assigned"
   ) => {
-    for (const key of assignmentKeys) {
+    const getDisplayValue = (source, key) => {
+      const value = source?.[key];
+
+      if (typeof value === "string" && value.trim() !== "") {
+        return value;
+      }
+
+      if (typeof value === "number") {
+        return value;
+      }
+
       if (
-        assignment &&
-        assignment[key] !== undefined &&
-        assignment[key] !== null &&
-        String(assignment[key]).trim() !== ""
+        value &&
+        typeof value === "object" &&
+        typeof value.name === "string" &&
+        value.name.trim() !== ""
       ) {
-        return assignment[key];
+        return value.name;
+      }
+
+      return null;
+    };
+
+    for (const key of assignmentKeys) {
+      const value = getDisplayValue(assignment, key);
+
+      if (value !== null) {
+        return value;
       }
     }
 
     for (const key of studentKeys) {
-      if (
-        student &&
-        student[key] !== undefined &&
-        student[key] !== null &&
-        String(student[key]).trim() !== ""
-      ) {
-        return student[key];
+      const value = getDisplayValue(student, key);
+
+      if (value !== null) {
+        return value;
       }
     }
 
@@ -55,18 +72,18 @@ function StudentAssignmentBanner() {
   };
 
   const hostel = getValue(
-    ["hostel_name", "hostelName"],
-    ["hostel_name", "hostelName"]
+    ["hostel_name", "hostelName", "hostel"],
+    ["hostel_name", "hostelName", "hostel"]
   );
 
   const block = getValue(
-    ["block_name", "blockName"],
-    ["block_name", "blockName"]
+    ["block_name", "blockName", "block", "hostelBlock", "hostel_block"],
+    ["block_name", "blockName", "block", "hostelBlock", "hostel_block"]
   );
 
   const messUnit = getValue(
-    ["mess_unit_name", "messUnitName"],
-    ["mess_unit", "messUnit", "mess_unit_name"]
+    ["mess_unit_name", "messUnitName", "messUnit", "mess_unit"],
+    ["mess_unit", "messUnit", "mess_unit_name", "messUnitName"]
   );
 
   const mealCategory = getValue(

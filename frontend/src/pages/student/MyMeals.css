@@ -1,0 +1,668 @@
+
+/* =========================================
+   STUDENT MEALS - PREMIUM UI
+========================================= */
+
+.student-my-meals {
+  width: 100%;
+  color: #172033;
+  font-family: inherit;
+}
+
+.student-my-meal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.student-my-meal-card {
+  min-width: 0;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e8edf5;
+  border-radius: 20px;
+  box-shadow: 0 5px 22px rgba(20, 35, 70, 0.055);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.student-my-meal-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(20, 35, 70, 0.09);
+}
+
+.student-my-meal-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.student-my-meal-icon {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+}
+
+.student-mymeal-breakfast {
+  color: #d97706;
+  background: #fff7e8;
+}
+
+.student-mymeal-lunch {
+  color: #2563eb;
+  background: #eff6ff;
+}
+
+.student-mymeal-dinner {
+  color: #7c3aed;
+  background: #f5f0ff;
+}
+
+.student-my-meal-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.student-my-meal-title h3 {
+  margin: 0 0 6px;
+  color: #172033;
+  font-size: 20px;
+  font-weight: 750;
+}
+
+.student-my-meal-title > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.student-my-meal-title small {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 5px 10px;
+  color: #475569;
+  background: #f1f5f9;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.student-menu-status {
+  padding: 7px 11px;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.student-menu-status.published {
+  color: #15803d;
+  background: #ecfdf3;
+}
+
+.student-menu-status.locked {
+  color: #64748b;
+  background: #f1f5f9;
+}
+
+.student-menu-status.unpublished {
+  color: #b45309;
+  background: #fff7ed;
+}
+
+/* Meal menu */
+
+.student-my-meal-menu {
+  margin-top: 20px;
+  padding: 17px;
+  background: #f8fafc;
+  border: 1px solid #edf1f6;
+  border-radius: 15px;
+}
+
+.student-my-meal-menu-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 13px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.student-my-meal-menu-heading span:last-child {
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.student-food-list {
+  display: grid;
+  gap: 10px;
+}
+
+.student-food-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #475569;
+  font-size: 13px;
+}
+
+.student-food-check {
+  width: 21px;
+  height: 21px;
+  display: grid;
+  place-items: center;
+  color: #16a34a;
+  background: #dcfce7;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.student-no-menu-items {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+/* Cutoff information */
+
+.student-cutoff-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.student-cutoff-row > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.student-cutoff-row strong {
+  color: #334155;
+  font-size: 12px;
+}
+
+/* Response section */
+
+.student-my-meal-response {
+  margin-top: 19px;
+  padding: 17px;
+  border: 1px solid #e8edf5;
+  border-radius: 16px;
+  background: #ffffff;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.student-my-meal-response.response-attending {
+  background: #f0fdf6;
+  border-color: #bbf7d0;
+}
+
+.student-my-meal-response.response-skipping {
+  background: #fff7f7;
+  border-color: #fecaca;
+}
+
+.student-my-meal-response.response-required {
+  background: #f8fafc;
+}
+
+.student-response-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  color: #263449;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.student-selected-label {
+  padding: 5px 9px;
+  color: #15803d;
+  background: #dcfce7;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.student-response-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.student-response-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid #e2e8f0;
+  border-radius: 13px;
+  background: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.student-response-option.attending {
+  color: #16a34a;
+}
+
+.student-response-option.skipping {
+  color: #dc2626;
+}
+
+.student-response-option.attending.selected {
+  border-color: #22c55e;
+  background: #f0fdf4;
+}
+
+.student-response-option.skipping.selected {
+  border-color: #ef4444;
+  background: #fff1f2;
+}
+
+.student-response-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.student-response-option > div {
+  display: grid;
+  gap: 4px;
+}
+
+.student-response-option strong {
+  color: #263449;
+  font-size: 12px;
+}
+
+.student-response-option span:not(.student-option-check) {
+  color: #94a3b8;
+  font-size: 10px;
+}
+
+.student-option-check {
+  margin-left: auto;
+  font-weight: 800;
+}
+
+/* QR generation section */
+
+.student-meal-qr-section {
+  margin-top: 20px;
+  padding-top: 19px;
+  border-top: 1px dashed #dce5ef;
+}
+
+.student-meal-qr-section h4 {
+  margin: 0 0 14px;
+  color: #172033;
+  font-size: 15px;
+  font-weight: 750;
+}
+
+.student-qr-scanned {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #bde8cf;
+  border-radius: 12px;
+  background: #effaf3;
+  color: #16834f;
+}
+
+.student-qr-scanned svg {
+  flex: 0 0 auto;
+}
+
+.student-qr-scanned div {
+  display: grid;
+  gap: 4px;
+}
+
+.student-qr-scanned strong {
+  color: #166c45;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.student-qr-scanned span {
+  color: #428061;
+  font-size: 11px;
+}
+
+.student-generate-qr-button {
+  width: 100%;
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 12px 18px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  border: 0;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+  box-shadow: 0 5px 13px rgba(37, 99, 235, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.student-generate-qr-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
+}
+
+.student-generate-qr-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* Premium QR card */
+
+.premium-qr-card {
+  margin-top: 17px;
+  padding: 20px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f8fbff 0%, #ffffff 45%);
+  border: 1px solid #dce7f7;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(30, 64, 120, 0.08);
+}
+
+.premium-qr-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.premium-qr-eyebrow {
+  color: #64748b;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.premium-qr-header h3 {
+  margin: 6px 0;
+  color: #172033;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.premium-qr-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.premium-qr-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  color: #15803d;
+  background: #dcfce7;
+  border: 1px solid #bbf7d0;
+  border-radius: 30px;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.premium-qr-active-dot {
+  width: 7px;
+  height: 7px;
+  background: #16a34a;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+}
+
+.premium-qr-code-frame {
+  width: fit-content;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 15px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 5px 18px rgba(15, 23, 42, 0.07);
+}
+
+.premium-qr-code-frame svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.premium-qr-instruction {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 17px 0;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 650;
+  text-align: center;
+}
+
+.premium-qr-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding-top: 15px;
+  border-top: 1px solid #e8edf5;
+}
+
+.premium-qr-details > div {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 11px;
+  background: #f8fafc;
+  border: 1px solid #edf1f6;
+  border-radius: 11px;
+}
+
+.premium-qr-details span {
+  color: #94a3b8;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.premium-qr-details strong {
+  overflow-wrap: anywhere;
+  color: #334155;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+/* QR error */
+
+.student-qr-error {
+  margin-top: 12px;
+  padding: 12px 14px;
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 11px;
+  font-size: 12px;
+}
+
+/* Locked message */
+
+.student-locked-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 11px 12px;
+  color: #64748b;
+  background: #f1f5f9;
+  border-radius: 11px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* Save response bar */
+
+.student-save-responses-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 26px;
+  padding: 20px 22px;
+  background: #ffffff;
+  border: 1px solid #e5eaf2;
+  border-radius: 17px;
+  box-shadow: 0 5px 20px rgba(20, 35, 70, 0.05);
+}
+
+.student-save-responses-bar > div {
+  display: grid;
+  gap: 5px;
+}
+
+.student-save-responses-bar strong {
+  color: #263449;
+  font-size: 13px;
+}
+
+.student-save-responses-bar span {
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.student-save-responses-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  color: #ffffff;
+  background: #2563eb;
+  border: none;
+  border-radius: 11px;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.student-save-responses-button:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.student-save-responses-button:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .student-my-meal-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .student-my-meal-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .student-my-meal-header {
+    gap: 11px;
+  }
+
+  .student-my-meal-title h3 {
+    font-size: 17px;
+  }
+
+  .student-menu-status {
+    padding: 6px 8px;
+    font-size: 9px;
+  }
+
+  .student-response-options {
+    grid-template-columns: 1fr;
+  }
+
+  .premium-qr-card {
+    padding: 15px;
+  }
+
+  .premium-qr-header h3 {
+    font-size: 18px;
+  }
+
+  .premium-qr-code-frame {
+    padding: 10px;
+  }
+
+  .premium-qr-code-frame svg {
+    width: 180px;
+    height: 180px;
+  }
+
+  .premium-qr-details {
+    grid-template-columns: 1fr;
+  }
+
+  .student-save-responses-bar {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .student-save-responses-button {
+    width: 100%;
+  }
+
+  .student-cutoff-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .student-my-meal-card,
+  .student-response-option,
+  .student-generate-qr-button,
+  .student-save-responses-button {
+    transition: none;
+  }
+}

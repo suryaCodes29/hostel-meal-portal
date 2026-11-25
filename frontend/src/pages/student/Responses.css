@@ -1,5 +1,6 @@
 .student-responses-page {
   width: 100%;
+  box-sizing: border-box;
   max-width: 1400px;
   margin: 0 auto;
   padding: 28px;
@@ -605,6 +606,37 @@
   .student-response-pagination {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .student-response-table-wrapper {
+    overflow-x: visible;
+  }
+
+  .student-response-table {
+    min-width: 0;
+  }
+
+  .student-response-table thead {
+    display: none;
+  }
+
+  .student-response-table tbody,
+  .student-response-table tr,
+  .student-response-table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .student-response-table tbody tr {
+    margin: 10px;
+    border: 1px solid #edf0f4;
+    border-radius: 10px;
+  }
+
+  .student-response-table td {
+    min-height: 44px;
+    border-bottom: 1px solid #edf0f4;
   }
 }
 

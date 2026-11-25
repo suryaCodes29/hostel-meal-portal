@@ -23,13 +23,9 @@ import {
   Link,
   useNavigate,
 } from "react-router-dom";
+import { API_BASE_URL } from "../services/apiConfig";
 
 import "../styles/managerRegister.css";
-
-
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  "http://127.0.0.1:5000";
 
 
 const INITIAL_FORM = {

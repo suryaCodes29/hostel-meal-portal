@@ -2,6 +2,8 @@ import {
   useEffect,
   useState
 } from "react";
+import { API_BASE_URL } from "../services/apiConfig";
+import { getStoredToken } from "../services/studentApi";
 
 
 function ManagerDashboard() {
@@ -50,14 +52,7 @@ function ManagerDashboard() {
     useState(false);
 
 
-  const token =
-    localStorage.getItem(
-      "token"
-    )
-    ||
-    sessionStorage.getItem(
-      "token"
-    );
+  const token = getStoredToken();
 
 
   const loadUsers =
@@ -67,7 +62,7 @@ function ManagerDashboard() {
 
         const response =
           await fetch(
-            "http://127.0.0.1:5000/api/manager/users",
+            `${API_BASE_URL}/api/manager/users`,
             {
 
               headers: {
@@ -143,7 +138,7 @@ function ManagerDashboard() {
 
         const response =
           await fetch(
-            "http://127.0.0.1:5000/api/manager/users",
+            `${API_BASE_URL}/api/manager/users`,
             {
 
               method:

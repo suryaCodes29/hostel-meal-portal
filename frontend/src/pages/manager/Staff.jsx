@@ -54,6 +54,7 @@ const EMPTY_STAFF_FORM = {
   hostelId: "",
   blockId: "",
   messUnitId: "",
+  mealCategory: "veg",
 };
 
 
@@ -62,6 +63,7 @@ const EMPTY_EDIT_FORM = {
   email: "",
   mobile: "",
   staffRole: "Cook",
+  mealCategory: "veg",
 };
 
 
@@ -69,6 +71,7 @@ const EMPTY_ASSIGNMENT_FORM = {
   hostelId: "",
   blockId: "",
   messUnitId: "",
+  mealCategory: "veg",
 };
 
 
@@ -97,6 +100,11 @@ function Staff() {
   const [
     staff,
     setStaff,
+  ] = useState([]);
+
+  const [
+    staffFeedback,
+    setStaffFeedback,
   ] = useState([]);
 
   const [
@@ -379,6 +387,16 @@ function Staff() {
       );
     };
   }, [loadStaff]);
+
+  useEffect(() => {
+    apiFetch("/api/manager/staff-feedback")
+      .then((data) =>
+        setStaffFeedback(
+          Array.isArray(data.feedback) ? data.feedback : []
+        )
+      )
+      .catch(() => setStaffFeedback([]));
+  }, [apiFetch]);
 
 
   /* =========================================================
@@ -758,6 +776,7 @@ function Staff() {
                     Number(
                       form.messUnitId
                     ),
+                  mealCategory: form.mealCategory,
                 }),
             }
           );
@@ -815,6 +834,9 @@ function Staff() {
         staffRole:
           person.staffRole ||
           "Cook",
+        mealCategory:
+          person.mealCategory ||
+          "veg",
       });
 
       setEditError("");
@@ -936,6 +958,7 @@ function Staff() {
 
                   staffRole:
                     editForm.staffRole,
+                  mealCategory: editForm.mealCategory,
                 }),
             }
           );
@@ -1003,6 +1026,9 @@ function Staff() {
                 person.messUnit.id
               )
             : "",
+        mealCategory:
+          person.mealCategory ||
+          "veg",
       });
 
       setAssignmentError("");
@@ -1136,6 +1162,8 @@ function Staff() {
                       assignmentForm
                         .messUnitId
                     ),
+                  mealCategory:
+                    assignmentForm.mealCategory,
                 }),
             }
           );
@@ -1565,6 +1593,38 @@ function Staff() {
 
       </section>
 
+      <section className="staff-table-card" style={{ marginTop: "18px" }}>
+        <div className="staff-table-heading">
+          <div>
+            <strong>Staff Feedback</strong>
+            <p>Operational feedback submitted by assigned staff</p>
+          </div>
+        </div>
+        {staffFeedback.length === 0 ? (
+          <div style={{ padding: "24px", color: "#667085" }}>
+            No staff feedback submissions found.
+          </div>
+        ) : (
+          <div style={{ display: "grid", gap: "10px", padding: "14px" }}>
+            {staffFeedback.map((item) => (
+              <article
+                key={item.id}
+                style={{
+                  border: "1px solid #e2e8f0",
+                  borderRadius: "10px",
+                  padding: "14px",
+                }}
+              >
+                <strong>{item.subject}</strong>
+                <p>{item.description}</p>
+                <small>
+                  {item.staffName || "Staff"} · {item.category} · {item.status}
+                </small>
+              </article>
+            ))}
+          </div>
+        )}
+      </section>
 
       {/* =====================================================
           FILTERS
@@ -1772,6 +1832,21 @@ function Staff() {
             </span>
           </div>
 
+        </div>
+
+        <div className="staff-form-grid">
+          <div className="staff-form-field">
+            <label>Food Category Responsibility</label>
+            <select
+              name="mealCategory"
+              value={form.mealCategory}
+              onChange={handleFormChange}
+            >
+              <option value="veg">Veg</option>
+              <option value="non-veg">Non-Veg</option>
+              <option value="both">Both</option>
+            </select>
+          </div>
         </div>
 
 
@@ -2008,6 +2083,31 @@ function Staff() {
                             }
                           >
                             Reassign
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={async () => {
+                              if (!window.confirm(`Reset ${person.name}'s password to Mess@123?`)) return;
+                              try {
+                                const response = await apiFetch(
+                                  `/api/manager/staff/${person.id}/reset-password`,
+                                  { method: "POST" }
+                                );
+                                setSuccessMessage(
+                                  response.message ||
+                                    "Password reset successfully."
+                                );
+                                await loadStaff();
+                              } catch (resetError) {
+                                setError(
+                                  resetError?.message ||
+                                    "Unable to reset Staff password."
+                                );
+                              }
+                            }}
+                          >
+                            Reset Password
                           </button>
 
 
@@ -2376,6 +2476,25 @@ function Staff() {
 
               </div>
 
+              <div className="staff-form-grid">
+                <div className="staff-form-field">
+                  <label>Food Category Responsibility</label>
+                  <select
+                    value={assignmentForm.mealCategory}
+                    onChange={(event) =>
+                      setAssignmentForm((current) => ({
+                        ...current,
+                        mealCategory: event.target.value,
+                      }))
+                    }
+                  >
+                    <option value="veg">Veg</option>
+                    <option value="non-veg">Non-Veg</option>
+                    <option value="both">Both</option>
+                  </select>
+                </div>
+              </div>
+
 
               <div className="staff-modal-actions">
 
@@ -2568,6 +2687,21 @@ function Staff() {
                 </strong>
               </div>
 
+            </div>
+
+            <div className="staff-form-grid">
+              <div className="staff-form-field">
+                <label>Food Category Responsibility</label>
+                <select
+                  name="mealCategory"
+                  value={editForm.mealCategory}
+                  onChange={handleEditChange}
+                >
+                  <option value="veg">Veg</option>
+                  <option value="non-veg">Non-Veg</option>
+                  <option value="both">Both</option>
+                </select>
+              </div>
             </div>
 
 

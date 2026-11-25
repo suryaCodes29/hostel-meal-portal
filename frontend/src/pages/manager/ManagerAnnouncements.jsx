@@ -336,6 +336,26 @@ export default function ManagerAnnouncements() {
     }
   }
 
+  async function deleteAnnouncement(item) {
+    if (!window.confirm(`Delete "${item.title}"?`)) return;
+    setError("");
+    setNotice("");
+    setSaving(true);
+    try {
+      const result = await apiFetch(
+        `/api/manager/announcements/${item.id}`,
+        { method: "DELETE" }
+      );
+      setNotice(result?.message || "Announcement deleted successfully.");
+      if (editingId === item.id) resetForm();
+      await loadAnnouncements();
+    } catch (err) {
+      setError(err?.message || "Could not delete the announcement.");
+    } finally {
+      setSaving(false);
+    }
+  }
+
   return (
     <main style={{ padding: "24px", maxWidth: "1400px", margin: "auto" }}>
       <header
@@ -778,6 +798,20 @@ export default function ManagerAnnouncements() {
                       Save as draft
                     </button>
                   )}
+
+                  <button
+                    type="button"
+                    style={{
+                      ...buttonStyle,
+                      color: "#b42318",
+                      borderColor: "#fecaca",
+                      background: "#fff",
+                    }}
+                    onClick={() => deleteAnnouncement(item)}
+                    disabled={saving}
+                  >
+                    Delete
+                  </button>
                 </div>
               </article>
             ))}

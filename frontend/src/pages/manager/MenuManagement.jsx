@@ -594,20 +594,11 @@ function createDailyFilters() {
 
 function createMenuForm() {
   return {
-    date:
-      getTodayInputValue(),
-
-    hostelId:
-      "",
-
-    messUnitId:
-      "",
-
-    meal:
-      "breakfast",
-
-    mealCategory:
-      "veg",
+    date: getTodayInputValue(),
+    hostelId: "",
+    messUnitId: "",
+    meal: "breakfast",
+    mealCategory: "veg",
   };
 }
 
@@ -2786,126 +2777,78 @@ function MenuManagement() {
   ========================================================= */
 
   const openCreateMenu =
-    useCallback(
-      (
-        overrides = {}
-      ) => {
-        const preferredHostel =
-          overrides.hostelId ??
-          (
-            dailyFilters
-              .hostelId !==
-            "all"
-              ? dailyFilters
-                  .hostelId
-              : hostels[0]
-                  ?.id ??
-                ""
-          );
+  useCallback(
+    (
+      overrides = {}
+    ) => {
+      const preferredHostel =
+        overrides.hostelId ??
+        (
+          dailyFilters.hostelId !== "all"
+            ? dailyFilters.hostelId
+            : hostels[0]?.id ?? ""
+        );
 
-        const availableMess =
-          messUnits.filter(
+      const availableMess =
+        messUnits.filter(
+          (mess) =>
+            String(getMessHostelId(mess)) ===
+            String(preferredHostel)
+        );
+
+      const preferredMess =
+        overrides.messUnitId ??
+        (
+          dailyFilters.messUnitId !== "all" &&
+          availableMess.some(
             (mess) =>
-              String(
-                getMessHostelId(
-                  mess
-                )
-              ) ===
-              String(
-                preferredHostel
-              )
-          );
-
-        const preferredMess =
-          overrides.messUnitId ??
-          (
-            dailyFilters
-              .messUnitId !==
-              "all" &&
-            availableMess.some(
-              (mess) =>
-                String(
-                  mess.id
-                ) ===
-                String(
-                  dailyFilters
-                    .messUnitId
-                )
-            )
-              ? dailyFilters
-                  .messUnitId
-              : availableMess[0]
-                  ?.id ??
-                ""
-          );
-
-        setDrawerMode(
-          "create"
+              String(mess.id) ===
+              String(dailyFilters.messUnitId)
+          )
+            ? dailyFilters.messUnitId
+            : availableMess[0]?.id ?? ""
         );
 
-        setEditingMenu(
-          null
-        );
+      setDrawerMode("create");
+      setEditingMenu(null);
 
-        setMenuForm({
-          date:
-            overrides.date ??
-            dailyFilters.date ??
-            getTodayInputValue(),
+      setMenuForm({
+        date:
+          overrides.date ??
+          dailyFilters.date ??
+          getTodayInputValue(),
 
-          hostelId:
-            preferredHostel
-              ? String(
-                  preferredHostel
-                )
-              : "",
+        hostelId: preferredHostel
+          ? String(preferredHostel)
+          : "",
 
-          messUnitId:
-            preferredMess
-              ? String(
-                  preferredMess
-                )
-              : "",
+        messUnitId: preferredMess
+          ? String(preferredMess)
+          : "",
 
-          meal:
-            overrides.meal ??
-            dailyFilters.meal ??
-            "breakfast",
+        meal:
+          overrides.meal ??
+          dailyFilters.meal ??
+          "breakfast",
 
-          mealCategory:
-            overrides
-              .mealCategory ??
-            dailyFilters
-              .mealCategory ??
-            "veg",
-        });
+        mealCategory:
+          overrides.mealCategory ??
+          dailyFilters.mealCategory ??
+          "veg",
+      });
 
-        setSelectedItems(
-          []
-        );
-
-        setFoodSearch(
-          ""
-        );
-
-        setDrawerError(
-          ""
-        );
-
-        setCustomFoodOpen(
-          false
-        );
-
-        setDrawerOpen(
-          true
-        );
-      },
-      [
-        dailyFilters,
-        hostels,
-        messUnits,
-      ]
-    );
+      setSelectedItems([]);
+      setFoodSearch("");
+      setDrawerError("");
+      setCustomFoodOpen(false);
+      setDrawerOpen(true);
+    },
+    [
+      dailyFilters,
+      hostels,
+      messUnits,
+    ]
+  );
 
 
   /* =========================================================
@@ -2913,183 +2856,87 @@ function MenuManagement() {
   ========================================================= */
 
   const openEditMenu =
-    (menu) => {
-      if (!menu) {
-        return;
-      }
+  (menu) => {
+    if (!menu) {
+      return;
+    }
 
-      setDrawerMode(
-        "edit"
-      );
+    setDrawerMode("edit");
+    setEditingMenu(menu);
 
-      setEditingMenu(
-        menu
-      );
+    setMenuForm({
+      date: toInputDate(menu.date),
 
-      setMenuForm({
-        date:
-          toInputDate(
-            menu.date
-          ),
+      hostelId: String(
+        menu.hostel?.id ?? ""
+      ),
 
-        hostelId:
-          String(
-            menu.hostel
-              ?.id ??
-              ""
-          ),
+      messUnitId: String(
+        menu.messUnit?.id ?? ""
+      ),
 
-        messUnitId:
-          String(
-            menu.messUnit
-              ?.id ??
-              ""
-          ),
+      meal: menu.meal || "breakfast",
 
-        meal:
-          menu.meal ||
-          "breakfast",
+      mealCategory:
+        menu.mealCategory || "veg",
+    });
 
-        mealCategory:
-          menu.mealCategory ||
-          "veg",
-      });
+    setSelectedItems(
+      Array.isArray(menu.items)
+        ? menu.items.map(normalizeSelectedFood)
+        : []
+    );
 
-      setSelectedItems(
-        Array.isArray(
-          menu.items
-        )
-          ? menu.items.map(
-              normalizeSelectedFood
-            )
-          : []
-      );
-
-      setFoodSearch(
-        ""
-      );
-
-      setDrawerError(
-        ""
-      );
-
-      setCustomFoodOpen(
-        false
-      );
-
-      setDrawerOpen(
-        true
-      );
-    };
+    setFoodSearch("");
+    setDrawerError("");
+    setCustomFoodOpen(false);
+    setDrawerOpen(true);
+  };
 
 
-  const closeDrawer =
-    () => {
-      if (
-        savingMenu
-      ) {
-        return;
-      }
 
-      setDrawerOpen(
-        false
-      );
+/* =========================================================
+   MENU FORM CHANGE HANDLERS
+========================================================= */
 
-      setEditingMenu(
-        null
-      );
+// Handle date, mess unit, meal and time changes
+const handleMenuFormChange = (event) => {
+  const { name, value } = event.target;
 
-      setDrawerError(
-        ""
-      );
-
-      setCustomFoodOpen(
-        false
-      );
-    };
+  setMenuForm((current) => ({
+    ...current,
+    [name]: value,
+  }));
+};
 
 
-  const handleMenuFormChange =
-    (event) => {
-      const {
-        name,
-        value,
-      } =
-        event.target;
+// Handle hostel selection in the drawer
+const handleDrawerHostelChange = (event) => {
+  const hostelId = event.target.value;
 
-      setMenuForm(
-        (current) => ({
-          ...current,
-          [name]:
-            value,
-        })
-      );
-    };
+  const availableMess = messUnits.filter(
+    (mess) =>
+      String(getMessHostelId(mess)) ===
+      String(hostelId)
+  );
 
-
-  const handleDrawerHostelChange =
-    (event) => {
-      const hostelId =
-        event.target.value;
-
-      const available =
-        messUnits.filter(
-          (mess) =>
-            String(
-              getMessHostelId(
-                mess
-              )
-            ) ===
-            String(
-              hostelId
-            )
-        );
-
-      setMenuForm(
-        (current) => ({
-          ...current,
-
-          hostelId,
-
-          messUnitId:
-            available[0]
-              ?.id
-              ? String(
-                  available[0]
-                    .id
-                )
-              : "",
-        })
-      );
-    };
+  setMenuForm((current) => ({
+    ...current,
+    hostelId,
+    messUnitId: "",
+  }));
+};
 
 
-  const handleDrawerCategoryChange =
-    (event) => {
-      const category =
-        event.target.value;
+// Handle meal category selection
+const handleDrawerCategoryChange = (event) => {
+  const { value } = event.target;
 
-      setMenuForm(
-        (current) => ({
-          ...current,
-
-          mealCategory:
-            category,
-        })
-      );
-
-      setSelectedItems(
-        (current) =>
-          current.filter(
-            (item) =>
-              item.mealCategory ===
-                "both" ||
-              item.mealCategory ===
-                category
-          )
-      );
-    };
-
+  setMenuForm((current) => ({
+    ...current,
+    mealCategory: value,
+  }));
+};
 
   /* =========================================================
      FOOD SELECTION
@@ -3352,77 +3199,45 @@ function MenuManagement() {
   /* =========================================================
      VALIDATE MENU DRAWER
   ========================================================= */
+const validateMenuDrawer = () => {
+  if (!menuForm.date) {
+    return "Select a Menu date.";
+  }
 
-  const validateMenuDrawer =
-    () => {
-      if (
-        !menuForm.date
-      ) {
-        return "Select a Menu date.";
-      }
+  if (!menuForm.hostelId) {
+    return "Select a Hostel.";
+  }
 
-      if (
-        !menuForm.hostelId
-      ) {
-        return "Select a Hostel.";
-      }
+  if (!menuForm.messUnitId) {
+    return "Select a Mess Unit.";
+  }
 
-      if (
-        !menuForm.messUnitId
-      ) {
-        return "Select a Mess Unit.";
-      }
+  if (!menuForm.meal) {
+    return "Select a Meal.";
+  }
 
-      if (
-        !menuForm.meal
-      ) {
-        return "Select a Meal.";
-      }
+  if (!menuForm.mealCategory) {
+    return "Select a Meal Category.";
+  }
 
-      if (
-        !menuForm
-          .mealCategory
-      ) {
-        return "Select a Meal Category.";
-      }
+  if (selectedItems.length === 0) {
+    return "Select at least one food item.";
+  }
 
-      if (
-        selectedItems.length ===
-        0
-      ) {
-        return "Select at least one food item.";
-      }
+  for (const item of selectedItems) {
+    const quantity = Number(item.quantityPerStudent);
 
-      for (
-        const item of
-        selectedItems
-      ) {
-        const quantity =
-          Number(
-            item.quantityPerStudent
-          );
+    if (!Number.isFinite(quantity) || quantity <= 0) {
+      return `Enter a valid quantity for ${item.name}.`;
+    }
 
-        if (
-          !Number.isFinite(
-            quantity
-          ) ||
-          quantity <= 0
-        ) {
-          return `Enter a valid quantity for ${item.name}.`;
-        }
+    if (!String(item.unit || "").trim()) {
+      return `Select a unit for ${item.name}.`;
+    }
+  }
 
-        if (
-          !String(
-            item.unit || ""
-          ).trim()
-        ) {
-          return `Select a unit for ${item.name}.`;
-        }
-      }
-
-      return "";
-    };
-
+  return "";
+};
 
   /* =========================================================
      SAVE MENU
@@ -3460,31 +3275,13 @@ function MenuManagement() {
       );
 
       const payload = {
-        hostelId:
-          Number(
-            menuForm.hostelId
-          ),
-
-        messUnitId:
-          Number(
-            menuForm.messUnitId
-          ),
-
-        date:
-          menuForm.date,
-
-        meal:
-          menuForm.meal,
-
-        mealCategory:
-          menuForm
-            .mealCategory,
-
-        items:
-          buildItemPayload(
-            selectedItems
-          ),
-      };
+  hostelId: Number(menuForm.hostelId),
+  messUnitId: Number(menuForm.messUnitId),
+  date: menuForm.date,
+  meal: menuForm.meal,
+  mealCategory: menuForm.mealCategory,
+  items: buildItemPayload(selectedItems),
+};
 
       try {
         const endpoint =
@@ -3522,16 +3319,6 @@ function MenuManagement() {
 
         setEditingMenu(
           null
-        );
-
-        setSuccessMessage(
-          response?.message ||
-            (
-              method ===
-              "POST"
-                ? "Menu saved successfully."
-                : "Menu updated successfully."
-            )
         );
 
         const nextFilters = {
@@ -3603,6 +3390,24 @@ function MenuManagement() {
         );
       }
     };
+
+
+  /* =========================================================
+     CLOSE CREATE / EDIT MENU DRAWER
+  ========================================================= */
+
+  const closeDrawer = () => {
+    if (savingMenu) {
+      return;
+    }
+
+    setDrawerOpen(false);
+    setEditingMenu(null);
+    setDrawerError("");
+    setSelectedItems([]);
+    setFoodSearch("");
+    setCustomFoodOpen(false);
+  };
 
 
   /* =========================================================
@@ -7855,7 +7660,7 @@ function MenuManagement() {
 
                 <label className="mm-field">
                   <span>
-                    Meal Category *
+                    Category *
                   </span>
 
                   <select
@@ -9379,6 +9184,27 @@ function MenuManagement() {
                   </select>
                 </label>
 
+
+                <label className="mm-field">
+  <span>
+    Meal Category *
+  </span>
+
+  <select
+    name="mealCategory"
+    value={menuForm.mealCategory}
+    onChange={handleDrawerCategoryChange}
+  >
+    {CATEGORIES.map((category) => (
+      <option
+        key={category.value}
+        value={category.value}
+      >
+        {category.label}
+      </option>
+    ))}
+  </select>
+</label>
 
                 <label className="mm-field">
                   <span>

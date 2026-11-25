@@ -1,6 +1,6 @@
-
-import React, { useEffect, useMemo, useState } from "react";
-
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { QRCodeSVG } from "qrcode.react";
+import "./MyMeals.css";
 import {
   Coffee,
   Utensils,
@@ -9,16 +9,27 @@ import {
   CheckCircle2,
   XCircle,
   Lock,
-  Save,
   RefreshCw,
   CalendarDays,
   AlertCircle,
 } from "lucide-react";
-
 import studentApi from "../../services/studentApi";
 import StudentAssignmentBanner from "../../components/student/StudentAssignmentBanner";
 
-const MEAL_ORDER = ["Breakfast", "Lunch", "Dinner"];
+const MEAL_ORDER = ["Breakfast", "Lunch", "Snacks", "Dinner"];
+
+function getQrExpiryTime(qr) {
+  if (!qr?.expiresAt) return null;
+  const value = String(qr.expiresAt);
+  const hasTimezone = /(?:Z|[+-]\d{2}:\d{2})$/i.test(value);
+  const timestamp = new Date(hasTimezone ? value : `${value}Z`).getTime();
+  return Number.isNaN(timestamp) ? null : timestamp;
+}
+
+function isQrActive(qr) {
+  const expiresAt = getQrExpiryTime(qr);
+  return Boolean(qr?.token && expiresAt && expiresAt > Date.now());
+}
 
 const mealIcons = {
   Breakfast: Coffee,
@@ -29,13 +40,34 @@ const mealIcons = {
 const mealClasses = {
   Breakfast: "student-mymeal-breakfast",
   Lunch: "student-mymeal-lunch",
+  Snacks: "student-mymeal-snacks",
   Dinner: "student-mymeal-dinner",
 };
+
+function getStoredQrPasses() {
+  try {
+    const cached = JSON.parse(
+      sessionStorage.getItem("hostelMealQrPasses") || "{}",
+    );
+    return cached && typeof cached === "object" && !Array.isArray(cached)
+      ? cached
+      : {};
+  } catch {
+    return {};
+  }
+}
 
 function MyMeals() {
   const [menus, setMenus] = useState([]);
   const [responses, setResponses] = useState({});
   const [originalResponses, setOriginalResponses] = useState({});
+
+  // Meal QR state
+  const [qrData, setQrData] = useState(getStoredQrPasses);
+  const qrDataRef = useRef(qrData);
+  const [qrLoading, setQrLoading] = useState({});
+  const [qrErrors, setQrErrors] = useState({});
+  const qrRequests = useRef(new Set());
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -68,10 +100,21 @@ function MyMeals() {
 
       setError("");
 
-      // Do not clear the success message here. A successful save
-      // should remain visible while data is refreshed.
+      // Do not clear the success message here.
+      const today = new Date().toLocaleDateString("en-CA", {
+        timeZone: "Asia/Kolkata",
+      });
+      const end = new Date();
+      end.setDate(end.getDate() + 31);
+      const dateTo = end.toLocaleDateString("en-CA", {
+        timeZone: "Asia/Kolkata",
+      });
+
       const [menuResponse, responseResponse] = await Promise.all([
-        studentApi.getTodayMenus(),
+        studentApi.getStudentMenus({
+          dateFrom: today,
+          dateTo,
+        }),
         studentApi.getResponses(),
       ]);
 
@@ -99,7 +142,12 @@ function MyMeals() {
           ? responseData.responses
           : [];
 
-      setMenus(menuList);
+      setMenus(
+        menuList.filter((menu) =>
+          menu?.sessionStatus !== "completed" ||
+          menu?.qrAttendance?.status === "scanned"
+        )
+      );
 
       const responseMap = {};
 
@@ -132,7 +180,14 @@ function MyMeals() {
   };
 
   useEffect(() => {
-    loadMeals();
+    const initialLoad = window.setTimeout(() => void loadMeals(), 0);
+    const refreshInterval = window.setInterval(() => {
+      loadMeals(true);
+    }, 60000);
+    return () => {
+      window.clearTimeout(initialLoad);
+      window.clearInterval(refreshInterval);
+    };
   }, []);
 
   useEffect(() => {
@@ -157,6 +212,7 @@ function MyMeals() {
 
     if (normalized.includes("break")) return "Breakfast";
     if (normalized.includes("lunch")) return "Lunch";
+    if (normalized.includes("snack")) return "Snacks";
     if (normalized.includes("dinner")) return "Dinner";
 
     return value || "Meal";
@@ -193,6 +249,7 @@ function MyMeals() {
     if (/AM|PM/i.test(text)) return text;
 
     const parts = text.split(":");
+
     if (parts.length < 2) return text;
 
     let hour = Number(parts[0]);
@@ -201,7 +258,9 @@ function MyMeals() {
     if (Number.isNaN(hour)) return text;
 
     const suffix = hour >= 12 ? "PM" : "AM";
+
     hour %= 12;
+
     if (hour === 0) hour = 12;
 
     return `${hour}:${minute} ${suffix}`;
@@ -227,12 +286,15 @@ function MyMeals() {
   const getCutoff = (menu) =>
     menu?.response_cutoff ??
     menu?.responseCutoff ??
+    menu?.responseDeadline ??
+    menu?.response_deadline ??
     menu?.cutoff_at ??
     menu?.cutoffAt ??
     null;
 
   const isPastCutoff = (menu) => {
     const cutoff = getCutoff(menu);
+
     if (!cutoff) return false;
 
     const cutoffDate = new Date(cutoff);
@@ -244,12 +306,15 @@ function MyMeals() {
 
   const isPastMeal = (menu) => {
     const date = menu?.date ?? menu?.menu_date ?? menu?.menuDate;
+
     if (!date) return false;
 
     const endTime = menu?.end_time ?? menu?.endTime;
+
     if (!endTime) return false;
 
     const dateText = String(date).split("T")[0];
+
     const dateTime = new Date(`${dateText}T${endTime}`);
 
     if (Number.isNaN(dateTime.getTime())) return false;
@@ -257,7 +322,9 @@ function MyMeals() {
     return dateTime < new Date();
   };
 
-  const isLocked = (menu) => isPastCutoff(menu) || isPastMeal(menu);
+  const isLocked = (menu) =>
+    menu?.responseOpen === false ||
+    menu?.sessionStatus === "completed";
 
   const isPublished = (menu) => {
     if (menu?.is_published !== undefined) {
@@ -290,19 +357,56 @@ function MyMeals() {
     [menus]
   );
 
-  const handleSelect = (menu, value) => {
+  // Generate Meal QR
+  const handleGenerateQR = async (menu) => {
     const menuId = getMenuId(menu);
+    const key = String(menuId);
 
-    if (menuId === undefined || menuId === null) return;
-    if (!isPublished(menu) || isLocked(menu)) return;
+    if (!menuId) return;
 
-    setResponses((previous) => ({
+    if (isQrActive(qrData[key]) || qrRequests.current.has(key)) {
+      return;
+    }
+
+    qrRequests.current.add(key);
+    setQrLoading((previous) => ({
       ...previous,
-      [String(menuId)]: value,
+      [key]: true,
     }));
 
-    setSuccess("");
-    setError("");
+    setQrErrors((previous) => ({
+      ...previous,
+      [key]: "",
+    }));
+
+    try {
+      const response = await studentApi.generateMealQrToken(menuId);
+
+      const data = response?.data ?? response;
+      const qr = data?.qr ?? data;
+      const nextQrData = { ...qrDataRef.current, [key]: qr };
+      qrDataRef.current = nextQrData;
+      setQrData(nextQrData);
+      try {
+        sessionStorage.setItem("hostelMealQrPasses", JSON.stringify(nextQrData));
+      } catch {
+        // The QR remains usable in the current page if browser storage is unavailable.
+      }
+    } catch (error) {
+      setQrErrors((previous) => ({
+        ...previous,
+        [key]:
+          error?.response?.data?.message ||
+          error?.message ||
+          "Unable to generate QR code.",
+      }));
+    } finally {
+      qrRequests.current.delete(key);
+      setQrLoading((previous) => ({
+        ...previous,
+        [key]: false,
+      }));
+    }
   };
 
   const hasChanges = useMemo(() => {
@@ -320,59 +424,31 @@ function MyMeals() {
     return false;
   }, [responses, originalResponses]);
 
-  // Updated: display success only after the save API succeeds.
-  const handleSaveResponses = async () => {
-    if (saving || !hasChanges) return;
+  const handleSelect = async (menu, value) => {
+    const menuId = getMenuId(menu);
+
+    if (menuId === undefined || menuId === null) return;
+
+    const key = String(menuId);
+
+    if (
+      saving ||
+      isLocked(menu) ||
+      !isPublished(menu)
+    ) return;
 
     setSaving(true);
     setError("");
     setSuccess("");
 
     try {
-      const changedMenus = orderedMenus.filter((menu) => {
-        const menuId = getMenuId(menu);
-
-        if (menuId === undefined || menuId === null) return false;
-
-        const key = String(menuId);
-
-        return (
-          responses[key] &&
-          responses[key] !== originalResponses[key]
-        );
-      });
-
-      if (changedMenus.length === 0) {
-        setSuccess("There are no new changes to save.");
-        return;
-      }
-
-      // Submit changed responses sequentially.
-      for (const menu of changedMenus) {
-        const menuId = getMenuId(menu);
-        const response = responses[String(menuId)];
-
-        await studentApi.submitMealResponse(menuId, response);
-      }
-
-      // Update only the successfully submitted responses.
-      setOriginalResponses((previous) => {
-        const updated = { ...previous };
-
-        changedMenus.forEach((menu) => {
-          const key = String(getMenuId(menu));
-          updated[key] = responses[key];
-        });
-
-        return updated;
-      });
-
-      setSuccess("Response saved successfully!");
+      await studentApi.submitMealResponse(menuId, value);
+      setResponses((previous) => ({ ...previous, [key]: value }));
+      setOriginalResponses((previous) => ({ ...previous, [key]: value }));
+      setSuccess("Response saved successfully.");
     } catch (err) {
-      console.error("Saving meal responses error:", err);
-      setError(
-        err?.message || "Unable to save your response. Please try again."
-      );
+      setError(err?.message || "Unable to save your response.");
+      await loadMeals(true);
     } finally {
       setSaving(false);
     }
@@ -388,6 +464,8 @@ function MyMeals() {
 
   const getMealTypeLabel = (menu) => {
     const category =
+      menu?.mealCategory ??
+      menu?.meal_category ??
       menu?.category ??
       menu?.food_type ??
       menu?.foodType ??
@@ -431,6 +509,7 @@ function MyMeals() {
           </div>
 
           <h2>My Meals</h2>
+
           <p>
             View today's published menu and tell us whether you will attend.
           </p>
@@ -485,7 +564,7 @@ function MyMeals() {
             <strong>Meal Response</strong>
             <span>
               Select Attending or Skipping for each meal before the response
-              cutoff.
+              deadline.
             </span>
           </div>
         </div>
@@ -512,7 +591,8 @@ function MyMeals() {
             <Utensils size={28} />
           </div>
 
-          <h3>No meals available today</h3>
+          <h3>No upcoming meals available</h3>
+
           <p>
             No published menu is currently available for your hostel, block,
             mess unit and meal category.
@@ -537,6 +617,7 @@ function MyMeals() {
               const MealIcon = mealIcons[meal] || Utensils;
               const mealClass =
                 mealClasses[meal] || "student-mymeal-default";
+
               const selected = responses[String(menuId)] || "";
               const locked = isLocked(menu);
               const published = isPublished(menu);
@@ -544,6 +625,10 @@ function MyMeals() {
               const servingTime = getServingTime(menu);
               const cutoff = getCutoff(menu);
               const mealCategory = getMealTypeLabel(menu);
+              const responseLocked = locked;
+              const cachedQr = qrData[String(menuId)];
+              const qrScanned = menu?.qrAttendance?.status === "scanned";
+              const qrExpired = Boolean(cachedQr?.token) && !isQrActive(cachedQr);
 
               return (
                 <article
@@ -566,6 +651,15 @@ function MyMeals() {
                       )}
 
                       {mealCategory && <small>{mealCategory}</small>}
+                      {(menu?.date || menu?.menuDate || menu?.menu_date) && (
+                        <small>
+                          {formatDate(
+                            menu?.date ||
+                              menu?.menuDate ||
+                              menu?.menu_date
+                          )}
+                        </small>
+                      )}
                     </div>
 
                     {!published ? (
@@ -586,7 +680,7 @@ function MyMeals() {
 
                   <div className="student-my-meal-menu">
                     <div className="student-my-meal-menu-heading">
-                      <span>Today's Menu</span>
+                      <span>Menu Items</span>
                       <span>
                         {items.length} item{items.length !== 1 ? "s" : ""}
                       </span>
@@ -622,30 +716,49 @@ function MyMeals() {
                     </strong>
                   </div>
 
-                  <div className="student-my-meal-response">
+                  {/* Meal response section */}
+                  <div
+                    className={`student-my-meal-response ${
+                      selected === "attending"
+                        ? "response-attending"
+                        : selected === "skipping"
+                          ? "response-skipping"
+                          : "response-required"
+                    } ${
+                      selected &&
+                      selected === originalResponses[String(menuId)]
+                        ? "response-saved"
+                        : "response-unsaved"
+                    }`}
+                  >
                     <div className="student-response-heading">
                       <span>Will you attend this meal?</span>
-                      {selected && (
+
+                      {selected ? (
                         <span className="student-selected-label">
-                          Selected
+                          {selected === "attending" ? "ATTENDING" : "SKIPPING"}
                         </span>
+                      ) : (
+                        <span className="student-selected-label">NO RESPONSE</span>
                       )}
                     </div>
 
                     <div className="student-response-options">
                       <button
                         type="button"
-                        disabled={locked || !published}
+                        disabled={responseLocked || !published || saving}
                         className={`student-response-option attending ${
                           selected === "attending" ? "selected" : ""
                         }`}
                         onClick={() => handleSelect(menu, "attending")}
                       >
                         <CheckCircle2 size={18} />
+
                         <div>
                           <strong>Attending</strong>
                           <span>I'll have this meal</span>
                         </div>
+
                         {selected === "attending" && (
                           <span className="student-option-check">✓</span>
                         )}
@@ -653,29 +766,142 @@ function MyMeals() {
 
                       <button
                         type="button"
-                        disabled={locked || !published}
+                        disabled={responseLocked || !published || saving}
                         className={`student-response-option skipping ${
                           selected === "skipping" ? "selected" : ""
                         }`}
                         onClick={() => handleSelect(menu, "skipping")}
                       >
                         <XCircle size={18} />
+
                         <div>
                           <strong>Skipping</strong>
                           <span>I won't have this meal</span>
                         </div>
+
                         {selected === "skipping" && (
                           <span className="student-option-check">✓</span>
                         )}
                       </button>
                     </div>
 
+                    {/* MEAL QR VERIFICATION */}
+                    {selected === "attending" && published && (
+                      <div className="student-meal-qr-section">
+                        <h4>Meal Verification QR</h4>
+
+                        {qrScanned ? (
+                          <div className="student-qr-scanned" role="status">
+                            <CheckCircle2 size={21} />
+                            <div>
+                              <strong>QR Attendance: SCANNED</strong>
+                              <span>QR Scanned Successfully</span>
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            {(!cachedQr?.token || qrExpired) && (
+                              <button
+                                type="button"
+                                className="student-generate-qr-button"
+                                onClick={() => handleGenerateQR(menu)}
+                                disabled={qrLoading[String(menuId)]}
+                              >
+                                {qrLoading[String(menuId)]
+                                  ? "Generating QR..."
+                                  : "Generate Meal QR"}
+                              </button>
+                            )}
+
+                            {qrErrors[String(menuId)] && (
+                              <div className="student-qr-error" role="alert">
+                                {qrErrors[String(menuId)]}
+                              </div>
+                            )}
+
+                            {cachedQr?.token && !qrExpired && (
+                              <div className="student-meal-qr-card premium-qr-card">
+                                <div className="premium-qr-header">
+                                  <div>
+                                    <span className="premium-qr-eyebrow">
+                                      DIGITAL MEAL PASS
+                                    </span>
+                                    <h3>Your Meal Pass</h3>
+                                    <p>
+                                      {meal} • {getTodayLabel()}
+                                    </p>
+                                  </div>
+
+                                  <span className="premium-qr-active">
+                                    <span className="premium-qr-active-dot" />
+                                    QR ACTIVE
+                                  </span>
+                                </div>
+
+                                <div className="premium-qr-code-frame">
+                                  <QRCodeSVG
+                                    value={qrData[String(menuId)].token}
+                                    size={200}
+                                    level="H"
+                                    bgColor="#ffffff"
+                                    fgColor="#14213d"
+                                  />
+                                </div>
+
+                                <div className="premium-qr-instruction">
+                                  <CheckCircle2 size={17} />
+                                  <span>
+                                    Show this QR code at your mess counter.
+                                  </span>
+                                </div>
+
+                                <div className="premium-qr-details">
+                                  <div>
+                                    <span>Meal</span>
+                                    <strong>{meal}</strong>
+                                  </div>
+
+                                  <div>
+                                    <span>Meal Time</span>
+                                    <strong>
+                                      {servingTime || "Not specified"}
+                                    </strong>
+                                  </div>
+
+                                  {qrData[String(menuId)].qrOpenTime && (
+                                    <div>
+                                      <span>QR Opens</span>
+                                      <strong>
+                                        {formatDateTime(
+                                          qrData[String(menuId)].qrOpenTime
+                                        )}
+                                      </strong>
+                                    </div>
+                                  )}
+
+                                  {qrData[String(menuId)].expiresAt && (
+                                    <div>
+                                      <span>Expires At</span>
+                                      <strong>
+                                        {formatDateTime(
+                                          qrData[String(menuId)].expiresAt
+                                        )}
+                                      </strong>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    )}
+
                     {locked && (
                       <div className="student-locked-message">
                         <Lock size={13} />
                         <span>
-                          Responses are locked after the cutoff or once the
-                          meal has passed.
+                          SESSION CLOSED
                         </span>
                       </div>
                     )}
@@ -694,46 +920,21 @@ function MyMeals() {
             })}
           </div>
 
-          <div className="student-save-responses-bar">
-            <div>
-              <strong>
-                {hasChanges
-                  ? "You have unsaved changes"
-                  : "Your responses are up to date"}
-              </strong>
-              <span>
-                {hasChanges
-                  ? "Save your selections to update your meal responses."
-                  : "No changes need to be saved."}
-              </span>
-            </div>
-
-            <button
-              type="button"
-              className="student-save-responses-button"
-              onClick={handleSaveResponses}
-              disabled={saving || !hasChanges}
-            >
-              {saving ? (
-                <>
-                  <RefreshCw
-                    size={15}
-                    className="student-refresh-spin"
-                  />
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <Save size={15} />
-                  Save Responses
-                </>
-              )}
-            </button>
-          </div>
         </>
       )}
     </div>
   );
+}
+
+function formatDate(value) {
+  if (!value) return "";
+  const date = new Date(`${String(value).split("T")[0]}T00:00:00+05:30`);
+  if (Number.isNaN(date.getTime())) return String(value);
+  return date.toLocaleDateString("en-IN", {
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+  });
 }
 
 function formatDateTime(value) {

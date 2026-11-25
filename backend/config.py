@@ -1,3 +1,4 @@
+
 import os
 from urllib.parse import quote_plus
 
@@ -46,6 +47,12 @@ class Config:
     )
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    # Project timezone for all meal schedules and deadlines.
+    APP_TIMEZONE = os.getenv(
+        "APP_TIMEZONE",
+        "Asia/Kolkata"
+    )
 
     JWT_SECRET_KEY = os.getenv(
         "JWT_SECRET_KEY",

@@ -66,6 +66,15 @@ import ManagerAnnouncements from "./pages/manager/ManagerAnnouncements";
 ========================================================= */
 
 import StaffDashboard from "./pages/StaffDashboard";
+import StaffLayout from "./components/staff/StaffLayout";
+import QRScanner from "./pages/staff/QRScanner";
+import MealAttendance from "./pages/staff/MealAttendance";
+import StudentResponses from "./pages/staff/StudentResponses";
+import AttendanceHistory from "./pages/staff/AttendanceHistory";
+import StaffAnnouncements from "./pages/staff/Announcements";
+import StaffProfile from "./pages/staff/Profile";
+import StaffSettings from "./pages/staff/Settings";
+import StaffNotifications from "./pages/staff/Notifications";
 
 
 /* =========================================================
@@ -548,19 +557,24 @@ function App() {
         ===================================================== */}
 
         <Route
-          path="/staff/dashboard"
+          path="/staff"
           element={
-
-            <RoleProtectedRoute
-              requiredRole="staff"
-            >
-
-              <StaffDashboard />
-
+            <RoleProtectedRoute requiredRole="staff">
+              <StaffLayout />
             </RoleProtectedRoute>
-
           }
-        />
+        >
+          <Route index element={<Navigate to="/staff/dashboard" replace />} />
+          <Route path="dashboard" element={<StaffDashboard />} />
+          <Route path="qr-scanner" element={<QRScanner />} />
+          <Route path="attendance" element={<MealAttendance />} />
+          <Route path="responses" element={<StudentResponses />} />
+          <Route path="history" element={<AttendanceHistory />} />
+          <Route path="announcements" element={<StaffAnnouncements />} />
+          <Route path="notifications" element={<StaffNotifications />} />
+          <Route path="profile" element={<StaffProfile />} />
+          <Route path="settings" element={<StaffSettings />} />
+        </Route>
 
 
         {/* =====================================================

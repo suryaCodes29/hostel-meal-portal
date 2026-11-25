@@ -23,7 +23,8 @@ import "./StudentDashboard.css";
 const mealOrder = {
   breakfast: 1,
   lunch: 2,
-  dinner: 3,
+  snacks: 3,
+  dinner: 4,
 };
 
 const normalizeMeal = (meal) =>
@@ -70,6 +71,20 @@ const formatTime = (value) => {
     hour: "numeric",
     minute: "2-digit",
   });
+};
+
+const getISTGreeting = () => {
+  const hour = Number(
+    new Intl.DateTimeFormat("en-IN", {
+      timeZone: "Asia/Kolkata",
+      hour: "2-digit",
+      hourCycle: "h23",
+    }).format(new Date())
+  );
+
+  if (hour >= 5 && hour < 12) return "Good morning";
+  if (hour >= 12 && hour < 17) return "Good afternoon";
+  return "Good evening";
 };
 
 const getResponseStatus = (response) => {
@@ -382,7 +397,7 @@ export default function StudentDashboard() {
             </p>
 
             <h1>
-              Good morning, {firstName}! 👋
+              {getISTGreeting()}, {firstName}! 👋
             </h1>
 
             <p className="student-dashboard-subtitle">

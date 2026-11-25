@@ -1,5 +1,6 @@
 import sys
 import unittest
+from unittest.mock import patch
 
 from datetime import date
 from pathlib import Path
@@ -35,6 +36,7 @@ from flask_jwt_extended import (
 )
 
 from werkzeug.security import (
+    check_password_hash,
     generate_password_hash,
 )
 
@@ -54,6 +56,12 @@ from models import (
 
 from routes.manager_routes import (
     manager_bp,
+)
+from routes.auth_routes import (
+    auth_bp,
+)
+from routes.staff_routes import (
+    staff_bp,
 )
 
 
@@ -105,6 +113,12 @@ class ManagerTenantIsolationTestCase(
 
         self.app.register_blueprint(
             manager_bp
+        )
+        self.app.register_blueprint(
+            auth_bp
+        )
+        self.app.register_blueprint(
+            staff_bp
         )
 
 
@@ -1845,6 +1859,9 @@ class ManagerTenantIsolationTestCase(
 
                     "messUnitId":
                         self.mess_b_id,
+
+                    "mealCategory":
+                        "veg",
                 },
             ),
 
@@ -1900,6 +1917,135 @@ class ManagerTenantIsolationTestCase(
                 self.assert_forbidden_or_not_found(
                     response
                 )
+
+
+    def test_create_staff_saves_hashed_credentials_and_assignment(self):
+        payload = {
+            "name": "New Mess Cook",
+            "email": "new.mess.cook@test.local",
+            "mobile": "9000000191",
+            "staffRole": "Cook",
+            "hostelId": self.hostel_a_id,
+            "blockId": self.block_a_id,
+            "messUnitId": self.mess_a_id,
+            "mealCategory": "veg",
+        }
+
+        response = self._post("a", "/api/manager/staff", payload)
+        self.assertEqual(response.status_code, 201, response.get_data(as_text=True))
+        result = response.get_json()["staff"]
+        self.assertEqual(result["name"], payload["name"])
+        self.assertEqual(result["email"], payload["email"])
+        self.assertEqual(result["mealCategory"], "veg")
+        self.assertEqual(result["hostel"]["id"], self.hostel_a_id)
+        self.assertEqual(result["messUnit"]["id"], self.mess_a_id)
+
+        with self.app.app_context():
+            staff_member = db.session.get(User, result["id"])
+            self.assertIsNotNone(staff_member)
+            self.assertEqual(staff_member.staff_id, result["staffId"])
+            self.assertEqual(staff_member.role, "staff")
+            self.assertEqual(staff_member.staff_role, "Cook")
+            self.assertEqual(staff_member.hostel_id, self.hostel_a_id)
+            self.assertEqual(staff_member.block_id, self.block_a_id)
+            self.assertEqual(staff_member.mess_unit_id, self.mess_a_id)
+            self.assertEqual(staff_member.meal_category, "veg")
+            self.assertTrue(staff_member.must_change_password)
+            self.assertTrue(check_password_hash(staff_member.password_hash, "Mess@123"))
+            self.assertNotEqual(staff_member.password_hash, "Mess@123")
+
+        listed_staff = self._get("a", "/api/manager/staff").get_json()["staff"]
+        listed_member = next(
+            member for member in listed_staff if member["id"] == result["id"]
+        )
+        self.assertEqual(listed_member["mealCategory"], "veg")
+        self.assertEqual(listed_member["hostel"]["id"], self.hostel_a_id)
+        self.assertEqual(listed_member["messUnit"]["id"], self.mess_a_id)
+
+        login = self.client.post(
+            "/api/auth/login",
+            json={
+                "email": payload["email"],
+                "password": result["temporaryPassword"],
+                "role": "staff",
+            },
+        )
+        self.assertEqual(login.status_code, 200, login.get_data(as_text=True))
+        staff_headers = {
+            "Authorization": f"Bearer {login.get_json()['access_token']}"
+        }
+
+        profile = self.client.get("/api/staff/profile", headers=staff_headers)
+        dashboard = self.client.get("/api/staff/dashboard", headers=staff_headers)
+        self.assertEqual(profile.status_code, 200)
+        self.assertEqual(dashboard.status_code, 200)
+        self.assertEqual(profile.get_json()["profile"]["mealCategory"], "veg")
+        self.assertEqual(dashboard.get_json()["staff"]["mealCategory"], "veg")
+
+        assignment = self._put(
+            "a",
+            f"/api/manager/staff/{result['id']}/assign",
+            {
+                "hostelId": self.hostel_a_id,
+                "blockId": self.block_a_id,
+                "messUnitId": self.mess_a_id,
+                "mealCategory": "non-veg",
+            },
+        )
+        self.assertEqual(assignment.status_code, 200, assignment.get_data(as_text=True))
+
+        updated_profile = self.client.get(
+            "/api/staff/profile",
+            headers=staff_headers,
+        ).get_json()["profile"]
+        updated_dashboard = self.client.get(
+            "/api/staff/dashboard",
+            headers=staff_headers,
+        ).get_json()["staff"]
+        self.assertEqual(updated_profile["mealCategory"], "non-veg")
+        self.assertEqual(updated_dashboard["mealCategory"], "non-veg")
+        self.assertEqual(updated_profile["hostelId"], self.hostel_a_id)
+        self.assertEqual(updated_profile["messUnitId"], self.mess_a_id)
+        updated_listing = self._get("a", "/api/manager/staff").get_json()["staff"]
+        updated_member = next(
+            member for member in updated_listing if member["id"] == result["id"]
+        )
+        self.assertEqual(updated_member["mealCategory"], "non-veg")
+
+        duplicate_email = self._post(
+            "a",
+            "/api/manager/staff",
+            {**payload, "mobile": "9000000192"},
+        )
+        self.assertEqual(duplicate_email.status_code, 409)
+
+        with patch(
+            "routes.manager_routes.next_staff_id",
+            return_value=result["staffId"],
+        ):
+            duplicate_staff_id = self._post(
+                "a",
+                "/api/manager/staff",
+                {
+                    **payload,
+                    "email": "duplicate.staff.id@test.local",
+                    "mobile": "9000000194",
+                },
+            )
+        self.assertEqual(duplicate_staff_id.status_code, 409)
+
+        second = self._post(
+            "a",
+            "/api/manager/staff",
+            {
+                **payload,
+                "name": "Second Mess Cook",
+                "email": "second.mess.cook@test.local",
+                "mobile": "9000000193",
+            },
+        )
+        self.assertEqual(second.status_code, 201, second.get_data(as_text=True))
+        self.assertNotEqual(result["staffId"], second.get_json()["staff"]["staffId"])
 
 
     # ========================================================

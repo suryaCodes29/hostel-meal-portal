@@ -9,6 +9,7 @@ import React, {
 
 import studentApi, {
   clearStudentSession,
+  getStoredToken,
   getStoredUser,
 } from "../services/studentApi";
 
@@ -290,7 +291,7 @@ export function StudentProvider({
            * studentApi itself reads the actual token.
            */
           const token =
-            studentApi.getToken();
+            getStoredToken();
 
           if (!token) {
             clearStudentSession();
@@ -349,7 +350,11 @@ export function StudentProvider({
   ======================================================= */
 
   useEffect(() => {
-    initializeStudent();
+    const timer = window.setTimeout(
+      () => void initializeStudent(),
+      0,
+    );
+    return () => window.clearTimeout(timer);
   }, [initializeStudent]);
 
 
@@ -497,7 +502,7 @@ export function StudentProvider({
 
   const logout =
     useCallback(() => {
-      studentApi.logoutStudent();
+      studentApi.logout();
 
       setStudent(null);
       setAssignment(null);
@@ -514,14 +519,15 @@ export function StudentProvider({
   ======================================================= */
 
   useEffect(() => {
-    const handleAuthError =
-      () => {
+    const handleAuthExpired =
+      (event) => {
         setStudent(null);
         setAssignment(null);
         setSettings(null);
         setNotifications([]);
         setUnreadNotificationCount(0);
         setInitialized(false);
+        setError(event.detail?.message || "Your session has expired.");
       };
 
     const handleLogout =
@@ -536,8 +542,8 @@ export function StudentProvider({
       };
 
     window.addEventListener(
-      "student-auth-error",
-      handleAuthError
+      "auth-session-expired",
+      handleAuthExpired
     );
 
     window.addEventListener(
@@ -547,8 +553,8 @@ export function StudentProvider({
 
     return () => {
       window.removeEventListener(
-        "student-auth-error",
-        handleAuthError
+        "auth-session-expired",
+        handleAuthExpired
       );
 
       window.removeEventListener(

@@ -204,6 +204,10 @@ export default function Announcements() {
 
   useEffect(() => {
     loadAnnouncements();
+    const refreshTimer = window.setInterval(() => {
+      loadAnnouncements(true);
+    }, 60000);
+    return () => window.clearInterval(refreshTimer);
   }, []);
 
   const filteredAnnouncements = useMemo(() => {

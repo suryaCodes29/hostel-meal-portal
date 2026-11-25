@@ -11,15 +11,11 @@ import {
 import {
   clearPreviousManagerSession,
 } from "../utils/managerSession";
+import { API_BASE_URL } from "../services/apiConfig";
 
 
 const ManagerContext =
   createContext(null);
-
-
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  "http://127.0.0.1:5000";
 
 
 const AUTH_STORAGE_KEYS =

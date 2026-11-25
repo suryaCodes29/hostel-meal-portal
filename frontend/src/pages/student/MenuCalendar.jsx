@@ -17,7 +17,7 @@ import { useStudent } from "../../context/StudentContext";
 
 import "./MenuCalendar.css";
 
-const MEAL_ORDER = ["Breakfast", "Lunch", "Dinner"];
+const MEAL_ORDER = ["Breakfast", "Lunch", "Snacks", "Dinner"];
 
 const getDateKey = (date) => {
   const year = date.getFullYear();

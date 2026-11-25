@@ -545,6 +545,15 @@ class Menu(db.Model):
         ),
         nullable=False
     )
+    start_time = db.Column(
+        db.Time,
+        nullable=True
+    )
+
+    end_time = db.Column(
+        db.Time,
+        nullable=True
+    )
 
     # Legacy snapshot retained for existing routes/pages.
     # New Menu Management APIs will also maintain structured item links.
@@ -1230,16 +1239,231 @@ class MealResponse(db.Model):
         back_populates="responses"
     )
 
-    student = db.relationship(
-        "User",
-        foreign_keys=[student_user_id]
-    )
-
     mess_unit = db.relationship(
         "MessUnit",
         back_populates="responses"
     )
 
+    student = db.relationship(
+        "User",
+        foreign_keys=[student_user_id]
+    )
+
+
+# ============================================================
+# STAFF SETTINGS
+# ============================================================
+
+class StaffSettings(db.Model):
+
+    __tablename__ = "staff_settings"
+
+    id = db.Column(db.Integer, primary_key=True)
+    staff_user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+        unique=True,
+    )
+    notifications_enabled = db.Column(db.Boolean, nullable=False, default=True)
+    announcement_notifications = db.Column(db.Boolean, nullable=False, default=True)
+    manager_notifications = db.Column(db.Boolean, nullable=False, default=True)
+    meal_update_notifications = db.Column(db.Boolean, nullable=False, default=True)
+    system_notifications = db.Column(db.Boolean, nullable=False, default=True)
+    timezone = db.Column(db.String(50), nullable=False, default="Asia/Kolkata")
+    language = db.Column(db.String(20), nullable=False, default="en")
+    theme = db.Column(
+        db.Enum("light", "dark", "system"),
+        nullable=False,
+        default="system",
+    )
+    compact_layout = db.Column(db.Boolean, nullable=False, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        onupdate=datetime.utcnow,
+        nullable=False,
+    )
+
+    staff = db.relationship("User", foreign_keys=[staff_user_id])
+
+
+# ============================================================
+# QR MEAL VERIFICATION
+# ============================================================
+
+class MealQRToken(db.Model):
+
+    __tablename__ = "meal_qr_tokens"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    # The QR token itself is never stored.
+    # Only its SHA-256 hash is stored in the database.
+    token_hash = db.Column(
+        db.String(64),
+        unique=True,
+        nullable=False,
+        index=True
+    )
+
+    meal_response_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "meal_responses.id",
+            ondelete="CASCADE"
+        ),
+        nullable=False,
+        unique=True
+    )
+
+    student_user_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "users.id",
+            ondelete="CASCADE"
+        ),
+        nullable=False
+    )
+
+    menu_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "menus.id",
+            ondelete="CASCADE"
+        ),
+        nullable=False
+    )
+
+    mess_unit_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "mess_units.id",
+            ondelete="CASCADE"
+        ),
+        nullable=False
+    )
+
+    expires_at = db.Column(
+        db.DateTime,
+        nullable=False
+    )
+
+    redeemed_at = db.Column(
+        db.DateTime,
+        nullable=True
+    )
+
+    redeemed_by_staff_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "users.id",
+            ondelete="SET NULL"
+        ),
+        nullable=True
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        nullable=False
+    )
+
+    __table_args__ = (
+        db.Index(
+            "ix_meal_qr_student_menu",
+            "student_user_id",
+            "menu_id"
+        ),
+    )
+
+
+# ============================================================
+# QR MEAL VERIFICATION AUDIT
+# ============================================================
+
+class MealQRVerification(db.Model):
+
+    __tablename__ = "meal_qr_verifications"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    meal_response_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "meal_responses.id",
+            ondelete="CASCADE"
+        ),
+        nullable=False
+    )
+
+    student_user_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "users.id",
+            ondelete="CASCADE"
+        ),
+        nullable=False
+    )
+
+    menu_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "menus.id",
+            ondelete="CASCADE"
+        ),
+        nullable=False
+    )
+
+    mess_unit_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "mess_units.id",
+            ondelete="CASCADE"
+        ),
+        nullable=False
+    )
+
+    verified_by_staff_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "users.id",
+            ondelete="SET NULL"
+        ),
+        nullable=True
+    )
+
+    counter_category = db.Column(
+        db.String(30),
+        nullable=True
+    )
+
+    verification_status = db.Column(
+        db.Enum(
+            "approved",
+            "denied",
+            "already_served"
+        ),
+        nullable=False
+    )
+
+    denial_reason = db.Column(
+        db.String(255),
+        nullable=True
+    )
+
+    verified_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        nullable=False
+    )
 
 # ============================================================
 # STUDENT FEEDBACK
@@ -1426,6 +1650,77 @@ class StudentFeedback(db.Model):
 
 
 # ============================================================
+# STAFF FEEDBACK
+# ============================================================
+
+class StaffFeedback(db.Model):
+
+    __tablename__ = "staff_feedback"
+
+    id = db.Column(db.Integer, primary_key=True)
+    staff_user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    manager_user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    hostel_id = db.Column(
+        db.Integer,
+        db.ForeignKey("hostels.id", ondelete="SET NULL"),
+        nullable=True,
+    )
+    mess_unit_id = db.Column(
+        db.Integer,
+        db.ForeignKey("mess_units.id", ondelete="SET NULL"),
+        nullable=True,
+    )
+    menu_id = db.Column(
+        db.Integer,
+        db.ForeignKey("menus.id", ondelete="SET NULL"),
+        nullable=True,
+    )
+    meal_category = db.Column(db.String(30), nullable=True)
+    category = db.Column(db.String(50), nullable=False)
+    subject = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    status = db.Column(
+        db.Enum("pending", "reviewed", "resolved"),
+        nullable=False,
+        default="pending",
+    )
+    manager_reply = db.Column(db.Text, nullable=True)
+    replied_by = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="SET NULL"),
+        nullable=True,
+    )
+    replied_at = db.Column(db.DateTime, nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        onupdate=datetime.utcnow,
+        nullable=False,
+    )
+
+    __table_args__ = (
+        db.Index("ix_staff_feedback_staff_date", "staff_user_id", "created_at"),
+        db.Index("ix_staff_feedback_scope", "hostel_id", "mess_unit_id", "status"),
+    )
+
+    staff = db.relationship("User", foreign_keys=[staff_user_id])
+    manager = db.relationship("User", foreign_keys=[manager_user_id])
+    hostel = db.relationship("Hostel", foreign_keys=[hostel_id])
+    mess_unit = db.relationship("MessUnit", foreign_keys=[mess_unit_id])
+    menu = db.relationship("Menu", foreign_keys=[menu_id])
+    replier = db.relationship("User", foreign_keys=[replied_by])
+
+
+# ============================================================
 # ANNOUNCEMENT
 # ============================================================
 
@@ -1512,6 +1807,11 @@ class Announcement(db.Model):
 
     attachment_url = db.Column(
         db.String(500),
+        nullable=True
+    )
+
+    expires_at = db.Column(
+        db.DateTime,
         nullable=True
     )
 
@@ -1942,6 +2242,15 @@ class Notification(db.Model):
             ondelete="CASCADE"
         ),
         nullable=False
+    )
+
+    recipient_user_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "users.id",
+            ondelete="CASCADE"
+        ),
+        nullable=True
     )
 
     notification_type = db.Column(

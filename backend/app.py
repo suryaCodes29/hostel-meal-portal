@@ -9,7 +9,11 @@ from datetime import datetime, timedelta, timezone
 from flask import (
     Flask,
     jsonify,
+    request,
 )
+from werkzeug.exceptions import HTTPException
+
+from flask_cors import CORS
 
 from flask_jwt_extended import (
     JWTManager,
@@ -33,6 +37,9 @@ from routes.manager_routes import (
 
 from routes.student_routes import (
     student_bp,
+)
+from routes.staff_routes import (
+    staff_bp,
 )
 
 from services.menu_history_cleanup import (
@@ -74,28 +81,31 @@ app.config.from_object(
 # CORS
 # ============================================================
 
-@app.after_request
-def add_cors_headers(
-    response
-):
-    response.headers[
-        "Access-Control-Allow-Origin"
-    ] = "http://localhost:5173"
-
-    response.headers[
-        "Access-Control-Allow-Headers"
-    ] = (
-        "Content-Type, Authorization"
-    )
-
-    response.headers[
-        "Access-Control-Allow-Methods"
-    ] = (
-        "GET, POST, PUT, PATCH, "
-        "DELETE, OPTIONS"
-    )
-
-    return response
+CORS(
+    app,
+    resources={
+        r"/api/*": {
+            "origins": [
+                "http://localhost:5173",
+                "http://127.0.0.1:5173",
+            ],
+            "methods": [
+                "GET",
+                "POST",
+                "PUT",
+                "PATCH",
+                "DELETE",
+                "OPTIONS",
+            ],
+            "allow_headers": [
+                "Content-Type",
+                "Authorization",
+            ],
+        }
+    },
+    supports_credentials=False,
+    vary_header=True,
+)
 
 
 # ============================================================
@@ -153,6 +163,41 @@ app.register_blueprint(
 app.register_blueprint(
     student_bp
 )
+app.register_blueprint(
+    staff_bp
+)
+
+
+@app.errorhandler(HTTPException)
+def handle_http_exception(error):
+    if not request.path.startswith("/api/"):
+        return error
+
+    message = (
+        "API endpoint not found."
+        if error.code == 404
+        else error.description
+    )
+    return jsonify({"message": message}), error.code
+
+
+@app.errorhandler(500)
+def handle_internal_server_error(error):
+    original = getattr(error, "original_exception", None)
+    exception = original or error
+    logger.error(
+        "Unhandled exception at endpoint=%s path=%s type=%s message=%s",
+        request.endpoint or "unknown",
+        request.path,
+        type(exception).__name__,
+        exception,
+        exc_info=(
+            type(exception),
+            exception,
+            exception.__traceback__,
+        ),
+    )
+    return jsonify({"message": "An internal server error occurred."}), 500
 
 
 # ============================================================
@@ -207,9 +252,6 @@ def test_database():
 
             "message":
                 "Database connection failed.",
-
-            "error":
-                str(error),
 
         }), 500
 
@@ -717,5 +759,5 @@ _start_menu_history_cleanup_scheduler()
 if __name__ == "__main__":
 
     app.run(
-        debug=True
+        debug=False
     )

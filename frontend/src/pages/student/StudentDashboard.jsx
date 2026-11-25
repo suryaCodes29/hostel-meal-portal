@@ -19,10 +19,31 @@ import studentApi from "../../services/studentApi";
 import StudentAssignmentBanner from "../../components/student/StudentAssignmentBanner";
 import "./StudentDashboard.css";
 
-const MEAL_ORDER = {
-  breakfast: 1,
-  lunch: 2,
-  dinner: 3,
+const MEAL_ORDER = [
+  "Breakfast",
+  "Lunch",
+  "Snacks",
+  "Dinner",
+];
+
+const getISTGreeting = () => {
+  const hour = Number(
+    new Intl.DateTimeFormat("en-IN", {
+      timeZone: "Asia/Kolkata",
+      hour: "2-digit",
+      hourCycle: "h23",
+    }).format(new Date())
+  );
+
+  if (hour >= 5 && hour < 12) {
+    return "Good morning";
+  }
+
+  if (hour >= 12 && hour < 17) {
+    return "Good afternoon";
+  }
+
+  return "Good evening";
 };
 
 const normalizeMeal = (menu) => {
@@ -36,6 +57,7 @@ const normalizeMeal = (menu) => {
 
   if (value.includes("break")) return "Breakfast";
   if (value.includes("lunch")) return "Lunch";
+  if (value.includes("snack")) return "Snacks";
   if (value.includes("dinner")) return "Dinner";
 
   return menu?.mealCategory || menu?.meal || "Meal";
@@ -154,6 +176,7 @@ function StatCard({ icon, title, value, subtitle, className = "" }) {
 
 function MealCard({ menu, response, onRespond, saving }) {
   const mealName = normalizeMeal(menu);
+  
   const items = getMenuItems(menu);
 
   const currentResponse = getResponseValue(response);
@@ -568,7 +591,7 @@ export default function StudentDashboard() {
             </span>
 
             <h1>
-              Welcome back, {displayName} 👋
+              {getISTGreeting()}, {firstName}! 👋
             </h1>
 
             <p>
